@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" data-l="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Climate of a Street · 거리의 기후</title>
+<meta name="description" content="Street form and summer heat in Seoul, read from AI-labelled street imagery and 723 sensors. By Jisoo Han, Yonsei University.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bar"><div class="in">
+  <div class="ticks"><i style="background:var(--s1)"></i><i style="background:var(--s2)"></i><i style="background:var(--s3)"></i><i style="background:var(--s4)"></i></div>
+  <div class="t"><span class="en">The Climate of a Street</span><span class="ko">거리의 기후</span></div>
+  <div class="lang" role="group" aria-label="Language"><button data-set="en" class="on">EN</button><button data-set="ko">한국어</button></div>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <h1><span class="en">The Climate of a Street</span><span class="ko">거리의 기후</span></h1>
+  <p class="sub"><span class="en">Street form and summer heat in Seoul, read from AI-labelled street imagery and 723 sensors</span><span class="ko">AI로 읽은 거리 이미지와 723개 센서로 본 서울의 거리 형태와 여름철 기온</span></p>
+  <div class="byline">
+    <div class="en">By <b>Jisoo Han</b><br><span class="small">Urban Planning and Engineering, Yonsei University · November 2026</span></div>
+    <div class="ko">글 <b>한지수</b><br><span class="small">연세대학교 도시공학과 · 2026년 11월</span></div>
+  </div>
+</div></header>
+
+<!-- 1 opening -->
+<section id="nights" style="border-top:0;padding-top:20px"><div class="wide">
+  <div class="fig" style="background:#fff;padding:0">
+    <svg id="stripe" viewBox="0 0 1000 120" aria-label="62 nights"></svg>
+  </div>
+  <div class="wrap" style="padding:0">
+    <p class="en">Seoul, summer 2025. Every tile is one night. Its colour shows how much warmer dense, enclosed streets with little greenery were than open, green streets, after accounting for where the streets are. <b>They were warmer on all 62 nights.</b></p>
+    <p class="ko">2025년 여름, 서울. 타일 하나가 하룻밤입니다. 색은 녹지가 적고 건물로 둘러싸인 밀집 거리가, 트이고 녹지가 많은 거리보다 얼마나 더 따뜻했는지를 보여 줍니다. 거리의 위치 차이는 보정했습니다. <b>62일 밤 모두 더 따뜻했습니다.</b></p>
+    <div class="nightinfo small" id="nightinfo"><span class="en">Tap a night.</span><span class="ko">밤 하나를 눌러 보세요.</span></div>
+  </div>
+</div></section>
+
+<!-- 2 finding -->
+<section id="finding"><div class="wrap">
+  <h2><span class="en">The finding in 30 seconds</span><span class="ko">30초 요약</span></h2>
+  <p class="en">A street keeps some of its own climate. Where buildings close in and greenery is missing, the day's heat has a harder time leaving at night. We typed every street in Seoul from imagery and maps, matched the types to 723 street sensors, and found:</p>
+  <p class="ko">거리는 자기만의 기후를 어느 정도 지닙니다. 건물이 가깝게 둘러싸고 녹지가 없는 곳에서는 낮에 쌓인 열이 밤에 잘 빠져나가지 못합니다. 우리는 이미지와 지도로 서울의 모든 거리를 유형으로 나누고, 이를 723개 거리 센서와 맞춰 보았습니다.</p>
+</div>
+<div class="wide"><div class="keys">
+  <a class="key" href="#hours"><div class="v num" data-count="coef.night.S4" data-f="sg2" data-u=" °C"></div>
+    <div class="l"><span class="en">at night (00–05 h)</span><span class="ko">밤 (00–05시)</span></div>
+    <div class="s"><span class="en">S4 vs S1, all else equal · 95% CI </span><span class="ko">S4 대 S1, 다른 조건이 같을 때 · 95% 신뢰구간 </span><span data-v="coef.night.S4" data-f="ci2"></span></div></a>
+  <a class="key" href="#hours"><div class="v num" data-count="coef.afternoon.S4" data-f="sg2" data-u=" °C"></div>
+    <div class="l"><span class="en">in the afternoon (14–16 h)</span><span class="ko">오후 (14–16시)</span></div>
+    <div class="s"><span class="en">95% CI </span><span class="ko">95% 신뢰구간 </span><span data-v="coef.afternoon.S4" data-f="ci2"></span></div></a>
+  <a class="key" href="#tropical"><div class="v num" data-count="trop2025" data-f="sg1" data-u=""></div>
+    <div class="l"><span class="en">more tropical nights</span><span class="ko">열대야 일수 증가</span></div>
+    <div class="s"><span class="en">per summer on S4 streets, all else equal</span><span class="ko">S4 거리, 여름 한 철, 다른 조건이 같을 때</span></div></a>
+  <a class="key dark" href="#where"><div class="v num" data-count="S4.share" data-f="pct1" data-u=""></div>
+    <div class="l"><span class="en">of Seoul's street length is S4</span><span class="ko">서울 거리 길이 중 S4 비율</span></div>
+    <div class="s"><span class="en">expressways excluded</span><span class="ko">고속도로 제외</span></div></a>
+  <a class="key" href="#who"><div class="v num" data-count="res.rec" data-f="pct1" data-u=""></div>
+    <div class="l"><span class="en">S4 share where 수급자 live</span><span class="ko">수급자가 사는 동의 S4 비율</span></div>
+    <div class="s"><span class="en">vs </span><span class="ko">전체 주민 </span><span data-v="res.all" data-f="pct1"></span><span class="en"> for all residents</span></div></a>
+</div>
+<nav class="toc">
+  <a href="#act1"><span class="en">1 · A street's own climate</span><span class="ko">1 · 거리의 기후</span></a>
+  <a href="#act2"><span class="en">2 · Is it real?</span><span class="ko">2 · 정말일까?</span></a>
+  <a href="#act3"><span class="en">3 · Where, and who</span><span class="ko">3 · 어디에, 누가</span></a>
+  <a href="#find"><span class="en">Find your 동</span><span class="ko">우리 동 찾기</span></a>
+  <a href="#act4"><span class="en">4 · Beyond Seoul</span><span class="ko">4 · 서울 너머</span></a>
+  <a href="#hood"><span class="en">Equations</span><span class="ko">수식</span></a>
+  <a href="#act5"><span class="en">Debate</span><span class="ko">토론</span></a>
+  <a href="#refs"><span class="en">References</span><span class="ko">참고문헌</span></a>
+</nav>
+</div></section>
+
+<!-- ACT 1 -->
+<div class="act" id="act1"><div class="wrap">
+  <div class="k"><span class="en">Act 1</span><span class="ko">1막</span></div>
+  <h2><span class="en">A street's own climate</span><span class="ko">거리의 기후</span></h2>
+  <p><span class="en">What does a street do to heat?</span><span class="ko">거리는 열에 어떤 일을 할까요?</span></p>
+</div></div>
+
+<section id="two"><div class="wrap">
+  <h2><span class="en">A night on two streets</span><span class="ko">두 거리, 어느 여름밤</span></h2>
+  <p class="en">On the left, an open, green street (<span class="tchip c1">S1</span>). Buildings average <span data-v="S1.height_100m" data-f="f0"></span> m, cover <span data-v="S1.coverage_100m" data-f="pct0"></span> of the ground nearby, and trees fill much of the view. Buildings block <span data-v="S1.bvf" data-f="pct0"></span> of the sky dome.</p>
+  <p class="ko">왼쪽은 트이고 녹지가 많은 거리(<span class="tchip c1">S1</span>)입니다. 주변 건물 높이는 평균 <span data-v="S1.height_100m" data-f="f0"></span> m, 땅의 <span data-v="S1.coverage_100m" data-f="pct0"></span>를 덮고, 시야의 많은 부분을 나무가 채웁니다. 하늘 돔의 <span data-v="S1.bvf" data-f="pct0"></span>를 건물이 가립니다.</p>
+  <p class="en">On the right, a dense low-rise street (<span class="tchip c4">S4</span>). Buildings are lower, <span data-v="S4.height_100m" data-f="f0"></span> m on average, but they cover <span data-v="S4.coverage_100m" data-f="pct0"></span> of the ground and stand close to the street. There is little greenery. Buildings block <span data-v="S4.bvf" data-f="pct0"></span> of the sky dome.</p>
+  <p class="ko">오른쪽은 밀집한 저층 거리(<span class="tchip c4">S4</span>)입니다. 건물은 평균 <span data-v="S4.height_100m" data-f="f0"></span> m로 더 낮지만 땅의 <span data-v="S4.coverage_100m" data-f="pct0"></span>를 덮고 거리에 바짝 붙어 있습니다. 녹지는 거의 없습니다. 하늘 돔의 <span data-v="S4.bvf" data-f="pct0"></span>를 건물이 가립니다.</p>
+</div>
+<div class="wide"><div class="fig">
+  <div class="ctrl">
+    <button class="btn on" data-mode="pair"><span class="en">Two real sensors, 22–25 Aug 2025</span><span class="ko">실제 센서 두 개, 2025년 8월 22–25일</span></button>
+    <button class="btn" data-mode="avg"><span class="en">Summer average, all sensors</span><span class="ko">여름 평균, 전체 센서</span></button>
+    <button class="btn" id="play">▶ <span class="en">Play</span><span class="ko">재생</span></button>
+  </div>
+  <svg id="streets" viewBox="0 0 1000 300"></svg>
+  <input type="range" id="tslider" min="0" max="71" value="0" aria-label="time">
+  <div class="scroll"><svg id="tchart" viewBox="0 0 1000 230"></svg></div><span class="hint"><span class="en">Swipe sideways to see the whole chart.</span><span class="ko">옆으로 밀어 전체 그래프를 보세요.</span></span>
+  <div class="read" id="tread"></div>
+  <div class="cap" id="tcap"></div>
+</div></div>
+<div class="wrap">
+  <p class="en">After sunset, a street cools by sending heat up to the open sky. On the open street, much of the sky is free. On the enclosed street, walls take up a large part of it, so heat is passed between walls and road and leaves more slowly.</p>
+  <p class="ko">해가 지면 거리는 열을 하늘로 내보내며 식습니다. 트인 거리에서는 하늘 대부분이 열려 있습니다. 둘러싸인 거리에서는 벽이 하늘의 큰 부분을 차지해, 열이 벽과 도로 사이를 오가며 더 천천히 빠져나갑니다.</p>
+  <p class="en">Over the whole summer, S4 streets ran warmer at every hour. After accounting for location, building height and density, and the sensor device, the night gap is <b><span data-v="coef.night.S4" data-f="sg2"></span> °C</b>.</p>
+  <p class="ko">여름 전체로 보면 S4 거리는 모든 시간대에 더 따뜻했습니다. 위치, 건물 높이와 밀도, 센서 기기를 보정하면 밤의 차이는 <b><span data-v="coef.night.S4" data-f="sg2"></span> °C</b>입니다.</p>
+  <p class="en">One surprise: S4 streets get <i>less</i> direct sun than S1 streets (about <span data-v="S4.sun_h" data-f="f1"></span> against <span data-v="S1.sun_h" data-f="f1"></span> hours a day along the summer sun path), because their buildings shade them. They are warmer anyway. Shade alone doesn't cool a street if the heat has nowhere to go and there are no trees.</p>
+  <p class="ko">뜻밖의 점도 있습니다. S4 거리는 건물 그늘 때문에 S1 거리보다 직사광선을 <i>덜</i> 받습니다(여름 태양 경로 기준 하루 약 <span data-v="S4.sun_h" data-f="f1"></span>시간 대 <span data-v="S1.sun_h" data-f="f1"></span>시간). 그런데도 더 따뜻합니다. 열이 빠져나갈 곳이 없고 나무도 없다면, 그늘만으로는 거리가 식지 않습니다.</p>
+
+  <h3><span class="badge model"><span class="en">Teaching model</span><span class="ko">설명용 모형</span></span><br><span class="en">Try it yourself</span><span class="ko">직접 해 보기</span></h3>
+  <p class="en">This is a teaching model, not our measurement. It uses the textbook result for a long, straight street: the share of open sky seen from the middle of the road depends only on how tall the walls are compared with how wide the street is (Oke, 1981). Raise the walls or narrow the street and watch the sky close in. Real streets are messier, with gaps between buildings, trees and slopes. That is why we measured the sky from street photographs instead.</p>
+  <p class="ko">이것은 설명을 위한 모형이며, 우리 측정값이 아닙니다. 길고 곧은 거리를 가정한 교과서 공식을 씁니다. 도로 한가운데에서 보이는 하늘의 비율은 벽의 높이와 거리 폭의 비율로만 정해집니다(Oke, 1981). 벽을 높이거나 거리를 좁혀 하늘이 닫히는 것을 보세요. 실제 거리는 건물 사이 틈, 나무, 경사 때문에 훨씬 복잡합니다. 그래서 우리는 하늘을 거리 사진으로 직접 쟀습니다.</p>
+  <div class="fig">
+    <svg id="canyon" viewBox="0 0 700 300"></svg>
+    <div class="grid2" style="grid-template-columns:1fr 1fr">
+      <div><label class="small"><span class="en">Wall height</span><span class="ko">벽 높이</span>: <b id="hv"></b> m</label><input type="range" id="hsl" min="3" max="60" value="15"></div>
+      <div><label class="small"><span class="en">Street width</span><span class="ko">거리 폭</span>: <b id="wv"></b> m</label><input type="range" id="wsl" min="6" max="40" value="20"></div>
+    </div>
+    <div class="ctrl"><button class="btn" id="setS1"><span class="en">Match S1's measured sky</span><span class="ko">S1의 측정 하늘에 맞추기</span></button><button class="btn" id="setS4"><span class="en">Match S4's measured sky</span><span class="ko">S4의 측정 하늘에 맞추기</span></button></div>
+    <div class="cap"><span class="en">Open sky at the street centre = cos(arctan(2H/W)), for an infinitely long, symmetric canyon with no trees. "Match" sets H/W so that 1 − open sky equals the type's measured BVF; that is an illustration, not a measured street width.</span><span class="ko">거리 중앙에서 보이는 하늘 = cos(arctan(2H/W)), 나무가 없는 무한히 긴 대칭 협곡을 가정합니다. "맞추기"는 1 − 하늘 비율이 그 유형의 측정 BVF와 같아지도록 H/W를 정한 것으로, 실제 측정한 거리 폭이 아닙니다.</span></div>
+  </div>
+</div></section>
+
+<section id="ai"><div class="wrap">
+  <h2><span class="en">How the AI reads a street</span><span class="ko">AI가 거리를 읽는 방법</span></h2>
+  <p class="en">Tap each step. Drawings are schematic: Google Street View images can't be republished here.</p>
+  <p class="ko">단계를 눌러 보세요. 그림은 도식입니다. 구글 스트리트뷰 이미지는 이곳에 다시 게시할 수 없습니다.</p>
+  <div class="fig">
+    <div class="steps" id="steps"></div>
+    <div class="stepbody" id="stepbody"></div>
+  </div>
+  <p class="small"><span class="en">Most photos were taken in spring 2018, so tree shade is under-counted. Greenery itself comes from summer 2025 satellite data (Sentinel-2).</span><span class="ko">사진 대부분은 2018년 봄에 찍혀 나무 그늘이 실제보다 적게 잡힙니다. 녹지 자체는 2025년 여름 위성 자료(Sentinel-2)로 쟀습니다.</span></p>
+</div></section>
+
+<section id="types"><div class="wrap">
+  <h2><span class="en">Four kinds of street</span><span class="ko">네 가지 거리</span></h2>
+  <p class="en">We grouped the 723 sensor sites by four measures: how much sky the buildings block (<span class="term" data-t="bvf">BVF</span>), greenery within 30 m (<span class="term" data-t="ndvi">NDVI</span>), and building height and coverage within 100 m. Four types came out. Tap a dot.</p>
+  <p class="ko">723개 센서 지점을 네 가지 지표로 묶었습니다. <span class="term" data-t="bvf">BVF</span>(건물이 가리는 하늘의 비율), 30 m 안의 녹지(<span class="term" data-t="ndvi">NDVI</span>), 100 m 안의 건물 높이와 건폐율입니다. 네 유형이 나왔습니다. 점을 눌러 보세요.</p>
+</div>
+<div class="wide"><div class="fig">
+  <div class="grid2">
+    <svg id="scatter" viewBox="0 0 600 420"></svg>
+    <div>
+      <div id="typelist"></div>
+      <div class="explain" id="dotinfo" style="margin-top:10px"></div>
+    </div>
+  </div>
+</div></div>
+<div class="wrap">
+  <h3><span class="en">Did we pick the types that told the best story?</span><span class="ko">결과가 잘 나오는 유형만 고른 것은 아닐까요?</span></h3>
+  <p class="en">We tried 60 versions: ten sets of measures, each split into three to eight groups. Before running them, we wrote down the rules a version had to pass: stable when the data are resampled, nameable, and using only measures a street's design can change. In all 20 versions that passed, the warmest type was the most enclosed and least green.</p>
+  <p class="ko">60가지 버전을 시험했습니다. 지표 조합 10가지를 각각 3–8개 그룹으로 나눴습니다. 돌리기 전에 통과 기준을 먼저 적어 두었습니다. 자료를 다시 뽑아도 안정적일 것, 이름을 붙일 수 있을 것, 거리 설계로 바꿀 수 있는 지표만 쓸 것. 통과한 20가지 버전 모두에서 가장 따뜻한 유형은 가장 둘러싸이고 녹지가 가장 적은 유형이었습니다.</p>
+  <div class="fig"><div class="scroll"><svg id="versions" viewBox="0 0 700 300"></svg></div><span class="hint"><span class="en">Swipe sideways to see the whole chart.</span><span class="ko">옆으로 밀어 전체 그래프를 보세요.</span></span>
+    <div class="cap"><span class="en">Each dot is one version: stability across resamples (across) and how much the types add to predicting temperature beyond location and buildings (up, night). Filled = passed every rule. Orange ring = the chosen four types.</span><span class="ko">점 하나가 버전 하나입니다. 가로: 재표본 안정성, 세로: 위치와 건물 외에 유형이 기온 예측에 더하는 정도(밤). 채운 점 = 모든 기준 통과. 주황 테두리 = 선택한 네 유형.</span></div></div>
+  <p class="small"><span class="en">The four types simplify a continuum. The statistical separation between them is weak, (silhouette 0.29), so the case for them rests on stability, prediction and replication, not on clean boundaries.</span><span class="ko">네 유형은 연속적인 차이를 단순화한 것입니다. 유형 사이의 통계적 구분은 약한 편이라(실루엣 0.29), 유형의 근거는 깔끔한 경계가 아니라 안정성, 예측력, 재현성에 있습니다.</span></p>
+</div></section>
+
+<!-- ACT 2 -->
+<div class="act" id="act2"><div class="wrap">
+  <div class="k"><span class="en">Act 2</span><span class="ko">2막</span></div>
+  <h2><span class="en">Is it real?</span><span class="ko">정말일까?</span></h2>
+  <p><span class="en">Could the gap be chance, location, or the sensors themselves?</span><span class="ko">이 차이는 우연이나 위치, 혹은 센서 때문은 아닐까요?</span></p>
+</div></div>
+
+<section id="hours"><div class="wrap">
+  <h2><span class="en">Warmer at every hour</span><span class="ko">모든 시간대에 더 따뜻한 거리</span></h2>
+  <p class="en">Each line is one street type: how far its sensors sat above or below the median of all Seoul sensors, hour by hour, averaged over July and August 2025. Comparing every sensor with the city median removes the weather all streets share; what remains is local. Drag the hour.</p>
+  <p class="ko">선 하나가 거리 유형 하나입니다. 그 유형의 센서들이 서울 전체 센서의 중앙값보다 시간마다 얼마나 높거나 낮았는지를 2025년 7–8월 평균으로 보여 줍니다. 모든 센서를 도시 중앙값과 비교하면 모든 거리가 함께 겪는 날씨가 빠지고, 지역적인 차이만 남습니다. 시간을 움직여 보세요.</p>
+</div>
+<div class="wide"><div class="fig">
+  <div class="ctrl"><button class="btn on" data-yr="p25">2025</button><button class="btn" data-yr="p26"><span class="en">2026 (same method)</span><span class="ko">2026 (같은 방법)</span></button></div>
+  <div class="scroll"><svg id="profile" viewBox="0 0 1000 380"></svg></div><span class="hint"><span class="en">Swipe sideways to see the whole chart.</span><span class="ko">옆으로 밀어 전체 그래프를 보세요.</span></span>
+  <input type="range" id="hslider" min="0" max="23" value="21">
+  <div class="read" id="hread"></div>
+</div></div>
+<div class="wrap">
+  <p class="en">S4 stays above the city all day and night; S1 stays below it. The observed gap is widest around <span data-v="gap24_max_h" data-f="int"></span> h (<span data-v="gap24_max" data-f="f2"></span> °C) and narrowest around <span data-v="gap24_min_h" data-f="int"></span> h (<span data-v="gap24_min" data-f="f2"></span> °C). Part of it is location: S1 streets are more often near hills, rivers and forest.</p>
+  <p class="ko">S4는 하루 종일 도시보다 따뜻하고, S1은 하루 종일 도시보다 시원합니다. 관측된 차이는 <span data-v="gap24_max_h" data-f="int"></span>시 무렵 <span data-v="gap24_max" data-f="f2"></span> °C로 가장 크고, <span data-v="gap24_min_h" data-f="int"></span>시 무렵 <span data-v="gap24_min" data-f="f2"></span> °C로 가장 작습니다. 일부는 위치 때문입니다. S1 거리는 산, 강, 숲 가까이에 더 많이 있습니다.</p>
+  <h3><span class="en">What the controls take away</span><span class="ko">통제 변수가 덜어내는 몫</span></h3>
+  <div class="fig"><div class="scroll"><svg id="ladder" viewBox="0 0 700 250"></svg></div><span class="hint"><span class="en">Swipe sideways to see the whole chart.</span><span class="ko">옆으로 밀어 전체 그래프를 보세요.</span></span>
+    <div class="cap"><span class="en">S4 minus S1, °C, with 95% CI, as each group of controls is added. Location: elevation, water, forest, wider greenery and 구. Buildings: height, height variation, coverage and floor area within 500 m. Device: the sensor model.</span><span class="ko">S4 − S1 차이(°C, 95% 신뢰구간)가 통제 변수를 더할 때마다 어떻게 변하는지. 위치: 고도, 수변, 숲, 넓은 범위의 녹지, 구. 건물: 500 m 안의 높이, 높이 편차, 건폐율, 용적률. 기기: 센서 기종.</span></div></div>
+  <p class="en">Location explains about half of the raw night gap. Once location is in, adding buildings and the device moves the estimate very little.</p>
+  <p class="ko">밤 차이의 절반가량은 위치로 설명됩니다. 위치를 넣고 나면 건물과 기기를 더해도 추정치는 거의 변하지 않습니다.</p>
+</div></section>
+
+<section id="hold"><div class="wrap">
+  <h2><span class="en">Nine ways to try to break the result</span><span class="ko">결과를 무너뜨리려는 아홉 가지 시도</span></h2>
+  <p class="en">Before running each check we wrote down what it would need to show. In every one, S4 streets stay warmer than S1 streets at night and in the afternoon. Tap a row.</p>
+  <p class="ko">각 점검을 돌리기 전에, 무엇을 보여야 통과인지 먼저 적어 두었습니다. 모든 점검에서 S4 거리는 밤과 오후 모두 S1 거리보다 따뜻했습니다. 줄을 눌러 보세요.</p>
+</div>
+<div class="wide"><div class="fig">
+  <div class="scroll"><svg id="forest" viewBox="0 0 1000 420"></svg></div><span class="hint"><span class="en">Swipe sideways to see the whole chart.</span><span class="ko">옆으로 밀어 전체 그래프를 보세요.</span></span>
+  <div class="explain" id="fexplain"></div>
+</div></div>
+<div class="wrap">
+  <p class="en"><b>Many tests, one chance of a false alarm?</b> Across all <span data-v="holm.n_tests" data-f="int"></span> tests we ran, the largest p-value after Holm's correction for multiple testing is <span data-v="holm.max_holm_p" data-f="f3"></span>.</p>
+  <p class="ko"><b>검정을 많이 하면 우연히 맞을 수도 있지 않을까요?</b> 우리가 돌린 <span data-v="holm.n_tests" data-f="int"></span>개 검정 전체에 Holm 보정을 적용해도 가장 큰 p값은 <span data-v="holm.max_holm_p" data-f="f3"></span>입니다.</p>
+  <p class="en"><b>A hidden cause?</b> Something we did not measure could still explain the gap. To erase it, that hidden factor would need to explain about <span data-v="rv" data-f="pct0i0"></span> of the remaining variation in both street type and night temperature (Cinelli &amp; Hazlett, 2020). For scale, the measured control most tied to street type, mean building height within 500 m, explains only about 6–7%.</p>
+  <p class="ko"><b>숨은 원인은 없을까요?</b> 측정하지 못한 무언가가 차이를 설명할 수도 있습니다. 차이를 없애려면 그 숨은 요인이 거리 유형과 밤 기온 양쪽에서 남은 변동의 약 <span data-v="rv" data-f="pct0i0"></span>를 설명해야 합니다(Cinelli &amp; Hazlett, 2020). 비교하면, 거리 유형과 가장 관련된 측정 변수인 500 m 안 평균 건물 높이는 약 6–7%만 설명합니다.</p>
+  <p class="en"><b>When is the gap largest?</b> On the ten hottest nights of 2025, the S4–S1 gap averaged <span data-v="gap_hot10" data-f="f2"></span> °C, against <span data-v="gap_other" data-f="f2"></span> °C on the other nights.</p>
+  <p class="ko"><b>차이는 언제 가장 클까요?</b> 2025년 가장 더웠던 열흘 밤에는 S4–S1 차이가 평균 <span data-v="gap_hot10" data-f="f2"></span> °C, 나머지 밤에는 <span data-v="gap_other" data-f="f2"></span> °C였습니다.</p>
+</div></section>
+
+<section id="tropical"><div class="wrap">
+  <h2><span class="en">Tropical nights, street by street</span><span class="ko">거리별 열대야</span></h2>
+  <p class="en">The Korea Meteorological Administration counts a <span class="term" data-t="trop">tropical night</span> when the night's lowest temperature, between 18:01 and 09:00 the next day, stays at 25 °C or above (KMA). We applied the same rule to each sensor, with the 25 °C line calibrated to the street sensor network, over 61 nights and <span data-v="trop_n_sensors" data-f="int"></span> sensors with complete nights.</p>
+  <p class="ko">기상청은 밤 최저기온(당일 18:01부터 다음 날 09:00까지)이 25 °C 이상이면 <span class="term" data-t="trop">열대야</span>로 셉니다(기상청). 같은 규칙을 센서마다 적용했습니다. 25 °C 기준은 거리 센서망에 맞게 보정했고, 61일 밤과 밤 자료가 온전한 센서 <span data-v="trop_n_sensors" data-f="int"></span>개를 썼습니다.</p>
+  <div class="fig"><svg id="tropbars" viewBox="0 0 700 230"></svg>
+    <div class="cap"><span class="en">Mean tropical nights per sensor, July–August. Thick: 2025. Thin: 2026, a cooler summer.</span><span class="ko">센서당 평균 열대야 일수, 7–8월. 굵은 막대: 2025년, 가는 막대: 더 선선했던 2026년.</span></div></div>
+  <p class="en">All else equal, S4 streets had <b><span data-v="trop2025" data-f="f1"></span> more tropical nights</b> than S1 streets <span data-v="trop2025" data-f="ci1"></span>; in 2026, <span data-v="trop2026" data-f="f1"></span> more <span data-v="trop2026" data-f="ci1"></span>.</p>
+  <p class="ko">다른 조건이 같을 때 S4 거리는 S1 거리보다 열대야가 <b><span data-v="trop2025" data-f="f1"></span>일 더</b> 많았습니다 <span data-v="trop2025" data-f="ci1"></span>. 2026년에는 <span data-v="trop2026" data-f="f1"></span>일 더 많았습니다 <span data-v="trop2026" data-f="ci1"></span>.</p>
+  <p class="en"><b>Why nights matter.</b> A Seoul study found the risk of death on hot nights rising from a night minimum of 22 °C, and highest at 25 °C among the cut-offs it tested (Oh et al., 2022).</p>
+  <p class="ko"><b>밤이 중요한 이유.</b> 서울 연구에 따르면 밤 최저기온 22 °C부터 사망 위험이 높아지고, 시험한 기준 가운데 25 °C에서 가장 높았습니다(Oh et al., 2022).</p>
+</div></section>
+
+<!-- ACT 3 -->
+<div class="act" id="act3"><div class="wrap">
+  <div class="k"><span class="en">Act 3</span><span class="ko">3막</span></div>
+  <h2><span class="en">Where, and who</span><span class="ko">어디에, 누가</span></h2>
+  <p><span class="en">Where are these streets, and who lives along them?</span><span class="ko">이런 거리는 어디에 있고, 그 곁에는 누가 살까요?</span></p>
+</div></div>
+
+<section id="where"><div class="wrap">
+  <h2><span class="en">Four in ten of Seoul's streets</span><span class="ko">서울 거리 열 곳 중 네 곳</span></h2>
+  <p class="en">Using building height, building coverage and summer greenery, we gave every mapped street segment in Seoul a type. S4 streets make up <b><span data-v="S4.share" data-f="pct1"></span></b> of the <span data-v="total_km" data-f="int,"></span> km of mapped street (expressways excluded). Pinch or scroll to zoom; tap a type to show or hide it.</p>
+  <p class="ko">건물 높이, 건폐율, 여름 녹지로 서울의 모든 거리 구간에 유형을 붙였습니다. 지도에 있는 거리 <span data-v="total_km" data-f="int,"></span> km(고속도로 제외) 가운데 <b><span data-v="S4.share" data-f="pct1"></span></b>가 S4입니다. 확대하려면 손가락을 벌리거나 스크롤하세요. 유형을 눌러 켜고 끌 수 있습니다.</p>
+</div>
+<div class="wide"><div class="fig">
+  <div class="mapbox" id="streetmap"><div class="mapinner" id="smi"></div></div>
+  <div class="legend" id="slegend"></div>
+</div></div>
+<div class="wrap">
+  <p class="en">Is the map right? On 3,678 segments that also have Street View photos, the map type matches the photo-based type 84% of the time (κ 0.75). Correcting for the mismatches gives an S4 share of 40.7%.</p>
+  <p class="ko">지도는 맞을까요? 스트리트뷰 사진이 있는 3,678개 구간에서, 지도 유형은 사진으로 판단한 유형과 84% 일치합니다(κ 0.75). 불일치를 보정하면 S4 비율은 40.7%입니다.</p>
+</div></section>
+
+<section id="who"><div class="wrap">
+  <h2><span class="en">More of these streets where people on basic livelihood support live</span><span class="ko">기초생활수급자가 사는 곳에 이런 거리가 더 많다</span></h2>
+  <p class="en">For each of Seoul's <span data-v="res.n_dong" data-f="int"></span> 행정동 we know the share of its streets that are S4 and how many residents receive basic livelihood support (<span class="term" data-t="sug">수급자</span>).</p>
+  <p class="ko">서울 <span data-v="res.n_dong" data-f="int"></span>개 행정동마다 S4 거리의 비율과 국민기초생활보장 <span class="term" data-t="sug">수급자</span> 수를 알고 있습니다.</p>
+  <div class="fig"><svg id="resbars" viewBox="0 0 700 150"></svg></div>
+  <p class="en">수급자 lived in 동 with <b><span data-v="res.rec_diff" data-f="f1"></span> percentage points more</b> S4 street than residents overall <span data-v="res.rec_diff" data-f="ci1"></span>. People aged 65 and over: no clear difference (<span data-v="res.old_diff" data-f="sg1"></span> <span data-v="res.old_diff" data-f="ci1"></span>). The interval comes from resampling whole 구, so it allows for neighbouring 동 being alike. This is the street mix of each person's 동, not the street outside each home.</p>
+  <p class="ko">수급자는 전체 주민보다 S4 거리가 <b><span data-v="res.rec_diff" data-f="f1"></span>%p 더 많은</b> 동에 살았습니다 <span data-v="res.rec_diff" data-f="ci1"></span>. 65세 이상: 뚜렷한 차이 없음 (<span data-v="res.old_diff" data-f="sg1"></span>%p <span data-v="res.old_diff" data-f="ci1"></span>). 신뢰구간은 구 단위로 다시 뽑아 계산했습니다. 이웃한 동이 서로 비슷하다는 점을 반영한 것입니다. 이는 각 사람이 사는 동의 거리 구성이지, 각자의 집 앞 거리는 아닙니다.</p>
+</div></section>
+
+<section id="find"><div class="wrap">
+  <h2><span class="en">Find your 동</span><span class="ko">우리 동 찾기</span></h2>
+  <p class="en"><b>Priority 동</b> (dark): <span data-v="prio_n" data-f="int"></span> 동 in the top quarter of Seoul for both S4 street share and 수급자 rate. Together they hold <span data-v="prio_s4_km" data-f="int"></span> km of S4 street and <span data-v="prio_rec_share" data-f="pct0"></span> of all recipients. Search a 동 or tap the map.</p>
+  <p class="ko"><b>우선 검토 동</b>(진한 색): S4 거리 비율과 수급자 비율이 모두 서울 상위 25%인 <span data-v="prio_n" data-f="int"></span>개 동. 이 동들에 S4 거리 <span data-v="prio_s4_km" data-f="int"></span> km와 전체 수급자의 <span data-v="prio_rec_share" data-f="pct0"></span>가 있습니다. 동을 검색하거나 지도를 누르세요.</p>
+</div>
+<div class="wide"><div class="fig">
+  <div class="ctrl">
+    <button class="btn on" data-dm="cls"><span class="en">Streets × need</span><span class="ko">거리 × 수급자</span></button>
+    <button class="btn" data-dm="s4"><span class="en">S4 street share</span><span class="ko">S4 거리 비율</span></button>
+    <button class="btn" data-dm="rate"><span class="en">수급자 rate</span><span class="ko">수급자 비율</span></button>
+  </div>
+  <div class="grid2">
+    <div><svg id="dongmap"></svg><div class="legend" id="dlegend"></div></div>
+    <div>
+      <div class="search"><input id="dq" autocomplete="off" placeholder="동 name / 동 이름 (e.g. 수유3동, Suyu)"><div class="sugg" id="dsugg"></div></div>
+      <div id="dcard"></div>
+    </div>
+  </div>
+</div></div></section>
+
+<section id="act"><div class="wrap">
+  <h2><span class="en">What a district could do</span><span class="ko">자치구가 할 수 있는 일</span></h2>
+  <p class="small"><span class="en">Three directions, still to be tested. These are associations across a city, not tested interventions.</span><span class="ko">세 가지 방향, 아직 검증 전입니다. 도시 전체에서 본 연관성이지, 검증된 개입 효과가 아닙니다.</span></p>
+  <div class="proposal"><div class="n">1</div><div><b class="en">Green S4 streets first.</b><b class="ko">S4 거리부터 녹화하기.</b>
+    <span class="en">Greener surroundings went with cooler afternoons: about <span data-v="cont.afternoon.ndvi_30m" data-f="sg2"></span> °C for every +0.1 of NDVI within 30 m, all else equal <span data-v="cont.afternoon.ndvi_30m" data-f="ci2"></span>. S4 streets are the least green (NDVI <span data-v="S4.ndvi_30m" data-f="f2"></span> against <span data-v="S1.ndvi_30m" data-f="f2"></span> on S1).</span>
+    <span class="ko">주변이 푸를수록 오후가 시원했습니다. 다른 조건이 같을 때 30 m 안의 NDVI가 0.1 늘 때마다 약 <span data-v="cont.afternoon.ndvi_30m" data-f="sg2"></span> °C였습니다 <span data-v="cont.afternoon.ndvi_30m" data-f="ci2"></span>. S4 거리는 녹지가 가장 적습니다(NDVI <span data-v="S4.ndvi_30m" data-f="f2"></span>, S1은 <span data-v="S1.ndvi_30m" data-f="f2"></span>).</span></div></div>
+  <div class="proposal"><div class="n">2</div><div><b class="en">Keep streets open to the sky.</b><b class="ko">하늘을 향해 열린 거리 지키기.</b>
+    <span class="en">More enclosure went with warmer nights: about <span data-v="cont.night.bvf" data-f="sg2"></span> °C for every +0.1 of BVF <span data-v="cont.night.bvf" data-f="ci2"></span>. When dense low-rise blocks are rebuilt, the height of the street wall against the street's width matters for how well nights can cool.</span>
+    <span class="ko">더 둘러싸일수록 밤이 따뜻했습니다. BVF가 0.1 늘 때마다 약 <span data-v="cont.night.bvf" data-f="sg2"></span> °C였습니다 <span data-v="cont.night.bvf" data-f="ci2"></span>. 저층 밀집 지역을 다시 지을 때, 거리 폭에 대한 가로벽의 높이가 밤에 얼마나 잘 식는지에 영향을 줍니다.</span></div></div>
+  <div class="proposal"><div class="n">3</div><div><b class="en">Protect S1 and S2 streets.</b><b class="ko">S1과 S2 거리 지키기.</b>
+    <span class="en">Keep their trees and spacing as the city densifies.</span><span class="ko">도시가 고밀화되어도 나무와 건물 간격을 유지합니다.</span></div></div>
+  <div class="fig"><div class="grid2"><svg id="inset" viewBox="0 0 400 400"></svg>
+    <div><h3 style="margin-top:0"><span class="en">Where to start: 수유3동</span><span class="ko">어디서 시작할까: 수유3동</span></h3>
+    <p class="en">강북구 수유3동 has 22.6 km of S4 street, 84% of its typed streets, the most of the priority 동 (송천동 is close behind at 22.5 km). A next step would be a paired field study there: an S4 street and a nearby open, green street, measured with shielded sensors in the same night and afternoon windows, before choosing a greening or redesign pilot.</p>
+    <p class="ko">강북구 수유3동에는 S4 거리가 22.6 km 있고, 유형이 붙은 거리의 84%입니다. 우선 검토 동 가운데 가장 많습니다(송천동이 22.5 km로 바로 뒤). 다음 단계로 이곳에서 짝 현장 측정을 제안합니다. S4 거리와 가까운 트이고 녹지가 많은 거리를 같은 밤과 오후 시간대에 차폐 센서로 재고, 그다음에 녹화나 재설계 시범 사업을 고르는 것입니다.</p></div></div></div>
+</div></section>
+
+<!-- ACT 4: beyond Seoul -->
+<div class="act" id="act4"><div class="wrap">
+  <div class="k"><span class="en">Act 4</span><span class="ko">4막</span></div>
+  <h2><span class="en">Beyond Seoul</span><span class="ko">서울 너머</span></h2>
+  <p><span class="en">Is this only a Seoul story? What have other cities found, and what can travel?</span><span class="ko">서울만의 이야기일까요? 다른 도시는 무엇을 발견했고, 무엇을 옮겨 쓸 수 있을까요?</span></p>
+</div></div>
+
+<section id="world"><div class="wrap">
+  <h2><span class="en">Other cities, the same question</span><span class="ko">다른 도시, 같은 질문</span></h2>
+  <p class="en">These studies come from our literature review. Some share Seoul's density and hills; some share the method; one shares the equity question. Tap a city to compare it with Seoul.</p>
+  <p class="ko">우리 문헌 검토에서 찾은 연구들입니다. 서울처럼 밀도가 높고 산이 많은 도시도 있고, 방법이 같은 연구도 있고, 형평성 질문을 공유하는 연구도 있습니다. 도시를 눌러 서울과 비교해 보세요.</p>
+</div>
+<div class="wide"><div class="fig">
+  <div class="grid2">
+    <div class="scroll"><svg id="worldmap" viewBox="0 0 640 380"></svg></div>
+    <div id="citycard"></div>
+  </div>
+  <span class="hint"><span class="en">Swipe sideways to see the whole map.</span><span class="ko">옆으로 밀어 전체 지도를 보세요.</span></span>
+</div></div>
+<div class="wrap">
+  <h3><span class="en">What travels, and what doesn't</span><span class="ko">옮겨 쓸 수 있는 것과 없는 것</span></h3>
+  <ul class="en">
+    <li><b>The method travels.</b> Street View images, an AI that labels sky, trees and buildings, and a dense public sensor network: Hong Kong, Taipei and Seoul all have the first two, and more cities are adding the third.</li>
+    <li><b>The mechanism travels, with care.</b> Enclosure slowing night cooling is classic urban climatology (Oke, 1981). But in tropical Singapore, sky blocked by trees did not make nights warmer (Wong &amp; Jusuf, 2010). That is one reason we measured building-blocked sky (BVF) separately from tree-blocked sky.</li>
+    <li><b>The numbers don't travel.</b> +0.45 °C belongs to Seoul's climate, building stock and sensor network. Another city has to measure its own.</li>
+    <li><b>The equity question travels.</b> In 108 US cities, historically redlined neighbourhoods are hotter today (Hoffman, Shandas &amp; Pendleton, 2020). Our 수급자 gap is much smaller and measured differently, but it asks the same question: who lives on the hottest streets?</li>
+  </ul>
+  <ul class="ko">
+    <li><b>방법은 옮겨 쓸 수 있습니다.</b> 스트리트뷰 이미지, 하늘·나무·건물을 구분하는 AI, 촘촘한 공공 센서망. 홍콩, 타이베이, 서울은 앞의 두 가지를 갖추고 있고, 세 번째를 갖추는 도시도 늘고 있습니다.</li>
+    <li><b>원리도 옮겨 쓸 수 있지만, 조심해서.</b> 둘러싸인 거리가 밤에 늦게 식는다는 것은 도시기후학의 고전적 결과입니다(Oke, 1981). 그러나 열대 도시 싱가포르에서는 나무가 가린 하늘이 밤을 더 덥게 만들지 않았습니다(Wong &amp; Jusuf, 2010). 우리가 건물이 가린 하늘(BVF)을 나무가 가린 하늘과 따로 잰 이유 중 하나입니다.</li>
+    <li><b>숫자는 옮겨 쓸 수 없습니다.</b> +0.45 °C는 서울의 기후, 건물, 센서망에 속한 값입니다. 다른 도시는 스스로 재야 합니다.</li>
+    <li><b>형평성 질문도 옮겨 쓸 수 있습니다.</b> 미국 108개 도시에서, 과거 레드라이닝(redlining)된 동네가 오늘날 더 덥습니다(Hoffman, Shandas &amp; Pendleton, 2020). 우리의 수급자 차이는 훨씬 작고 측정 방식도 다르지만, 같은 질문을 던집니다. 가장 더운 거리에는 누가 사는가?</li>
+  </ul>
+</div></section>
+
+<section id="climate"><div class="wrap">
+  <h2><span class="en">Street heat and climate action</span><span class="ko">거리의 열과 기후 대응</span></h2>
+  <p class="en">Climate policy has two halves. <b>Mitigation</b> cuts the emissions that warm the planet. <b>Adaptation</b> prepares places and people for the heat that is already coming. Street design sits mostly on the adaptation side, with some mitigation along the way.</p>
+  <p class="ko">기후 정책에는 두 축이 있습니다. <b>완화</b>는 지구를 데우는 배출을 줄이는 일이고, <b>적응</b>은 이미 다가오는 더위에 장소와 사람을 대비시키는 일입니다. 거리 설계는 주로 적응 쪽에 있고, 일부는 완화에도 닿습니다.</p>
+  <div class="fig"><div class="tablewrap"><table>
+    <thead><tr><th><span class="en">Action</span><span class="ko">행동</span></th><th><span class="en">Adaptation</span><span class="ko">적응</span></th><th><span class="en">Mitigation</span><span class="ko">완화</span></th><th><span class="en">What our data say</span><span class="ko">우리 자료가 말하는 것</span></th></tr></thead>
+    <tbody>
+      <tr><td class="en">Greening S4 streets</td><td class="ko">S4 거리 녹화</td><td>●</td><td>◐</td><td><span class="en">greener edges went with cooler afternoons (<span data-v="cont.afternoon.ndvi_30m" data-f="sg2"></span> °C per +0.1 NDVI)</span><span class="ko">주변이 푸를수록 오후가 시원했음 (NDVI +0.1당 <span data-v="cont.afternoon.ndvi_30m" data-f="sg2"></span> °C)</span></td></tr>
+      <tr><td class="en">Keeping streets open to the sky</td><td class="ko">하늘이 열린 거리 유지</td><td>●</td><td>○</td><td><span class="en">more enclosure went with warmer nights (<span data-v="cont.night.bvf" data-f="sg2"></span> °C per +0.1 BVF)</span><span class="ko">더 둘러싸일수록 밤이 따뜻했음 (BVF +0.1당 <span data-v="cont.night.bvf" data-f="sg2"></span> °C)</span></td></tr>
+      <tr><td class="en">Cooler surfaces and less waste heat</td><td class="ko">더 시원한 표면, 폐열 줄이기</td><td>●</td><td>●</td><td><span class="en">not measured in this study (a stated limit)</span><span class="ko">이 연구에서 측정하지 못함 (한계로 명시)</span></td></tr>
+      <tr><td class="en">Targeting help to people at risk</td><td class="ko">취약한 사람에게 지원 집중</td><td>●</td><td>○</td><td><span class="en">수급자 live in 동 with more S4 street (<span data-v="res.rec_diff" data-f="sg1"></span> points)</span><span class="ko">수급자가 사는 동에 S4 거리가 더 많음 (<span data-v="res.rec_diff" data-f="sg1"></span>%p)</span></td></tr>
+    </tbody></table></div>
+    <div class="cap"><span class="en">● main role · ◐ partial · ○ little. A cooler street can mean less air-conditioning, which is where mitigation enters; we did not measure energy use.</span><span class="ko">● 주된 역할 · ◐ 일부 · ○ 거의 없음. 거리가 시원하면 냉방이 줄 수 있고, 여기서 완화가 시작됩니다. 에너지 사용량은 측정하지 않았습니다.</span></div></div>
+</div></section>
+
+<!-- Under the hood -->
+<div class="act" id="hood"><div class="wrap">
+  <div class="k"><span class="en">Under the hood</span><span class="ko">들여다보기</span></div>
+  <h2><span class="en">The method in equations</span><span class="ko">수식으로 본 방법</span></h2>
+  <p><span class="en">Tap any symbol to see what it means. Each card says where the idea comes from and what we changed.</span><span class="ko">기호를 누르면 뜻이 나옵니다. 카드마다 아이디어의 출처와 우리가 바꾼 점을 적었습니다.</span></p>
+</div></div>
+<section id="equations"><div class="wrap"><div id="eqcards"></div></div></section>
+
+<section id="limits"><div class="wrap">
+  <h2><span class="en">Limits</span><span class="ko">한계</span></h2>
+  <ul class="en">
+    <li><b>Associations, not causes.</b> One city, two summers. The results describe how streets differ, not what would happen if a street were changed.</li>
+    <li><b>Air temperature at about 3.7 m.</b> Not the heat people feel (which also depends on sun, wind and humidity), and not indoor heat.</li>
+    <li><b>One sensor network.</b> Its two device models read about 0.5 °C apart; device is controlled for and checked separately.</li>
+    <li><b>Photos mostly from 2018.</b> Some streets have been rebuilt since; tree shade is under-counted. Greenery comes from 2025 satellite data.</li>
+    <li><b>Four types simplify a continuum.</b> They are useful for planning, not natural categories.</li>
+    <li><b>Residents by 행정동.</b> The analysis uses each 동's street mix, not the street outside each home. 수급자 counts are from December 2024, population from December 2025.</li>
+    <li><b>Night population.</b> "All residents" is the number of people present in each 동 at night (생활인구), which is close to, but not the same as, the registered population.</li>
+  </ul>
+  <ul class="ko">
+    <li><b>연관성이지 인과가 아닙니다.</b> 한 도시, 두 여름의 결과입니다. 거리가 어떻게 다른지를 보여 줄 뿐, 거리를 바꾸면 무슨 일이 생길지를 보여 주지는 않습니다.</li>
+    <li><b>약 3.7 m 높이의 기온.</b> 사람이 느끼는 더위(햇볕, 바람, 습도에 따라 달라짐)나 실내 기온이 아닙니다.</li>
+    <li><b>센서망 하나.</b> 두 기종이 약 0.5 °C 차이 나므로 기기를 통제하고 따로 점검했습니다.</li>
+    <li><b>사진은 대부분 2018년.</b> 그 뒤 다시 지어진 거리가 있고, 나무 그늘은 적게 잡힙니다. 녹지는 2025년 위성 자료를 썼습니다.</li>
+    <li><b>네 유형은 연속적인 차이를 단순화한 것.</b> 계획에 쓸모 있는 구분이지, 자연스러운 범주는 아닙니다.</li>
+    <li><b>행정동 단위 주민 분석.</b> 각자의 집 앞 거리가 아니라 동의 거리 구성을 씁니다. 수급자는 2024년 12월, 인구는 2025년 12월 기준입니다.</li>
+    <li><b>야간 인구.</b> "전체 주민"은 밤에 각 동에 있는 사람 수(생활인구)로, 등록 인구와 가깝지만 같지는 않습니다.</li>
+  </ul>
+</div></section>
+
+<section id="code"><div class="wrap">
+  <h2><span class="en">Foundations: the code</span><span class="ko">기초: 코드</span></h2>
+  <p class="en">The core of the analysis in five short pieces of code. The excerpts are simplified for reading; the full analysis scripts were shared with the advisor and are available on request.</p>
+  <p class="ko">분석의 핵심을 짧은 코드 다섯 개로 보여 줍니다. 읽기 쉽게 줄인 코드이며, 전체 분석 스크립트는 지도교수께 공유했고 요청하면 제공합니다.</p>
+  <div id="codeblocks"></div>
+</div></section>
+
+<!-- DEBATE -->
+<div class="act" id="act5" style="background:#3A2A1F"><div class="wrap">
+  <div class="k"><span class="en">Open debate</span><span class="ko">열린 토론</span></div>
+  <h2><span class="en">With limited money, where should a city cool first?</span><span class="ko">예산이 한정될 때, 도시는 어디부터 식혀야 할까요?</span></h2>
+  <p><span class="en">Four answers, each argued at full strength. Then ours, and then yours.</span><span class="ko">네 가지 답을 각각 가장 강한 논리로 소개합니다. 그다음 우리의 생각, 그리고 여러분의 생각.</span></p>
+</div></div>
+<section id="debate"><div class="wrap">
+  <div id="positions"></div>
+  <h3><span class="en">Our view</span><span class="ko">우리의 생각</span> <span class="badge"><span class="en">the author's position</span><span class="ko">저자의 입장</span></span></h3>
+  <p class="en"><b>Start where hot streets and need overlap, and use citywide rules everywhere else.</b> The 42 priority 동 hold <span data-v="prio_s4_km" data-f="int"></span> km of S4 street and <span data-v="prio_rec_share" data-f="pct0"></span> of recipients, so greening there serves both aims at once. Greening is the lever our data support most directly in the afternoon; at night, keeping streets open to the sky matters more, and that is decided slowly, through rebuilding rules. So we would pair targeted greening in the priority 동 with a citywide rule on street-wall height against street width.</p>
+  <p class="ko"><b>뜨거운 거리와 필요가 겹치는 곳에서 시작하고, 나머지에는 도시 전체 규칙을 적용하자.</b> 42개 우선 검토 동에 S4 거리 <span data-v="prio_s4_km" data-f="int"></span> km와 수급자의 <span data-v="prio_rec_share" data-f="pct0"></span>가 있어, 이곳의 녹화는 두 목표를 한꺼번에 채웁니다. 오후에는 녹화가 우리 자료가 가장 직접 뒷받침하는 수단이고, 밤에는 하늘이 열린 거리가 더 중요한데 이는 재건축 규칙을 통해 천천히 정해집니다. 그래서 우선 검토 동의 집중 녹화와, 거리 폭에 대한 가로벽 높이를 정하는 도시 전체 규칙을 함께 제안합니다.</p>
+  <h3><span class="en">The strongest objections to our view</span><span class="ko">우리 생각에 대한 가장 강한 반론</span></h3>
+  <ul class="en">
+    <li><b>The equity gap in our data is small.</b> <span data-v="res.rec_diff" data-f="sg1"></span> percentage points, with an interval from <span data-v="res.rec_diff" data-f="ci1"></span>. On our numbers alone, targeting by need does not buy much more than targeting by heat.</li>
+    <li><b>동 averages hide people.</b> A priority list built from 동 averages misses vulnerable residents living in 동 that are not on it, and includes better-off residents in 동 that are.</li>
+    <li><b>The street is not the room.</b> For many people at risk, indoor heat in poor housing (쪽방, 반지하, 고시원) matters more than air temperature on the street. In an exploratory check, about half of Seoul's 쪽방 residents lived where we had neither a street photo within 200 m nor a sensor within about 440 m: our method can't see them.</li>
+    <li><b>Greening takes years and upkeep.</b> Trees need space, water and time; cooling centres and support for air-conditioning bills help this summer.</li>
+  </ul>
+  <ul class="ko">
+    <li><b>우리 자료의 형평성 차이는 작습니다.</b> <span data-v="res.rec_diff" data-f="sg1"></span>%p, 신뢰구간 <span data-v="res.rec_diff" data-f="ci1"></span>. 우리 숫자만 보면, 필요를 기준으로 고르는 것이 더위를 기준으로 고르는 것보다 크게 낫지 않습니다.</li>
+    <li><b>동 평균은 사람을 가립니다.</b> 동 평균으로 만든 우선순위 목록은 목록 밖의 동에 사는 취약 주민을 놓치고, 목록 안의 동에 사는 형편이 나은 주민을 포함합니다.</li>
+    <li><b>거리는 방이 아닙니다.</b> 많은 취약 주민에게는 거리의 기온보다 열악한 주거(쪽방, 반지하, 고시원)의 실내 더위가 더 중요합니다. 탐색적 점검에서, 서울 쪽방 주민의 약 절반은 200 m 안에 거리 사진도, 약 440 m 안에 센서도 없는 곳에 살았습니다. 우리 방법으로는 보이지 않는 사람들입니다.</li>
+    <li><b>녹화에는 시간과 관리가 듭니다.</b> 나무에는 공간, 물, 시간이 필요합니다. 무더위 쉼터나 냉방비 지원은 이번 여름에 도움이 됩니다.</li>
+  </ul>
+
+  <h3><span class="en">Your view: a visitor poll</span><span class="ko">여러분의 생각: 방문자 투표</span></h3>
+  <p class="en">Which position comes closest to yours? Tap one to vote and see how other visitors answered.</p>
+  <p class="ko">어느 입장이 여러분의 생각에 가장 가깝나요? 하나를 눌러 투표하고, 다른 방문자들의 답을 확인해 보세요.</p>
+  <div class="fig" id="pollbox">
+    <div class="pollbtns" id="pollbtns"></div>
+    <div id="pollres" style="margin-top:14px"></div>
+    <p class="note" id="pollnote"></p>
+  </div>
+</div></section>
+
+<section id="refs"><div class="wrap">
+  <h2><span class="en">References</span><span class="ko">참고문헌</span></h2>
+  <ol class="refs" id="reflist"></ol>
+  <h3><span class="en">Data and credits</span><span class="ko">자료와 출처</span></h3>
+  <ul class="refs">
+    <li>S-DoT air temperature: 서울 열린데이터광장 (OA-22833, OA-15969). Sensor heights: 서울시 정보통신과 (2025 inspection).</li>
+    <li>Street View imagery © Google, used for measurement only.</li>
+    <li>Contains modified Copernicus Sentinel data 2025 (NDVI).</li>
+    <li>Streets © OpenStreetMap contributors, ODbL.</li>
+    <li>Buildings: 국토교통부 GIS건물통합정보 (AL_D010).</li>
+    <li>행정동 boundaries: vuski/admdongkor (CC BY 4.0), from 통계청 SGIS (공공누리 제1유형).</li>
+    <li>생활인구 (OA-14991); 국민기초생활보장 수급자 (동별, Dec 2024); 등록인구 (Dec 2025): 서울 열린데이터광장.</li>
+    <li>Elevation: FABDEM (Hawker et al., 2022), CC BY-NC-SA 4.0.</li>
+    <li>Tropical-night definition: 기상청 기상자료개방포털, 열대야일수.</li>
+  </ul>
+  <h3><span class="en">How to cite this site</span><span class="ko">인용 방법</span></h3>
+  <p class="small">Han, J. (2026). <i>The Climate of a Street: Street form and summer heat in Seoul.</i> https://floweringwisdom.github.io/climate-of-a-street/</p>
+</div></section>
+
+<section id="glossary"><div class="wrap">
+  <h2><span class="en">Glossary</span><span class="ko">용어</span></h2>
+  <dl class="gloss" id="gloss"></dl>
+</div></section>
+
+<footer><div class="wrap">
+  <p class="en">This website was written and built by Jisoo Han. The research behind it was a 2026 capstone project in Urban Planning and Engineering at Yonsei University, carried out by Jisoo Han and Minju Won and supervised by Prof. Bon Woo Koo.</p>
+  <p class="ko">이 웹사이트는 한지수가 쓰고 만들었습니다. 바탕이 된 연구는 연세대학교 도시공학과 2026년 종합설계 프로젝트로, 한지수와 원민주가 함께 수행했으며 구본우 교수님의 지도를 받았습니다.</p>
+  <p><span class="en">Contact</span><span class="ko">연락처</span>: <span class="mail" data-u="floweringwisdom" data-d="yonsei.ac.kr"></span> · <span class="mail" data-u="flowering-wisdom" data-d="berkeley.edu"></span></p>
+  <p class="note"><span class="en">Version 1.0, 17 November 2026. Numbers come from the same analysis files as the exhibition panel.</span><span class="ko">버전 1.0, 2026년 11월 17일. 모든 수치는 전시 판넬과 같은 분석 파일에서 가져왔습니다.</span></p>
+</div></footer>
+<div class="tip" id="tip"></div>
+<script src="app.js"></script>
+</body>
+</html>
