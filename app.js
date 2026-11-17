@@ -1,11 +1,11 @@
-/* The Climate of a Street — interactive figures. All numbers are read from data/*.json. */
+/* The Climate of a Street: interactive figures. All numbers are read from data/*.json. */
 (() => {
 "use strict";
 const NS = "http://www.w3.org/2000/svg";
 const TC = {S1:"#009E73",S2:"#56B4E9",S3:"#E69F00",S4:"#D55E00"}, TCT = {S1:"#00805D",S2:"#2F86B8",S3:"#A87200",S4:"#C04F00"};
 const T4 = ["S1","S2","S3","S4"];
 const NAME = {en:{S1:"open & green",S2:"tall & spaced",S3:"mid-density, less green",S4:"dense low-rise, enclosed, least green"},
-              ko:{S1:"트이고 녹지가 많은 거리",S2:"높고 간격이 넓은 거리",S3:"중밀도, 녹지가 적은 거리",S4:"저층 밀집, 둘러싸이고 녹지가 가장 적은 거리"}};
+              ko:{S1:"개방·녹지형",S2:"고층·이격형",S3:"중밀·저녹지형",S4:"저층 고밀·폐쇄형"}};
 let LANG = "en"; const D = {}; const renders = [];
 const L = (en, ko) => LANG === "ko" ? ko : en;
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
@@ -71,13 +71,13 @@ function renderStripe() {
   txt(svg, 31 * w, 116, L("1 August", "8월 1일"), {fill: "#4F5E63", "font-size": ls});
   txt(svg, 1000, 116, L("31 August", "8월 31일"), {fill: "#4F5E63", "font-size": ls, "text-anchor": "end"});
   const fs = Math.max(22, Math.min(46, 22 * 700 / (svg.clientWidth || 700)));
-  txt(svg, 500, 46 + fs / 3, L("S4 warmer than S1 on 62 of 62 nights", "62일 밤 중 62일, S4가 S1보다 따뜻"), {"text-anchor": "middle", fill: "#fff", "font-size": fs, "font-weight": 900, "pointer-events": "none"});
+  txt(svg, 500, 46 + fs / 3, L("S4 warmer than S1 on 62 of 62 nights", "62일 밤 모두 S4가 S1보다 따뜻"), {"text-anchor": "middle", fill: "#fff", "font-size": fs, "font-weight": 900, "pointer-events": "none"});
   if (selNight !== null) showNight(selNight);
 }
 function showNight(i) {
   const d = D.nights[i], dt = new Date(d.d + "T00:00:00");
   const ds = LANG === "ko" ? `${dt.getMonth() + 1}월 ${dt.getDate()}일 밤` : `Night of ${dt.toLocaleDateString("en-GB", {day: "numeric", month: "long"})}`;
-  $("#nightinfo").innerHTML = `<b>${ds}</b>: ${L("S4 streets", "S4 거리가")} <b>${sgn(d.g, 2)} °C</b> ${L("warmer than S1, all else equal", "S1보다 따뜻 (다른 조건이 같을 때)")} · 95% ${L("CI", "신뢰구간")} [${num(d.lo, 2)}, ${num(d.hi, 2)}]`;
+  $("#nightinfo").innerHTML = `<b>${ds}</b>: ${L("S4 streets", "S4 가로가")} <b>${sgn(d.g, 2)} °C</b> ${L("warmer than S1, all else equal", "S1보다 따뜻했다 (다른 조건 통제)")} · 95% ${L("CI", "신뢰구간")} [${num(d.lo, 2)}, ${num(d.hi, 2)}]`;
 }
 
 /* ---------- 3. two streets ---------- */
@@ -149,9 +149,9 @@ function renderTwo() {
   const T = D.two;
   $("#tcap").innerHTML = tMode === "pair"
     ? L(`Raw air temperature from two sensors of the same device model, noon 22 Aug to noon 25 Aug 2025, every hour present: S1 in ${T.s1.gu}, S4 in ${T.s4.gu}. Each sits near its type's average summer night gap from the city median (S4 ${sgn(T.s4.gap, 2)} vs ${sgn(T.type_mean.S4, 2)} °C; S1 ${sgn(T.s1.gap, 2)} vs ${sgn(T.type_mean.S1, 2)} °C). Dashed: median of all Seoul sensors. Shaded: 00–05 h. Raw, not adjusted for location.`,
-        `같은 기종 센서 두 개의 실제 기온, 2025년 8월 22일 정오–25일 정오, 결측 없음: S1은 ${T.s1.gu}, S4는 ${T.s4.gu}. 각 센서의 여름밤 도시 중앙값 대비 차이는 자기 유형 평균에 가깝습니다(S4 ${sgn(T.s4.gap, 2)} 대 ${sgn(T.type_mean.S4, 2)} °C, S1 ${sgn(T.s1.gap, 2)} 대 ${sgn(T.type_mean.S1, 2)} °C). 점선: 서울 전체 센서 중앙값. 음영: 00–05시. 위치 보정 전 원자료.`)
+        `같은 기종 센서 두 개의 실측 기온(2025년 8월 22일 정오–25일 정오, 결측 없음). S1 센서는 ${T.s1.gu}, S4 센서는 ${T.s4.gu}에 있다. 두 센서의 여름밤 도시 중앙값 대비 차이는 각 유형의 평균과 비슷하다(S4 ${sgn(T.s4.gap, 2)} °C, 유형 평균 ${sgn(T.type_mean.S4, 2)} °C; S1 ${sgn(T.s1.gap, 2)} °C, 유형 평균 ${sgn(T.type_mean.S1, 2)} °C). 점선은 서울 전체 센서의 중앙값, 음영은 00–05시다. 입지를 보정하지 않은 원자료다.`)
     : L(`Average raw air temperature by hour, all S1 sensors (n = ${D.values["S1.n"]}) and all S4 sensors (n = ${D.values["S4.n"]}), July–August 2025, drawn from noon to noon. Raw, not adjusted for location.`,
-        `시간대별 평균 기온, S1 센서 전체(${D.values["S1.n"]}개)와 S4 센서 전체(${D.values["S4.n"]}개), 2025년 7–8월, 정오부터 다음 날 정오까지. 위치 보정 전 원자료.`);
+        `S1 센서 전체(${D.values["S1.n"]}개)와 S4 센서 전체(${D.values["S4.n"]}개)의 시간대별 평균 기온(2025년 7–8월). 정오부터 다음 날 정오까지 표시했으며, 입지를 보정하지 않은 원자료다.`);
   const sl = $("#tslider"); sl.max = S.n - 1; sl.value = i;
 }
 function initTwo() {
@@ -181,7 +181,7 @@ function renderCanyon() {
   el("rect", {x: cx + sw / 2, y: gy - bh, width: 700 - cx - sw / 2, height: bh, fill: "#C9C3B6"}, svg);
   el("rect", {x: 0, y: gy, width: 700, height: 30, fill: "#6F767A"}, svg);
   el("circle", {cx, cy: gy - 4, r: 5, fill: "#1C2629"}, svg);
-  txt(svg, 20, 34, L("Open sky seen from the street centre", "거리 중앙에서 보이는 하늘"), {"font-size": 15, fill: "#1E3557"});
+  txt(svg, 20, 34, L("Open sky seen from the street centre", "가로 중앙에서 보이는 하늘"), {"font-size": 15, fill: "#1E3557"});
   txt(svg, 20, 70, Math.round(svf * 100) + "%", {"font-size": 38, "font-weight": 900, fill: "#1E3557"});
   txt(svg, 680, 34, "H/W = " + (cH / cW).toFixed(2), {"font-size": 15, "text-anchor": "end", fill: "#1E3557"});
   $("#hv").textContent = cH; $("#wv").textContent = cW; $("#hsl").value = cH; $("#wsl").value = cW;
@@ -196,11 +196,11 @@ function initCanyon() {
 
 /* ---------- AI steps ---------- */
 const STEPS = [
-  {ic: "pano", en: ["Collect", "For every sensor, Google Street View panoramas within 100 m were gathered: 5,461 in total."], ko: ["모으기", "센서마다 100 m 안의 구글 스트리트뷰 파노라마를 모았습니다. 모두 5,461장입니다."]},
-  {ic: "fish", en: ["Look up", "Each panorama is turned into an upward fisheye: the view you would get lying on the road and looking at the sky."], ko: ["올려다보기", "파노라마를 위로 향한 어안 이미지로 바꿉니다. 도로에 누워 하늘을 올려다본 모습입니다."]},
-  {ic: "lab", en: ["Label", "An AI image model, SegFormer-B4 (Xie et al., 2021), trained on the public ADE20K scene set (Zhou et al., 2017), marks every pixel as sky, building, tree or other."], ko: ["표시하기", "AI 이미지 모델 SegFormer-B4(Xie et al., 2021)가 모든 픽셀을 하늘, 건물, 나무, 기타로 구분합니다. 공개 장면 데이터 ADE20K(Zhou et al., 2017)로 학습된 모델입니다."]},
-  {ic: "bvf", en: ["Measure", "BVF is the share of the sky dome hidden by buildings, weighted the way the sky exchanges heat with the ground (cosine-weighted). It is averaged over the panoramas around each sensor."], ko: ["재기", "BVF는 하늘 돔 가운데 건물이 가리는 비율입니다. 하늘과 지면이 열을 주고받는 방식에 맞게(코사인 가중) 계산하고, 센서 주변 파노라마의 값을 평균합니다."]},
-  {ic: "sun", en: ["Follow the sun", "On the same fisheyes we trace the July–August sun path and count hours of direct sun, building shade and tree shade."], ko: ["해 따라가기", "같은 어안 이미지 위에 7–8월 태양 경로를 그리고, 직사광선, 건물 그늘, 나무 그늘 시간을 셉니다."]}];
+  {ic: "pano", en: ["Collect", "For every sensor, Google Street View panoramas within 100 m were gathered: 5,461 in total."], ko: ["수집", "센서마다 반경 100 m 안의 구글 스트리트뷰 파노라마를 수집했다. 모두 5,461장이다."]},
+  {ic: "fish", en: ["Look up", "Each panorama is turned into an upward fisheye: the view you would get lying on the road and looking at the sky."], ko: ["변환", "파노라마를 하늘을 향한 어안 이미지로 변환한다. 도로 한가운데 누워 하늘을 올려다본 모습과 같다."]},
+  {ic: "lab", en: ["Label", "An AI image model, SegFormer-B4 (Xie et al., 2021), trained on the public ADE20K scene set (Zhou et al., 2017), marks every pixel as sky, building, tree or other."], ko: ["판독", "공개 장면 데이터셋 ADE20K(Zhou et al., 2017)로 학습된 AI 이미지 모델 SegFormer-B4(Xie et al., 2021)가 모든 픽셀을 하늘, 건물, 수목, 기타로 분류한다."]},
+  {ic: "bvf", en: ["Measure", "BVF is the share of the sky dome hidden by buildings, weighted the way the sky exchanges heat with the ground (cosine-weighted). It is averaged over the panoramas around each sensor."], ko: ["측정", "BVF는 하늘 반구 가운데 건물이 가리는 비율이다. 하늘과 지면 사이의 복사 열교환을 반영해 코사인 가중으로 계산하고, 센서 주변 파노라마의 값을 평균한다."]},
+  {ic: "sun", en: ["Follow the sun", "On the same fisheyes we trace the July–August sun path and count hours of direct sun, building shade and tree shade."], ko: ["일조 분석", "같은 어안 이미지 위에 7–8월 태양 궤적을 겹쳐, 직달 일사 시간과 건물 그늘, 수목 그늘 시간을 각각 산출한다."]}];
 let stepSel = 0;
 function icon(kind) {
   const s = document.createElementNS(NS, "svg"); s.setAttribute("viewBox", "0 0 80 80");
@@ -226,22 +226,22 @@ function renderScatter() {
   const X = b => 50 + 530 * b / 0.7, Y = n => 380 - 350 * n / 0.8;
   for (let v = 0; v <= 0.7001; v += 0.1) { el("line", {x1: X(v), x2: X(v), y1: 30, y2: 380, stroke: "#E2DED6"}, svg); txt(svg, X(v), 398, v.toFixed(1), {"text-anchor": "middle", fill: "#8A979B", "font-size": 12}); }
   for (let v = 0; v <= 0.8001; v += 0.2) { el("line", {x1: 50, x2: 580, y1: Y(v), y2: Y(v), stroke: "#E2DED6"}, svg); txt(svg, 44, Y(v) + 4, v.toFixed(1), {"text-anchor": "end", fill: "#8A979B", "font-size": 12}); }
-  txt(svg, 580, 416, L("BVF: sky blocked by buildings →", "BVF: 건물이 가리는 하늘 →"), {"text-anchor": "end", fill: "#4F5E63", "font-size": 13});
-  txt(svg, 50, 20, L("↑ greenery within 30 m (NDVI)", "↑ 30 m 안의 녹지 (NDVI)"), {fill: "#4F5E63", "font-size": 13});
+  txt(svg, 580, 416, L("BVF: sky blocked by buildings →", "BVF: 건물이 가린 하늘 →"), {"text-anchor": "end", fill: "#4F5E63", "font-size": 13});
+  txt(svg, 50, 20, L("↑ greenery within 30 m (NDVI)", "↑ 반경 30 m 녹지 (NDVI)"), {fill: "#4F5E63", "font-size": 13});
   D.sensors.forEach((s, i) => { const c = el("circle", {cx: X(s[0]), cy: Y(s[1]), r: dotSel === i ? 7 : 3.6, fill: TC[s[2]], opacity: dotSel === null || dotSel === i ? .85 : .35, stroke: dotSel === i ? "#1C2629" : "none", "stroke-width": 2, style: "cursor:pointer"}, svg);
     c.addEventListener("click", () => { dotSel = i; renderScatter(); }); });
   const cen = D.versions.cen; T4.forEach(t => { el("circle", {cx: X(cen[t].bvf), cy: Y(cen[t].ndvi_30m), r: 9, fill: "#fff", stroke: "#1C2629", "stroke-width": 2}, svg); txt(svg, X(cen[t].bvf) + 12, Y(cen[t].ndvi_30m) - 8, t, {"font-weight": 900, fill: TCT[t], "font-size": 16}); });
-  $("#typelist").innerHTML = T4.map(t => `<div style="margin:4px 0"><span class="tchip c${t[1]}">${t}</span> <b>${NAME[LANG][t]}</b> <span class="small">· ${D.values[t + ".n"]} ${L("sensors", "개 센서")}</span></div>`).join("");
+  $("#typelist").innerHTML = T4.map(t => `<div style="margin:4px 0"><span class="tchip c${t[1]}">${t}</span> <b>${NAME[LANG][t]}</b> <span class="small">· ${L(D.values[t + ".n"] + " sensors", "센서 " + D.values[t + ".n"] + "개")}</span></div>`).join("");
   if (dotSel !== null) { const s = D.sensors[dotSel];
-    $("#dotinfo").innerHTML = `<span class="tchip c${s[2][1]}">${s[2]}</span> ${L("One sensor", "센서 하나")} · BVF ${s[0].toFixed(2)} · NDVI ${s[1].toFixed(2)}<br>${L("Night (00–05 h)", "밤 (00–05시)")}: <b>${sgn(s[3], 2)} °C</b> · ${L("Afternoon (14–16 h)", "오후 (14–16시)")}: <b>${sgn(s[4], 2)} °C</b> <span class="small">${L("vs city median, raw summer mean", "도시 중앙값 대비, 여름 평균 원자료")}</span>`; }
-  else $("#dotinfo").innerHTML = `<span class="small">${L("White circles: the centre of each type. Tap a dot to see one sensor.", "흰 원: 각 유형의 중심. 점을 눌러 센서 하나를 보세요.")}</span>`;
+    $("#dotinfo").innerHTML = `<span class="tchip c${s[2][1]}">${s[2]}</span> ${L("One sensor", "센서 하나")} · BVF ${s[0].toFixed(2)} · NDVI ${s[1].toFixed(2)}<br>${L("Night (00–05 h)", "야간 (00–05시)")}: <b>${sgn(s[3], 2)} °C</b> · ${L("Afternoon (14–16 h)", "오후 (14–16시)")}: <b>${sgn(s[4], 2)} °C</b> <span class="small">${L("vs city median, raw summer mean", "도시 중앙값 대비 여름 평균, 원자료")}</span>`; }
+  else $("#dotinfo").innerHTML = `<span class="small">${L("White circles: the centre of each type. Tap a dot to see one sensor.", "흰 원은 각 유형의 중심이다. 점을 누르면 개별 센서의 값을 볼 수 있다.")}</span>`;
 }
 function renderVersions() {
   const svg = $("#versions"); clear(svg); const V = D.versions.ver;
   const X = a => 60 + 600 * (a - 0.4) / 0.6, ys = V.map(v => v[3]), ymax = Math.max(...ys) * 1.1, Y = g => 260 - 230 * g / ymax;
   for (let a = 0.4; a <= 1.0001; a += 0.1) { el("line", {x1: X(a), x2: X(a), y1: 30, y2: 260, stroke: "#E2DED6"}, svg); txt(svg, X(a), 278, a.toFixed(1), {"text-anchor": "middle", fill: "#8A979B", "font-size": 12}); }
   txt(svg, 660, 296, L("stability (median ARI) →", "안정성 (ARI 중앙값) →"), {"text-anchor": "end", fill: "#4F5E63", "font-size": 12});
-  txt(svg, 60, 20, L("↑ added prediction, night", "↑ 추가 예측력, 밤"), {fill: "#4F5E63", "font-size": 12});
+  txt(svg, 60, 20, L("↑ added prediction, night", "↑ 추가 설명력, 야간"), {fill: "#4F5E63", "font-size": 12});
   V.forEach(v => { const chosen = v[0] === "G" && v[1] === 4;
     el("circle", {cx: X(v[2]), cy: Y(v[3]), r: chosen ? 9 : 6, fill: v[5] ? "#1E3557" : "#fff", stroke: chosen ? "#D55E00" : "#1E3557", "stroke-width": chosen ? 3 : 1.4}, svg); });
 }
@@ -252,7 +252,7 @@ function renderProfile() {
   const svg = $("#profile"); clear(svg); const P = D.profile[pYear];
   const X = h => 70 + 900 * h / 23, Y = v => 190 - 150 * v / 0.8;
   el("rect", {x: X(0), y: 20, width: X(5) - X(0), height: 320, fill: "#ECE8E0"}, svg); el("rect", {x: X(14), y: 20, width: X(16) - X(14), height: 320, fill: "#FBE9DA"}, svg);
-  txt(svg, X(0) + 4, 36, L("night 00–05 h", "밤 00–05시"), {fill: "#4F5E63", "font-size": 12}); txt(svg, X(14) + 4, 36, L("afternoon", "오후"), {fill: "#4F5E63", "font-size": 12});
+  txt(svg, X(0) + 4, 36, L("night 00–05 h", "야간 00–05시"), {fill: "#4F5E63", "font-size": 12}); txt(svg, X(14) + 4, 36, L("afternoon", "오후"), {fill: "#4F5E63", "font-size": 12});
   for (let v = -0.8; v <= 0.4001; v += 0.2) { el("line", {x1: 70, x2: 970, y1: Y(v), y2: Y(v), stroke: Math.abs(v) < 1e-6 ? "#1C2629" : "#E2DED6"}, svg); txt(svg, 64, Y(v) + 4, sgn(v, 1), {"text-anchor": "end", fill: "#8A979B", "font-size": 12}); }
   txt(svg, 74, Y(0) - 6, L("city median", "도시 중앙값"), {fill: "#4F5E63", "font-size": 12});
   for (let h = 0; h < 24; h += 3) txt(svg, X(h), 362, String(h).padStart(2, "0") + ":00", {"text-anchor": "middle", fill: "#8A979B", "font-size": 12});
@@ -279,31 +279,31 @@ function ciPlot(svg, rows, opts) {
     [["night", "#1E3557", -5], ["afternoon", "#E39A5B", 5]].forEach(([k, col, dy]) => { const v = r[k]; if (!v) return;
       el("line", {x1: X(v[1]), x2: X(v[2]), y1: y + dy, y2: y + dy, stroke: col, "stroke-width": 2.5}, g); el("circle", {cx: X(v[0]), cy: y + dy, r: 5, fill: col}, g); });
     if (opts.onClick) g.addEventListener("click", () => opts.onClick(i)); });
-  const ly = y0 - 22; el("circle", {cx: x0, cy: ly, r: 5, fill: "#1E3557"}, svg); txt(svg, x0 + 9, ly + 4, L("night 00–05 h", "밤 00–05시"), {"font-size": 12});
+  const ly = y0 - 22; el("circle", {cx: x0, cy: ly, r: 5, fill: "#1E3557"}, svg); txt(svg, x0 + 9, ly + 4, L("night 00–05 h", "야간 00–05시"), {"font-size": 12});
   el("circle", {cx: x0 + 130, cy: ly, r: 5, fill: "#E39A5B"}, svg); txt(svg, x0 + 139, ly + 4, L("afternoon 14–16 h", "오후 14–16시"), {"font-size": 12});
 }
 function renderLadder() {
-  const V = D.values, steps = [["T", L("Street type only", "거리 유형만")], ["T+L", L("+ location", "+ 위치")], ["T+L+B", L("+ buildings", "+ 건물")], ["T+L+B+D", L("+ sensor device", "+ 센서 기기")]];
+  const V = D.values, steps = [["T", L("Street type only", "가로 유형만")], ["T+L", L("+ location", "+ 입지")], ["T+L+B", L("+ buildings", "+ 건물")], ["T+L+B+D", L("+ sensor device", "+ 센서 기종")]];
   ciPlot($("#ladder"), steps.map(([k, l]) => ({label: l, night: V[`ladder.night.${k}`], afternoon: V[`ladder.afternoon.${k}`]})), {x0: 220, x1: 680, lo: 0, hi: 1.2, step: 0.2, y0: 40, rh: 44});
 }
 /* ---------- forest ---------- */
 const FEX = {
-  "Main model": ["S4 vs S1 with location, building and device controls; robust standard errors.", "위치, 건물, 기기를 통제한 S4 대 S1 비교, 강건 표준오차."],
-  "One device type only (V02)": ["The network uses two sensor models that read about 0.5 °C apart. Here only one model is used.", "센서망은 약 0.5 °C 차이 나는 두 기종을 씁니다. 한 기종만 썼습니다."],
-  "Strictest 284 sensors": ["Only sensors that pass every doubt at once: pole-mounted, known height, one device type, no redevelopment nearby, photos from 2017 or later.", "모든 의문을 한꺼번에 통과한 센서만: 기둥 설치, 높이 확인, 한 기종, 주변 재개발 없음, 2017년 이후 사진."],
-  "Matched S1–S4 pairs": ["Each S1 site is paired with its most similar S4 site on the controls, and the remaining differences are corrected for.", "각 S1 지점을 통제 변수가 가장 비슷한 S4 지점과 짝지은 뒤, 남은 차이를 보정했습니다."],
-  "Machine-learning controls": ["A flexible model absorbs the controls instead of a straight-line one (Chernozhukov et al., 2018).", "직선 모형 대신 유연한 모형이 통제 변수를 흡수합니다(Chernozhukov et al., 2018)."],
-  "Other clustering (Gaussian mixture)": ["The types are rebuilt with a different method (Gaussian mixture).", "다른 방법(Gaussian mixture)으로 유형을 다시 만들었습니다."],
-  "Map-coordinate surface added": ["A smooth surface over map coordinates removes any broad city-wide pattern.", "지도 좌표에 대한 완만한 면을 넣어 도시 전체의 넓은 패턴을 제거합니다."],
-  "2026, same 455 sites": ["The next summer, at the same places.", "다음 여름, 같은 장소."],
-  "2026, 180 new sites": ["The next summer, at places the types were never fitted on.", "다음 여름, 유형을 만들 때 쓰지 않은 장소."]};
-const FKO = {"Main model": "기본 모형", "One device type only (V02)": "한 기종만 (V02)", "Strictest 284 sensors": "가장 엄격한 284개 센서", "Matched S1–S4 pairs": "S1–S4 짝 비교", "Machine-learning controls": "머신러닝 통제", "Other clustering (Gaussian mixture)": "다른 군집 방법", "Map-coordinate surface added": "좌표 기반 공간 패턴", "2026, same 455 sites": "2026년, 같은 455개 지점", "2026, 180 new sites": "2026년, 새 180개 지점"};
+  "Main model": ["S4 vs S1 with location, building and device controls; robust standard errors.", "입지, 건물, 센서 기종을 통제하고 강건 표준오차를 적용한 S4 대 S1 비교."],
+  "One device type only (V02)": ["The network uses two sensor models that read about 0.5 °C apart. Here only one model is used.", "센서망에는 측정값이 약 0.5 °C 차이 나는 두 기종이 섞여 있다. 이 점검에서는 한 기종만 사용했다."],
+  "Strictest 284 sensors": ["Only sensors that pass every doubt at once: pole-mounted, known height, one device type, no redevelopment nearby, photos from 2017 or later.", "제기될 수 있는 의문을 모두 통과한 센서만 남겼다. 지주 설치, 설치 높이 확인, 단일 기종, 주변 재개발 없음, 2017년 이후 촬영 사진이라는 조건이다."],
+  "Matched S1–S4 pairs": ["Each S1 site is paired with its most similar S4 site on the controls, and the remaining differences are corrected for.", "S1 지점마다 통제변수가 가장 비슷한 S4 지점을 짝지은 뒤 남은 차이를 보정했다."],
+  "Machine-learning controls": ["The controls enter through a flexible machine-learning model, so their effects need not follow straight lines (Chernozhukov et al., 2018).", "통제변수의 영향을 선형으로 가정하지 않고 유연한 머신러닝 모형으로 추정했다(Chernozhukov et al., 2018)."],
+  "Other clustering (Gaussian mixture)": ["The types are rebuilt with a different method (Gaussian mixture).", "다른 군집 방법(Gaussian mixture)으로 유형을 다시 도출했다."],
+  "Map-coordinate surface added": ["A smooth surface over map coordinates removes any broad city-wide pattern.", "지도 좌표에 대한 완만한 공간 추세면을 추가해 도시 전체에 걸친 광역적 패턴을 제거했다."],
+  "2026, same 455 sites": ["The next summer, at the same places.", "이듬해 여름, 같은 지점에서 다시 측정한 자료."],
+  "2026, 180 new sites": ["The next summer, at places the types were never fitted on.", "이듬해 여름, 유형 도출에 쓰이지 않은 신규 지점의 자료."]};
+const FKO = {"Main model": "기본 모형", "One device type only (V02)": "한 기종만 (V02)", "Strictest 284 sensors": "가장 엄격한 284개 센서", "Matched S1–S4 pairs": "S1–S4 짝 비교", "Machine-learning controls": "머신러닝 기반 통제", "Other clustering (Gaussian mixture)": "다른 군집 방법", "Map-coordinate surface added": "공간 추세면 추가", "2026, same 455 sites": "2026년, 같은 455개 지점", "2026, 180 new sites": "2026년, 신규 180개 지점"};
 let fSel = 0;
 function renderForest() {
   const F = D.values.forest;
   ciPlot($("#forest"), F.map(r => ({label: LANG === "ko" ? FKO[r.label] : r.label, night: r.night, afternoon: r.afternoon})), {x0: 330, x1: 980, lo: 0, hi: 1.2, step: 0.2, y0: 40, rh: 38, sel: fSel, onClick: i => { fSel = i; renderForest(); }});
   const r = F[fSel], ex = FEX[r.label];
-  $("#fexplain").innerHTML = `<b>${LANG === "ko" ? FKO[r.label] : r.label}</b>: ${ex ? ex[LANG === "ko" ? 1 : 0] : ""}<br><span class="small">${L("Night", "밤")} ${sgn(r.night[0], 2)} [${num(r.night[1], 2)}, ${num(r.night[2], 2)}] · ${L("Afternoon", "오후")} ${sgn(r.afternoon[0], 2)} [${num(r.afternoon[1], 2)}, ${num(r.afternoon[2], 2)}] °C</span>`;
+  $("#fexplain").innerHTML = `<b>${LANG === "ko" ? FKO[r.label] : r.label}</b>: ${ex ? ex[LANG === "ko" ? 1 : 0] : ""}<br><span class="small">${L("Night", "야간")} ${sgn(r.night[0], 2)} [${num(r.night[1], 2)}, ${num(r.night[2], 2)}] · ${L("Afternoon", "오후")} ${sgn(r.afternoon[0], 2)} [${num(r.afternoon[1], 2)}, ${num(r.afternoon[2], 2)}] °C</span>`;
 }
 /* ---------- tropical nights bars ---------- */
 function renderTrop() {
@@ -350,7 +350,7 @@ function renderRes() {
   [[L("All residents", "전체 주민"), V["res.all"], "#B9B5AD"], [L("People aged 65+", "65세 이상"), V["res.old"], "#B9B5AD"], [L("수급자", "수급자"), V["res.rec"], "#D55E00"]].forEach(([l, v, c], i) => {
     const y = 14 + i * 42; txt(svg, 0, y + 17, l, {"font-size": 15, "font-weight": i === 2 ? 700 : 400}); el("rect", {x: 220, y, width: X(v) - 220, height: 24, fill: c, rx: 3}, svg);
     txt(svg, X(v) + 6, y + 18, (100 * v).toFixed(1) + "%", {"font-size": 15, "font-weight": i === 2 ? 700 : 400}); });
-  txt(svg, 220, 146, L("Share of street length that is S4 in the 동 where each group lives", "각 집단이 사는 동에서 S4 거리가 차지하는 비율"), {"font-size": 12, fill: "#4F5E63"});
+  txt(svg, 220, 146, L("Share of street length that is S4 in the 동 where each group lives", "각 집단이 거주하는 동의 S4 가로 비율"), {"font-size": 12, fill: "#4F5E63"});
 }
 /* ---------- dong map + search ---------- */
 let dMode = "cls", dSel = null;
@@ -370,23 +370,23 @@ function renderDong() {
   el("path", {d: D.base.gu.map(r => "M" + r.map(p => p.join(",")).join("L") + "Z").join(""), fill: "none", stroke: "#8A979B", "stroke-width": 30, "pointer-events": "none"}, svg);
   if (dSel !== null) { const f = G.f[dSel]; el("path", {d: f.g.map(r => "M" + r.map(q => q.join(",")).join("L") + "Z").join(""), fill: "none", stroke: "#1C2629", "stroke-width": 90, "pointer-events": "none"}, svg); }
   const lg = $("#dlegend");
-  if (dMode === "cls") lg.innerHTML = [["both", L(`Priority: top quarter on both (${D.values.prio_n})`, `우선 검토: 둘 다 상위 25% (${D.values.prio_n})`)], ["streets", L("Top quarter for S4 streets only", "S4 거리만 상위 25%")], ["people", L("Top quarter for 수급자 only", "수급자만 상위 25%")], ["neither", L("Neither", "해당 없음")], ["forest", L("Forest and mountain (drawn over the 동)", "숲과 산 (동 위에 표시)")]].map(([k, l]) => `<span><i style="background:${k === "forest" ? "#E4ECDD" : DC[k]};height:12px;width:14px"></i> ${l}</span>`).join("");
-  else if (dMode === "s4") lg.innerHTML = `<span>${L("S4 share of street length", "S4 거리 비율")}: 0% <i style="width:90px;height:10px;background:linear-gradient(90deg,#FDF0E6,#B3470A)"></i> 90%</span>`;
+  if (dMode === "cls") lg.innerHTML = [["both", L(`Priority: top quarter on both (${D.values.prio_n})`, `우선 검토 동: 두 지표 모두 상위 25% (${D.values.prio_n}곳)`)], ["streets", L("Top quarter for S4 streets only", "S4 가로 비율만 상위 25%")], ["people", L("Top quarter for 수급자 only", "수급자 비율만 상위 25%")], ["neither", L("Neither", "해당 없음")], ["forest", L("Forest and mountain (drawn over the 동)", "산림 (동 경계 위에 표시)")]].map(([k, l]) => `<span><i style="background:${k === "forest" ? "#E4ECDD" : DC[k]};height:12px;width:14px"></i> ${l}</span>`).join("");
+  else if (dMode === "s4") lg.innerHTML = `<span>${L("S4 share of street length", "S4 가로 비율")}: 0% <i style="width:90px;height:10px;background:linear-gradient(90deg,#FDF0E6,#B3470A)"></i> 90%</span>`;
   else lg.innerHTML = `<span>${L("수급자 per registered resident", "등록 인구 대비 수급자")}: 0% <i style="width:90px;height:10px;background:linear-gradient(90deg,#EEF2F7,#1E3557)"></i> 14%</span>`;
   renderCard();
 }
 function selectDong(i) { dSel = i; renderDong(); }
 function renderCard() {
-  const box = $("#dcard"); if (dSel === null) { box.innerHTML = `<div class="card"><span class="small">${L("Tap a 동 or search above. Try 수유3동.", "동을 누르거나 위에서 검색하세요. 예: 수유3동")}</span></div>`; return; }
+  const box = $("#dcard"); if (dSel === null) { box.innerHTML = `<div class="card"><span class="small">${L("Tap a 동 or search above. Try 수유3동.", "지도에서 동을 누르거나 위에서 검색한다. 예: 수유3동")}</span></div>`; return; }
   const f = D.dong.f[dSel], n = D.dong.f.length;
-  const clsT = {neither: L("Neither", "해당 없음"), streets: L("Top quarter for S4 streets", "S4 거리 상위 25%"), people: L("Top quarter for 수급자", "수급자 상위 25%"), both: L("Priority 동: top quarter on both", "우선 검토 동: 둘 다 상위 25%")}[f.cls];
+  const clsT = {neither: L("Neither", "해당 없음"), streets: L("Top quarter for S4 streets", "S4 가로 비율 상위 25%"), people: L("Top quarter for 수급자", "수급자 비율 상위 25%"), both: L("Priority 동: top quarter on both", "우선 검토 동: 두 지표 모두 상위 25%")}[f.cls];
   const mix = T4.map((t, k) => `<i style="flex:${Math.max(0, f.sh[k] || 0)};background:${TC[t]}"></i>`).join("") + `<i style="flex:${Math.max(0, 1 - f.sh.reduce((a, b) => a + (b || 0), 0))};background:#CFCAC0"></i>`;
   box.innerHTML = `<div class="card" style="border-left-color:${DC[f.cls]}"><h4>${f.n} <span class="small">${f.gu}${f.en ? " · " + f.en : ""}</span></h4>
     <div class="mix">${mix}</div><div class="small">${T4.map((t, k) => `<span class="tt${t[1]}">${t}</span> ${Math.round(100 * (f.sh[k] || 0))}%`).join(" · ")} · ${L("expressways", "고속도로")} ${Math.round(100 * Math.max(0, 1 - f.sh.reduce((a, b) => a + (b || 0), 0)))}%</div>
-    <p style="margin:.5em 0 .2em"><b>S4 ${Math.round(100 * f.sh[3])}%</b> ${L(`of street length · rank ${f.r1} of ${n}`, `· ${n}개 동 중 ${f.r1}위`)} · ${f.km} km</p>
-    <p style="margin:.2em 0"><b>${L("수급자", "수급자")} ${(100 * f.rate).toFixed(1)}%</b> ${L(`of registered residents · rank ${f.r2} of ${n}`, `(등록 인구 대비) · ${f.r2}위`)}</p>
+    <p style="margin:.5em 0 .2em"><b>S4 ${Math.round(100 * f.sh[3])}%</b> ${L(`of street length · rank ${f.r1} of ${n}`, `(가로 연장 기준) · ${n}개 동 중 ${f.r1}위`)} · ${f.km} km</p>
+    <p style="margin:.2em 0"><b>${L("수급자", "수급자")} ${(100 * f.rate).toFixed(1)}%</b> ${L(`of registered residents · rank ${f.r2} of ${n}`, `(등록 인구 대비) · ${n}개 동 중 ${f.r2}위`)}</p>
     <p style="margin:.2em 0"><b>${clsT}</b></p>
-    <p class="note">${L("동 averages. A single street can be very different from its 동.", "동 평균값입니다. 같은 동 안에서도 거리마다 크게 다를 수 있습니다.")}</p></div>`;
+    <p class="note">${L("동 averages. A single street can be very different from its 동.", "동 평균값이다. 같은 동 안에서도 가로마다 상태가 크게 다를 수 있다.")}</p></div>`;
 }
 function initDong() {
   $$("[data-dm]").forEach(b => b.addEventListener("click", () => { dMode = b.dataset.dm; $$("[data-dm]").forEach(x => x.classList.toggle("on", x === b)); renderDong(); }));
@@ -411,15 +411,15 @@ function renderInset() {
 }
 /* ---------- code ---------- */
 const CODE = [
-  {t: ["1 · BVF from a labelled fisheye", "1 · 라벨이 붙은 어안 이미지에서 BVF 계산"], c: `<span class="cm"># label: 2-D array of classes on an upward fisheye (equidistant lens)
+  {t: ["1 · BVF from a labelled fisheye", "1 · 판독한 어안 이미지로 BVF 산출"], c: `<span class="cm"># label: 2-D array of classes on an upward fisheye (equidistant lens)
 # r: distance of each pixel from the image centre, R: image radius</span>
 theta = (r / R) * np.pi / 2                      <span class="cm"># zenith angle of each pixel</span>
 w = np.cos(theta) * np.sin(theta) / theta        <span class="cm"># cosine-weighted solid angle per pixel</span>
 bvf = (w * (label == BUILDING)).sum() / w.sum()  <span class="cm"># share of the sky dome hidden by buildings</span>`},
-  {t: ["2 · The outcome: each hour, a sensor minus the city", "2 · 결과 변수: 매시간 센서 값 − 도시 값"], c: `hourly["dev"] = hourly["t"] - hourly.groupby("time")["t"].transform("median")
+  {t: ["2 · The outcome: each hour, a sensor minus the city", "2 · 종속변수: 매시각 센서 기온 − 도시 중앙값"], c: `hourly["dev"] = hourly["t"] - hourly.groupby("time")["t"].transform("median")
 night = hourly[hourly.time.dt.hour.between(0, 5)].groupby("serial")["dev"].mean()
 afternoon = hourly[hourly.time.dt.hour.between(14, 16)].groupby("serial")["dev"].mean()`},
-  {t: ["3 · Four types from four measures", "3 · 네 지표로 만든 네 유형"], c: `X = StandardScaler().fit_transform(sites[["bvf", "ndvi_30m", "height_100m", "coverage_100m"]])
+  {t: ["3 · Four types from four measures", "3 · 네 지표로 도출한 네 유형"], c: `X = StandardScaler().fit_transform(sites[["bvf", "ndvi_30m", "height_100m", "coverage_100m"]])
 types = KMeans(n_clusters=4, n_init=50, random_state=0).fit_predict(X)
 <span class="cm"># repeated for 10 measure sets x k = 3..8, each version scored on rules written down first</span>`},
   {t: ["4 · The main model", "4 · 기본 모형"], c: `smf.ols("dev_night ~ C(type, Treatment('S1'))"
@@ -427,13 +427,13 @@ types = KMeans(n_clusters=4, n_init=50, random_state=0).fit_predict(X)
         " + height_500 + height_sd_500 + coverage_500 + far_500"   <span class="cm"># buildings</span>
         " + device",                                               <span class="cm"># sensor model</span>
         data=sites).fit(cov_type="HC1")`},
-  {t: ["5 · Residents: resampling whole 구", "5 · 주민 분석: 구 단위 재표본"], c: `share = lambda d, w: (d.S4 * d[w]).sum() / d[w].sum()
+  {t: ["5 · Residents: resampling whole 구", "5 · 주민 분석: 자치구 단위 재표본추출"], c: `share = lambda d, w: (d.S4 * d[w]).sum() / d[w].sum()
 gap = share(dong, "recipients") - share(dong, "night_pop")
 boot = [ (lambda b: share(b, "recipients") - share(b, "night_pop"))(
            pd.concat([dong[dong.gu == g] for g in rng.choice(gus, len(gus))]))
          for _ in range(2000) ]
 ci = np.percentile(boot, [2.5, 97.5])`}];
-function codeHTML(i) { return `<pre><code>${CODE[i].c}</code></pre><p class="note">${L("Simplified excerpt for reading.", "읽기 쉽게 줄인 코드입니다.")}</p>`; }
+function codeHTML(i) { return `<pre><code>${CODE[i].c}</code></pre><p class="note">${L("Simplified excerpt for reading.", "읽기 쉽도록 간추린 코드다.")}</p>`; }
 function renderCode() { $("#codeblocks").innerHTML = CODE.map((c, i) => `<h3>${c.t[LANG === "ko" ? 1 : 0]}</h3>${codeHTML(i)}`).join(""); }
 /* ---------- references ---------- */
 const REFS = [
@@ -457,14 +457,14 @@ const REFS = [
 function renderRefs() { $("#reflist").innerHTML = REFS.map(([t, d]) => `<li>${t}${d ? ` <a href="https://doi.org/${d}" target="_blank" rel="noopener">doi:${d}</a>` : ""}</li>`).join(""); }
 /* ---------- glossary + tooltips ---------- */
 const GL = {
-  bvf: ["BVF (building view factor)", "The share of the sky dome hidden by buildings, seen from the street, cosine-weighted.", "거리에서 본 하늘 돔 가운데 건물이 가리는 비율(코사인 가중)."],
-  ndvi: ["NDVI", "A satellite measure of green vegetation, from −1 to 1; higher is greener.", "위성으로 잰 식생 지수(−1~1). 높을수록 푸릅니다."],
-  med: ["City median / 도시 중앙값", "The middle reading of all Seoul sensors at that hour.", "그 시간 서울 전체 센서 값의 가운데 값."],
-  aee: ["All else equal / 다른 조건이 같을 때", "After accounting for location, buildings and sensor device.", "위치, 건물, 센서 기기를 보정한 뒤."],
-  ci: ["95% CI / 95% 신뢰구간", "The range that would contain the true value in 95 of 100 repeated samples.", "표본을 거듭 뽑을 때 100번 중 95번 참값을 포함하는 범위."],
-  trop: ["Tropical night / 열대야", "Night minimum (18:01–09:00) of 25 °C or above (KMA).", "밤 최저기온(18:01–09:00)이 25 °C 이상인 날 (기상청)."],
+  bvf: ["BVF (building view factor)", "The share of the sky dome hidden by buildings, seen from the street, cosine-weighted.", "가로에서 올려다본 하늘 반구 가운데 건물이 가리는 비율(코사인 가중)."],
+  ndvi: ["NDVI", "A satellite measure of green vegetation, from −1 to 1; higher is greener.", "위성 영상으로 산출한 정규식생지수(−1~1). 값이 클수록 식생이 많다."],
+  med: ["City median / 도시 중앙값", "The middle reading of all Seoul sensors at that hour.", "같은 시각 서울 전체 센서 기온의 중앙값."],
+  aee: ["All else equal / 다른 조건이 같을 때", "After accounting for location, buildings and sensor device.", "입지, 건물, 센서 기종을 통제한 상태."],
+  ci: ["95% CI / 95% 신뢰구간", "The range that would contain the true value in 95 of 100 repeated samples.", "표본을 반복 추출할 때 100번 중 95번 참값을 포함하도록 구성한 구간."],
+  trop: ["Tropical night / 열대야", "Night minimum (18:01–09:00) of 25 °C or above (KMA).", "18:01부터 다음 날 09:00까지의 최저기온이 25 °C 이상인 밤(기상청 정의)."],
   sug: ["수급자", "Recipient of basic livelihood support (국민기초생활보장).", "국민기초생활보장 수급자."],
-  dong: ["행정동", "Administrative neighbourhood; Seoul had 424 in the 2018 boundaries used here.", "행정동. 이 연구가 쓴 2018년 경계 기준 서울 424개."]};
+  dong: ["행정동", "Administrative neighbourhood; Seoul had 424 in the 2018 boundaries used here.", "행정동. 이 연구에서 사용한 2018년 경계 기준으로 서울에 424개가 있다."]};
 function renderGloss() { $("#gloss").innerHTML = Object.values(GL).map(g => `<dt>${g[0]}</dt><dd>${LANG === "ko" ? g[2] : g[1]}</dd>`).join(""); }
 function initTips() {
   const tip = $("#tip");
@@ -479,98 +479,98 @@ function initMail() { $$(".mail").forEach(s => { const a = document.createElemen
 /* ---------- equations ---------- */
 const v = (k, html) => `<span class="v" data-k="${k}" tabindex="0">${html}</span>`;
 const EQ = [
- {t: ["1 · The outcome: each sensor against the city, each hour", "1 · 결과 변수: 매시간 도시 전체와 비교한 센서"], at: "#hours",
+ {t: ["1 · The outcome: each sensor against the city, each hour", "1 · 종속변수: 매시각 도시 전체와 비교한 센서 기온"], at: "#hours",
   f: () => `${v("dit", "Δ<sub>i,t</sub>")} = ${v("Tit", "T<sub>i,t</sub>")} − ${v("med", "median<sub>j</sub>")} ${v("Tjt", "T<sub>j,t</sub>")}<br>${v("Dn", "Δ̄<sub>i</sub><sup>night</sup>")} = mean ${v("tn", "<sub>t ∈ 00–05 h</sub>")} ${v("dit", "Δ<sub>i,t</sub>")}`,
-  vars: {dit: ["the gap: how much warmer (+) or cooler (−) sensor i was than the city at hour t", "차이: 시각 t에 센서 i가 도시보다 얼마나 따뜻(+)하거나 시원(−)했는지"],
+  vars: {dit: ["the gap: how much warmer (+) or cooler (−) sensor i was than the city at hour t", "편차: 시각 t에 센서 i가 도시 전체보다 얼마나 높았는지(+) 또는 낮았는지(−)"],
          Tit: ["air temperature at sensor i, hour t (°C)", "시각 t, 센서 i의 기온 (°C)"],
          med: ["the median over all Seoul sensors j at that same hour", "같은 시각 서울 전체 센서 j의 중앙값"],
          Tjt: ["air temperature at every other sensor j at the same hour", "같은 시각 다른 모든 센서 j의 기온"],
-         Dn: ["sensor i's summer night value: the average gap over 00–05 h, July–August", "센서 i의 여름밤 값: 7–8월 00–05시 차이의 평균"],
-         tn: ["the night window, 00:00 to 05:59; the afternoon window is 14–16 h", "밤 시간대 00:00–05:59. 오후 시간대는 14–16시"]},
-  src: ["Our design. Comparing each sensor with the whole network at the same hour removes the weather all streets share, so a cloudy night or a heatwave doesn't swamp the street effect.", "우리의 설계입니다. 같은 시각 센서망 전체와 비교하면 모든 거리가 함께 겪는 날씨가 빠져, 흐린 밤이나 폭염이 거리 효과를 덮지 않습니다."],
-  adapt: ["We use the median rather than the mean so a few faulty sensors can't pull the reference.", "평균 대신 중앙값을 써서, 고장 난 센서 몇 개가 기준을 끌어당기지 못하게 했습니다."]},
+         Dn: ["sensor i's summer night value: the average gap over 00–05 h, July–August", "센서 i의 여름밤 값: 7–8월 00–05시 편차의 평균"],
+         tn: ["the night window, 00:00 to 05:59; the afternoon window is 14–16 h", "야간 시간대(00:00–05:59). 오후 시간대는 14–16시"]},
+  src: ["Our design. Comparing each sensor with the whole network at the same hour removes the weather all streets share, so a cloudy night or a heatwave doesn't swamp the street effect.", "이 연구의 설계다. 같은 시각의 센서망 전체와 비교하면 모든 가로가 공통으로 겪는 기상 변화가 제거되므로, 흐린 밤이나 폭염이 가로의 효과를 가리지 않는다."],
+  adapt: ["The reference is the median, so a few faulty sensors can't pull it up or down.", "기준값으로 중앙값을 사용해 오작동하는 센서 몇 개가 기준을 왜곡하지 못하게 했다."]},
  {t: ["2 · BVF: how much sky the buildings hide", "2 · BVF: 건물이 가리는 하늘"], at: "#ai",
   f: () => `${v("bvf", "BVF")} = ${v("sum", "Σ<sub>p</sub>")} ${v("w", "w<sub>p</sub>")} · ${v("ind", "𝟙[label<sub>p</sub> = building]")} / ${v("sum", "Σ<sub>p</sub>")} ${v("w", "w<sub>p</sub>")}<br>${v("w", "w<sub>p</sub>")} = cos ${v("th", "θ<sub>p</sub>")} · sin ${v("th", "θ<sub>p</sub>")} / ${v("th", "θ<sub>p</sub>")}`,
-  vars: {bvf: ["building view factor: share of the sky dome hidden by buildings, 0 to 1", "건물 조망 계수: 하늘 돔 가운데 건물이 가리는 비율, 0–1"],
-         sum: ["sum over every pixel p of the upward fisheye image", "위로 향한 어안 이미지의 모든 픽셀 p에 대한 합"],
-         w: ["pixel weight: how much that patch of sky exchanges heat with the ground", "픽셀 가중치: 그 하늘 조각이 지면과 열을 주고받는 정도"],
-         ind: ["1 if the AI labelled the pixel as building, otherwise 0", "AI가 픽셀을 건물로 표시하면 1, 아니면 0"],
-         th: ["zenith angle: 0° straight up, 90° at the horizon", "천정각: 바로 위는 0°, 지평선은 90°"]},
-  src: ["Building on Gong et al. (2018), who mapped sky, tree and building view factors of Hong Kong's street canyons from Google Street View with deep learning, and on fisheye methods from Street View panoramas (Li, Ratti &amp; Seiferling, 2018; Middel et al., 2017). The cosine weighting follows the radiative definition of a view factor.", "Gong 외(2018)가 구글 스트리트뷰와 딥러닝으로 홍콩 가로 협곡의 하늘·나무·건물 조망 계수를 지도화한 연구와, 스트리트뷰 파노라마로 어안 이미지를 만드는 방법(Li, Ratti &amp; Seiferling, 2018; Middel 외, 2017)을 바탕으로 했습니다. 코사인 가중은 조망 계수의 복사 정의를 따릅니다."],
-  adapt: ["We label pixels with SegFormer-B4 (Xie et al., 2021), average BVF over all panoramas within 100 m of each sensor, and keep building-blocked sky separate from tree-blocked sky.", "픽셀 라벨은 SegFormer-B4(Xie 외, 2021)로 붙이고, 센서마다 100 m 안 모든 파노라마의 BVF를 평균하며, 건물이 가린 하늘과 나무가 가린 하늘을 따로 셉니다."]},
- {t: ["3 · Hours of sun, building shade and tree shade", "3 · 직사광선, 건물 그늘, 나무 그늘 시간"], at: "#ai",
+  vars: {bvf: ["building view factor: share of the sky dome hidden by buildings, 0 to 1", "건물 조망 계수: 하늘 반구 가운데 건물이 가리는 비율(0–1)"],
+         sum: ["sum over every pixel p of the upward fisheye image", "하늘을 향한 어안 이미지의 모든 픽셀 p에 대한 합"],
+         w: ["pixel weight: how much that patch of sky exchanges heat with the ground", "픽셀 가중치: 해당 하늘 영역이 지면과 복사열을 주고받는 정도"],
+         ind: ["1 if the AI labelled the pixel as building, otherwise 0", "AI가 픽셀을 건물로 분류하면 1, 그렇지 않으면 0"],
+         th: ["zenith angle: 0° straight up, 90° at the horizon", "천정각: 천정 방향이 0°, 지평선이 90°"]},
+  src: ["Building on Gong et al. (2018), who mapped sky, tree and building view factors of Hong Kong's street canyons from Google Street View with deep learning, and on fisheye methods from Street View panoramas (Li, Ratti &amp; Seiferling, 2018; Middel et al., 2017). The cosine weighting follows the radiative definition of a view factor.", "구글 스트리트뷰와 딥러닝으로 홍콩 가로 협곡의 하늘·수목·건물 조망 계수를 산출한 Gong et al.(2018)과, 스트리트뷰 파노라마로 어안 이미지를 생성하는 방법(Li, Ratti &amp; Seiferling, 2018; Middel et al., 2017)에 기초했다. 코사인 가중은 복사 조망 계수의 정의를 따른다."],
+  adapt: ["We label pixels with SegFormer-B4 (Xie et al., 2021), average BVF over all panoramas within 100 m of each sensor, and keep building-blocked sky separate from tree-blocked sky.", "픽셀 분류에는 SegFormer-B4(Xie et al., 2021)를 사용했고, 센서마다 반경 100 m 안의 모든 파노라마에서 구한 BVF를 평균했다. 건물이 가린 하늘과 수목이 가린 하늘은 구분해 산출했다."]},
+ {t: ["3 · Hours of sun, building shade and tree shade", "3 · 직달 일사, 건물 그늘, 수목 그늘 시간"], at: "#ai",
   f: () => `${v("hs", "H<sub>sun</sub>")} = ${v("sh", "Σ<sub>h</sub>")} ${v("ind2", "𝟙[label at (α<sub>h</sub>, ε<sub>h</sub>) = sky]")} · ${v("dh", "Δh")}`,
-  vars: {hs: ["hours of direct sun per day at the street (similarly for building shade and tree shade)", "거리의 하루 직사광선 시간 (건물 그늘, 나무 그늘도 같은 방식)"],
-         sh: ["sum over time steps h across the day, July–August sun path in Seoul", "하루 동안의 시간 단계 h에 대한 합, 서울 7–8월 태양 경로"],
-         ind2: ["1 if the fisheye pixel where the sun sits (azimuth α, elevation ε) is sky", "태양이 있는 위치(방위각 α, 고도 ε)의 어안 픽셀이 하늘이면 1"],
+  vars: {hs: ["hours of direct sun per day at the street (similarly for building shade and tree shade)", "가로의 하루 직달 일사 시간 (건물 그늘과 수목 그늘도 같은 방식으로 산출)"],
+         sh: ["sum over time steps h across the day, July–August sun path in Seoul", "하루 동안의 시간 단계 h에 대한 합(서울의 7–8월 태양 궤적)"],
+         ind2: ["1 if the fisheye pixel where the sun sits (azimuth α, elevation ε) is sky", "태양 위치(방위각 α, 고도각 ε)에 해당하는 어안 픽셀이 하늘이면 1"],
          dh: ["length of each time step", "각 시간 단계의 길이"]},
-  src: ["Adapted from Street View sun-path methods for street shade (Li, Ratti &amp; Seiferling, 2018, Boston).", "스트리트뷰로 거리 그늘을 구한 태양 경로 방법(Li, Ratti &amp; Seiferling, 2018, 보스턴)을 응용했습니다."],
-  adapt: ["We trace Seoul's summer sun path and split the blocked hours into building shade and tree shade. Photos are mostly from spring 2018, so tree shade is under-counted.", "서울 여름 태양 경로를 그리고, 가려진 시간을 건물 그늘과 나무 그늘로 나눴습니다. 사진이 대부분 2018년 봄이라 나무 그늘은 적게 잡힙니다."]},
+  src: ["Adapted from Street View sun-path methods for street shade (Li, Ratti &amp; Seiferling, 2018, Boston).", "스트리트뷰로 가로의 그늘을 산출한 태양 궤적 방법(Li, Ratti &amp; Seiferling, 2018, 보스턴)을 응용했다."],
+  adapt: ["We trace Seoul's summer sun path and split the blocked hours into building shade and tree shade. Photos are mostly from spring 2018, so tree shade is under-counted.", "서울의 여름 태양 궤적을 적용하고, 태양이 가려진 시간을 건물 그늘과 수목 그늘로 나누었다. 사진 대부분이 2018년 봄에 촬영되어 수목 그늘은 실제보다 적게 잡힌다."]},
  {t: ["4 · Four types: k-means", "4 · 네 유형: k-means"], at: "#types",
   f: () => `min ${v("C", "C<sub>1..k</sub>")} ${v("sk", "Σ<sub>k</sub>")} ${v("si", "Σ<sub>i ∈ C<sub>k</sub></sub>")} ‖ ${v("z", "z<sub>i</sub>")} − ${v("mu", "μ<sub>k</sub>")} ‖²`,
-  vars: {C: ["the groups (types) to find; k = 4 here", "찾으려는 그룹(유형). 여기서는 k = 4"],
-         sk: ["sum over the groups", "그룹들에 대한 합"], si: ["sum over the sensor sites in group k", "그룹 k에 속한 센서 지점들에 대한 합"],
-         z: ["site i's four measures, each standardised: BVF, greenery within 30 m (NDVI), building height and coverage within 100 m", "지점 i의 네 지표(표준화): BVF, 30 m 안 녹지(NDVI), 100 m 안 건물 높이와 건폐율"],
-         mu: ["the centre of group k (the white circles on the scatter)", "그룹 k의 중심 (산점도의 흰 원)"]},
-  src: ["Standard k-means clustering: put each site in the group whose centre is closest.", "표준 k-means 군집: 각 지점을 중심이 가장 가까운 그룹에 넣습니다."],
-  adapt: ["Before running, we wrote down the rules a typology had to pass, then tested 60 versions (10 measure sets × 3–8 groups). The separation is weak (silhouette 0.29), so we rely on stability, prediction and replication.", "돌리기 전에 유형 분류가 통과해야 할 기준을 적어 두고, 60가지 버전(지표 조합 10개 × 3–8개 그룹)을 시험했습니다. 구분은 약한 편이라(실루엣 0.29) 안정성, 예측력, 재현성에 기댑니다."]},
+  vars: {C: ["the groups (types) to find; k = 4 here", "도출할 군집(유형). 여기서는 k = 4"],
+         sk: ["sum over the groups", "군집에 대한 합"], si: ["sum over the sensor sites in group k", "군집 k에 속한 센서 지점에 대한 합"],
+         z: ["site i's four measures, each standardised: BVF, greenery within 30 m (NDVI), building height and coverage within 100 m", "지점 i의 표준화된 네 지표: BVF, 반경 30 m 녹지(NDVI), 반경 100 m 건물 높이와 건폐율"],
+         mu: ["the centre of group k (the white circles on the scatter)", "군집 k의 중심 (산점도의 흰 원)"]},
+  src: ["Standard k-means clustering: put each site in the group whose centre is closest.", "표준적인 k-means 군집분석으로, 각 지점을 중심이 가장 가까운 군집에 배정한다."],
+  adapt: ["Before running anything we wrote down the rules a typology had to pass, then tested 60 versions (10 measure sets × 3–8 groups). The separation is weak (silhouette 0.29), so the case for the types rests on stability, prediction and replication.", "분석에 앞서 유형 분류가 충족해야 할 기준을 정해 두고, 60가지 버전(지표 조합 10개 × 군집 수 3–8개)을 시험했다. 군집 간 구분이 약한 편이어서(실루엣 계수 0.29) 유형의 타당성은 안정성, 예측력, 재현성에 근거한다."]},
  {t: ["5 · The main model", "5 · 기본 모형"], at: "#hold",
   f: () => `${v("Di", "Δ̄<sub>i</sub>")} = ${v("a", "α")} + ${v("b", "Σ<sub>k</sub> β<sub>k</sub>")} ${v("type", "𝟙[type<sub>i</sub> = k]")} + ${v("L", "γ′L<sub>i</sub>")} + ${v("B", "δ′B<sub>i</sub>")} + ${v("D", "θ D<sub>i</sub>")} + ${v("e", "ε<sub>i</sub>")}`,
-  vars: {Di: ["sensor i's summer night (or afternoon) gap from the city", "센서 i의 여름밤(또는 오후) 도시 대비 차이"],
-         a: ["the baseline: an S1 street", "기준값: S1 거리"],
-         b: ["the type effects, each compared with S1; β for S4 is the headline +0.45 °C at night", "S1과 비교한 유형별 효과. S4의 β가 밤 +0.45 °C"],
-         type: ["1 if sensor i is on a street of type k (S2, S3 or S4)", "센서 i가 유형 k(S2, S3, S4) 거리에 있으면 1"],
-         L: ["location controls: elevation, water and forest nearby, wider greenery, 구", "위치 통제: 고도, 주변 수변과 숲, 넓은 범위 녹지, 구"],
-         B: ["building controls within 500 m: mean height, height variation, coverage, floor area ratio", "500 m 안 건물 통제: 평균 높이, 높이 편차, 건폐율, 용적률"],
-         D: ["sensor device family (V02 or OC3), which read about 0.5 °C apart", "센서 기종(V02 또는 OC3). 약 0.5 °C 차이"],
-         e: ["everything else; standard errors are robust to unequal spread (HC1)", "그 밖의 모든 것. 표준오차는 이분산에 강건(HC1)"]},
-  src: ["Ordinary least squares with heteroskedasticity-robust standard errors, a standard regression set-up.", "이분산에 강건한 표준오차를 쓴 최소제곱 회귀, 표준적인 회귀 설계입니다."],
-  adapt: ["The device term was added after our audit found the two sensor families read differently and were unevenly spread over the types. It shrank the night gap from +0.50 to +0.45 °C.", "두 센서 기종의 측정값이 다르고 유형별로 고르게 퍼져 있지 않다는 점을 자체 점검에서 발견한 뒤 기기 항을 넣었습니다. 밤 차이가 +0.50에서 +0.45 °C로 줄었습니다."]},
+  vars: {Di: ["sensor i's summer night (or afternoon) gap from the city", "센서 i의 여름 야간(또는 오후) 도시 대비 편차"],
+         a: ["the baseline: an S1 street", "기준 범주: S1 가로"],
+         b: ["the type effects, each compared with S1; β for S4 is the headline +0.45 °C at night", "S1 대비 유형별 효과. S4의 β가 야간 +0.45 °C로, 이 연구의 핵심 결과다"],
+         type: ["1 if sensor i is on a street of type k (S2, S3 or S4)", "센서 i가 유형 k(S2, S3, S4) 가로에 있으면 1"],
+         L: ["location controls: elevation, water and forest nearby, wider greenery, 구", "입지 통제변수: 고도, 인근 수계와 산림, 광역 녹지, 자치구"],
+         B: ["building controls within 500 m: mean height, height variation, coverage, floor area ratio", "반경 500 m 건물 통제변수: 평균 높이, 높이 편차, 건폐율, 용적률"],
+         D: ["sensor device family (V02 or OC3), which read about 0.5 °C apart", "센서 기종(V02 또는 OC3). 두 기종의 측정값은 약 0.5 °C 차이 난다"],
+         e: ["everything else; standard errors are robust to unequal spread (HC1)", "오차항. 표준오차는 이분산에 강건한 HC1을 사용"]},
+  src: ["Ordinary least squares with heteroskedasticity-robust standard errors, a standard regression set-up.", "이분산에 강건한 표준오차를 적용한 최소제곱(OLS) 회귀로, 표준적인 회귀 설계다."],
+  adapt: ["The device term was added after our audit found the two sensor families read differently and were unevenly spread over the types. It shrank the night gap from +0.50 to +0.45 °C.", "자체 점검에서 두 센서 기종의 측정값이 서로 다르고 유형별 분포도 고르지 않다는 점을 확인해 기종 항을 추가했다. 그 결과 야간 기온 차는 +0.50 °C에서 +0.45 °C로 줄었다."]},
  {t: ["6 · Tropical nights", "6 · 열대야"], at: "#tropical",
   f: () => `${v("TN", "TN<sub>i</sub>")} = ${v("sn", "Σ<sub>n</sub>")} ${v("ind3", "𝟙[ min<sub>t ∈ 18–08 h</sub> T<sub>i,t</sub> ≥ c ]")} ,&nbsp; ${v("c", "c = 25 °C + offset")}`,
-  vars: {TN: ["number of tropical nights at sensor i over the 61 nights of July–August", "7–8월 61일 밤 동안 센서 i의 열대야 일수"],
+  vars: {TN: ["number of tropical nights at sensor i over the 61 nights of July–August", "7–8월 61일 밤 가운데 센서 i의 열대야 일수"],
          sn: ["sum over nights n", "밤 n에 대한 합"],
-         ind3: ["1 if the night's lowest hourly temperature stayed at or above c", "그날 밤 가장 낮은 시간 기온이 c 이상이면 1"],
-         c: ["the threshold: KMA's 25 °C plus an offset (+0.71 °C in 2025) so the network's median sensor counts the same nights as KMA's Seoul station", "기준: 기상청 25 °C에 보정값(2025년 +0.71 °C)을 더해, 센서망 중앙 센서가 기상청 서울 관측소와 같은 밤 수를 세도록 함"]},
-  src: ["The Korea Meteorological Administration's definition: night minimum (18:01–09:00) of 25 °C or more.", "기상청 정의: 밤 최저기온(18:01–09:00) 25 °C 이상."],
-  adapt: ["Street sensors read warmer at night than the official station, so a raw 25 °C would over-count. We calibrated one offset per summer and used sensors with at least 40 complete nights.", "거리 센서는 밤에 공식 관측소보다 따뜻하게 재므로, 25 °C를 그대로 쓰면 과대 집계됩니다. 여름마다 보정값 하나를 정하고, 온전한 밤이 40일 이상인 센서만 썼습니다."]},
- {t: ["7 · Who lives along S4 streets", "7 · S4 거리 곁에 사는 사람"], at: "#who",
+         ind3: ["1 if the night's lowest hourly temperature stayed at or above c", "그날 밤의 최저 시간별 기온이 c 이상이면 1"],
+         c: ["the threshold: KMA's 25 °C plus an offset (+0.71 °C in 2025) so the network's median sensor counts the same nights as KMA's Seoul station", "기준 온도: 기상청 기준 25 °C에 보정값(2025년 +0.71 °C)을 더해, 센서망의 중앙값 센서가 기상청 서울 관측소와 같은 열대야 일수를 기록하도록 맞춤"]},
+  src: ["The Korea Meteorological Administration's definition: night minimum (18:01–09:00) of 25 °C or more.", "기상청 정의: 18:01부터 다음 날 09:00까지의 최저기온이 25 °C 이상인 밤."],
+  adapt: ["Street sensors read warmer at night than the official station, so a raw 25 °C would over-count. We calibrated one offset per summer and used sensors with at least 40 complete nights.", "거리 센서는 야간에 공식 관측소보다 높게 측정되므로 25 °C를 그대로 적용하면 열대야가 과대 집계된다. 여름마다 보정값을 하나씩 정하고, 야간 자료가 온전한 밤이 40일 이상인 센서만 사용했다."]},
+ {t: ["7 · Who lives along S4 streets", "7 · S4 가로 주변에 사는 사람들"], at: "#who",
   f: () => `${v("Sg", "S4<sub>g</sub>")} = ${v("sd", "Σ<sub>d</sub>")} ${v("sdd", "s<sub>d</sub>")} ${v("wg", "w<sub>g,d</sub>")} / ${v("sd", "Σ<sub>d</sub>")} ${v("wg", "w<sub>g,d</sub>")} ,&nbsp; ${v("gap", "gap = S4<sub>수급자</sub> − S4<sub>all</sub>")}`,
-  vars: {Sg: ["the S4 share of street length in the 동 where group g lives, on average", "집단 g가 사는 동의 평균 S4 거리 비율"],
+  vars: {Sg: ["the S4 share of street length in the 동 where group g lives, on average", "집단 g가 거주하는 동의 평균 S4 가로 비율"],
          sd: ["sum over Seoul's 424 행정동", "서울 424개 행정동에 대한 합"],
-         sdd: ["the share of 동 d's street length that is S4", "동 d의 거리 길이 중 S4 비율"],
-         wg: ["how many people of group g live in 동 d (수급자, people aged 65+, or everyone at night)", "동 d에 사는 집단 g의 인원 (수급자, 65세 이상, 또는 밤 인구 전체)"],
-         gap: ["the difference in percentage points; its 95% interval comes from resampling whole 구 2,000 times", "%p 차이. 95% 구간은 구 전체를 2,000번 다시 뽑아 구함"]},
-  src: ["A population-weighted exposure share, with a cluster bootstrap for the interval (resampling whole clusters; see Cameron, Gelbach &amp; Miller, 2008).", "인구 가중 노출 비율과, 신뢰구간을 위한 군집 부트스트랩(군집 전체를 재표본; Cameron, Gelbach &amp; Miller, 2008 참고)."],
-  adapt: ["Resampling whole 구 rather than single 동 widens the interval, because neighbouring 동 are alike. We report the wider one.", "이웃한 동은 서로 비슷하므로, 동 하나씩이 아니라 구 전체를 다시 뽑으면 구간이 넓어집니다. 더 넓은 쪽을 보고합니다."]},
- {t: ["8 · How strong would a hidden cause have to be?", "8 · 숨은 원인은 얼마나 강해야 할까?"], at: "#hold",
+         sdd: ["the share of 동 d's street length that is S4", "동 d의 가로 연장 중 S4 비율"],
+         wg: ["how many people of group g live in 동 d (수급자, people aged 65+, or everyone at night)", "동 d에 거주하는 집단 g의 인원 (수급자, 65세 이상, 또는 야간 생활인구 전체)"],
+         gap: ["the difference in percentage points; its 95% interval comes from resampling whole 구 2,000 times", "%p 차이. 95% 신뢰구간은 자치구 단위로 2,000번 재표본추출해 구함"]},
+  src: ["A population-weighted exposure share, with a cluster bootstrap for the interval (resampling whole clusters; see Cameron, Gelbach &amp; Miller, 2008).", "인구 가중 노출 비율을 구하고, 신뢰구간은 군집 단위 부트스트랩으로 추정했다(Cameron, Gelbach &amp; Miller, 2008)."],
+  adapt: ["Neighbouring 동 are alike, so resampling whole 구 gives a wider interval than resampling single 동. We report the wider one.", "인접한 동끼리는 특성이 비슷하므로, 동 단위보다 자치구 단위로 재표본추출할 때 신뢰구간이 넓어진다. 이 연구는 더 보수적인 자치구 단위 구간을 보고했다."]},
+ {t: ["8 · How strong would a hidden cause have to be?", "8 · 누락된 요인은 얼마나 강해야 결과를 뒤집는가?"], at: "#hold",
   f: () => `${v("RV", "RV")} = ½ ( √( ${v("f", "f")}⁴ + 4${v("f", "f")}² ) − ${v("f", "f")}² ) ,&nbsp; ${v("f", "f")} = ${v("tt", "|t|")} / √${v("df", "df")}`,
-  vars: {RV: ["robustness value: the share of leftover variation, in both street type and temperature, a hidden cause would need to explain to erase the gap. Ours: about 30%", "강건성 값: 차이를 없애려면 숨은 원인이 거리 유형과 기온 양쪽에서 설명해야 할 남은 변동의 비율. 우리 값: 약 30%"],
+  vars: {RV: ["robustness value: the share of leftover variation, in both street type and temperature, a hidden cause would need to explain to erase the gap. Ours: about 30%", "강건성 값(robustness value): 누락된 요인이 차이를 없애려면 가로 유형과 기온 양쪽에서 설명해야 하는 잔여 변동의 비율. 이 연구에서는 약 30%"],
          f: ["partial Cohen's f of the S4 coefficient", "S4 계수의 부분 Cohen's f"],
          tt: ["the t-statistic of the S4 coefficient", "S4 계수의 t 통계량"],
          df: ["residual degrees of freedom", "잔차 자유도"]},
   src: ["Cinelli &amp; Hazlett (2020), Making sense of sensitivity.", "Cinelli &amp; Hazlett (2020), Making sense of sensitivity."],
-  adapt: ["For scale: the measured control most tied to S4 membership, mean building height within 500 m, explains only about 6–7% of the leftover variation in type.", "비교하면, S4 소속과 가장 관련된 측정 통제 변수인 500 m 안 평균 건물 높이는 유형의 남은 변동 가운데 약 6–7%만 설명합니다."]},
- {t: ["9 · Many tests at once: Holm's correction", "9 · 여러 검정을 한꺼번에: Holm 보정"], at: "#hold",
+  adapt: ["For scale: the measured control most tied to S4 membership, mean building height within 500 m, explains only about 6–7% of the leftover variation in type.", "비교하자면, 측정한 통제변수 가운데 S4 여부와 가장 밀접한 반경 500 m 평균 건물 높이도 유형의 잔여 변동을 약 6–7%만 설명한다."]},
+ {t: ["9 · Many tests at once: Holm's correction", "9 · 다중 검정: Holm 보정"], at: "#hold",
   f: () => `${v("pk", "p<sub>(1)</sub> ≤ … ≤ p<sub>(m)</sub>")} ;&nbsp; reject ${v("Hk", "H<sub>(k)</sub>")} while ${v("pk", "p<sub>(k)</sub>")} ≤ ${v("al", "α")} / (${v("m", "m")} − k + 1)`,
-  vars: {pk: ["the p-values of all tests, sorted from smallest to largest", "모든 검정의 p값을 작은 것부터 정렬"],
-         Hk: ["the k-th hypothesis in that order", "그 순서의 k번째 가설"],
-         al: ["the error rate allowed for the whole family of tests, 0.05", "검정 전체에 허용한 오류율, 0.05"],
-         m: ["the number of tests: 85 here", "검정의 수: 여기서는 85"]},
-  src: ["Holm (1979), a sequentially rejective procedure that controls the chance of any false alarm across all tests.", "Holm (1979): 모든 검정에서 한 번이라도 잘못 기각할 확률을 통제하는 순차 기각 방법."],
-  adapt: ["Applied to every S4-versus-S1 test we ran (85). The largest adjusted p-value is 0.014.", "우리가 돌린 모든 S4 대 S1 검정(85개)에 적용했습니다. 가장 큰 보정 p값은 0.014입니다."]},
- {t: ["10 · Sky in an ideal street (teaching model)", "10 · 이상적인 거리의 하늘 (설명용 모형)"], at: "#two",
+  vars: {pk: ["the p-values of all tests, sorted from smallest to largest", "모든 검정의 p값을 오름차순으로 정렬"],
+         Hk: ["the k-th hypothesis in that order", "정렬 순서상 k번째 가설"],
+         al: ["the error rate allowed for the whole family of tests, 0.05", "검정 전체에 허용하는 오류율(0.05)"],
+         m: ["the number of tests: 85 here", "검정의 수(이 연구에서는 85개)"]},
+  src: ["Holm (1979), a sequentially rejective procedure that controls the chance of any false alarm across all tests.", "Holm(1979)의 순차 기각 방법으로, 여러 검정 가운데 하나라도 잘못 기각할 확률을 통제한다."],
+  adapt: ["Applied to every S4-versus-S1 test we ran (85). The largest adjusted p-value is 0.014.", "이 연구에서 수행한 S4 대 S1 검정 85개 전체에 적용했다. 보정 후 가장 큰 p값은 0.014다."]},
+ {t: ["10 · Sky in an ideal street (teaching model)", "10 · 이상화된 가로 협곡의 천공률 (설명용 모형)"], at: "#two",
   f: () => `${v("svf", "SVF")} = cos ( arctan ( 2 ${v("H", "H")} / ${v("W", "W")} ) )`,
-  vars: {svf: ["sky view factor at the centre of the street floor", "거리 바닥 중앙의 하늘 조망 계수"], H: ["wall height (m)", "벽 높이 (m)"], W: ["street width (m)", "거리 폭 (m)"]},
-  src: ["Oke (1981): the textbook result for a long, symmetric street canyon.", "Oke (1981): 길고 대칭인 가로 협곡의 교과서적 결과."],
-  adapt: ["Used only in the 'try it yourself' model. Real streets have gaps, trees and slopes, which is why we measured BVF from photos.", "'직접 해 보기' 모형에만 썼습니다. 실제 거리에는 틈, 나무, 경사가 있어 BVF는 사진으로 쟀습니다."]}];
+  vars: {svf: ["sky view factor at the centre of the street floor", "가로 바닥 중앙의 천공률(SVF)"], H: ["wall height (m)", "벽 높이 (m)"], W: ["street width (m)", "가로 폭 (m)"]},
+  src: ["Oke (1981): the textbook result for a long, symmetric street canyon.", "Oke(1981): 길고 대칭인 가로 협곡에 대한 교과서적 관계식."],
+  adapt: ["Used only in the 'try it yourself' model. Real streets have gaps, trees and slopes, which is why we measured BVF from photos.", "'직접 해 보기' 모형에만 사용했다. 실제 가로에는 건물 사이의 틈, 수목, 경사가 있으므로 BVF는 사진으로 측정했다."]}];
 function renderEq() {
   $("#eqcards").innerHTML = EQ.map((e, i) => `<div class="fig eq" id="eq${i + 1}">
     <h3 style="margin-top:0">${e.t[LANG === "ko" ? 1 : 0]}</h3>
     <div class="formula" data-i="${i}">${e.f()}</div>
     <div class="eqrow"><b>${L("Where it comes from", "출처")}</b><p>${e.src[LANG === "ko" ? 1 : 0]}</p></div>
-    <div class="eqrow"><b>${L("How we adapted it", "우리가 바꾼 점")}</b><p>${e.adapt[LANG === "ko" ? 1 : 0]}${e.chk ? ` <span class="chk">check: ${e.chk}</span>` : ""}</p></div>
-    <a class="small" href="${e.at}">${L("See it in use ↑", "쓰인 곳 보기 ↑")}</a></div>`).join("");
+    <div class="eqrow"><b>${L("How we adapted it", "이 연구에서 수정한 점")}</b><p>${e.adapt[LANG === "ko" ? 1 : 0]}${e.chk ? ` <span class="chk">check: ${e.chk}</span>` : ""}</p></div>
+    <a class="small" href="${e.at}">${L("See it in use ↑", "본문에서 보기 ↑")}</a></div>`).join("");
 }
 function eqTip(el) {
   const i = +el.closest(".formula").dataset.i, d = EQ[i].vars[el.dataset.k]; if (!d) return;
@@ -584,37 +584,37 @@ document.addEventListener("keydown", e => { if (e.key === "Enter" && document.ac
 /* ---------- Beyond Seoul ---------- */
 const CITIES = [
  {id: "seoul", n: ["Seoul", "서울"], lat: 37.57, lon: 126.98, me: true,
-  like: ["This study.", "이 연구."], did: ["723 street sensors, Street View BVF, satellite greenery; two summers.", "거리 센서 723개, 스트리트뷰 BVF, 위성 녹지, 두 여름."], found: ["S4 streets +0.45 °C at night, all else equal.", "S4 거리 밤 +0.45 °C (다른 조건이 같을 때)."], tr: ["", ""]},
+  like: ["This study.", "이 연구."], did: ["723 street sensors, Street View BVF and satellite greenery over two summers.", "두 여름에 걸쳐 거리 센서 723개, 스트리트뷰 기반 BVF, 위성 녹지 자료를 분석했다."], found: ["S4 streets were 0.45 °C warmer at night, all else equal.", "다른 조건을 통제했을 때 S4 가로의 야간 기온이 0.45 °C 높았다."], tr: ["", ""]},
  {id: "hk", n: ["Hong Kong", "홍콩"], lat: 22.32, lon: 114.17, ref: "Gong et al., 2018",
-  like: ["Very dense, high-rise, steep hills: Seoul's closest match in form.", "매우 고밀, 고층, 가파른 산: 형태 면에서 서울과 가장 가까운 도시."],
-  did: ["Mapped sky, tree and building view factors of street canyons from Google Street View with deep learning.", "구글 스트리트뷰와 딥러닝으로 가로 협곡의 하늘·나무·건물 조망 계수를 지도화."],
-  found: ["Street View estimates agreed closely with field fisheye photos (R² above 0.95); a 3D-GIS model overestimated open sky by 0.11 on average, mostly because it leaves out street trees.", "스트리트뷰 추정치가 현장 어안 사진과 잘 맞았고(R² 0.95 이상), 3D-GIS 모형은 주로 가로수를 빼먹어 하늘을 평균 0.11 과대평가."],
-  tr: ["Our BVF follows this approach, and their warning about trees is why we measured from photos rather than building models alone.", "우리 BVF는 이 방법을 따르며, 나무에 대한 이들의 지적이 건물 모형만이 아니라 사진으로 잰 이유입니다."]},
+  like: ["Very dense, high-rise, steep hills: Seoul's closest match in form.", "고밀·고층 시가지와 가파른 산지를 갖춘, 형태상 서울과 가장 가까운 도시다."],
+  did: ["Mapped sky, tree and building view factors of street canyons from Google Street View with deep learning.", "구글 스트리트뷰와 딥러닝으로 가로 협곡의 하늘·수목·건물 조망 계수를 산출했다."],
+  found: ["Street View estimates agreed closely with field fisheye photos (R² above 0.95). A 3D-GIS model overestimated open sky by 0.11 on average, mostly because it leaves out street trees.", "스트리트뷰 추정치는 현장 어안 사진과 잘 일치했다(R² 0.95 이상). 반면 3D-GIS 모형은 가로수를 반영하지 못해 천공률을 평균 0.11 과대 추정했다."],
+  tr: ["Our BVF follows this approach. Their warning about trees is why we measured from photos and did not rely on building models alone.", "이 연구의 BVF 산출은 이 방법을 따랐다. 건물 모형만으로는 수목을 놓친다는 이들의 지적에 따라 사진으로 직접 측정했다."]},
  {id: "tpe", n: ["Taipei", "타이베이"], lat: 25.03, lon: 121.56, ref: "Chan et al., 2024; Lin et al., 2024",
-  like: ["A dense basin city ringed by mountains, like Seoul.", "서울처럼 산으로 둘러싸인 고밀 분지 도시."],
-  did: ["Chan et al. extracted greenery, building and sky view factors from Street View with a neural network and related them to monthly temperature (2018–2021). Lin et al. measured six street canyons on hot and cool days.", "Chan 외는 신경망으로 스트리트뷰에서 녹시율, 건물·하늘 조망 계수를 뽑아 월별 기온(2018–2021)과 연결. Lin 외는 더운 날과 선선한 날 여섯 개 가로 협곡을 측정."],
-  found: ["More street-level greenery went with lower temperatures; in the canyons, street-tree shade lowered air temperature by about 0.5 °C and mean radiant temperature by about 2 °C.", "거리 수준 녹지가 많을수록 기온이 낮았고, 가로수 그늘은 기온을 약 0.5 °C, 평균 복사 온도를 약 2 °C 낮췄음."],
-  tr: ["Same direction as our afternoon greenery result; a similar city to test our street types in.", "우리 오후 녹지 결과와 같은 방향. 우리 거리 유형을 시험해 볼 만한 비슷한 도시."]},
+  like: ["A dense basin city ringed by mountains, like Seoul.", "서울처럼 산으로 둘러싸인 고밀 분지 도시다."],
+  did: ["Chan et al. extracted greenery, building and sky view factors from Street View with a neural network and related them to monthly temperature (2018–2021). Lin et al. measured six street canyons on hot and cool days.", "Chan et al.은 신경망으로 스트리트뷰에서 녹시율과 건물·하늘 조망 계수를 추출해 월별 기온(2018–2021)과 연계했다. Lin et al.은 더운 날과 선선한 날에 가로 협곡 여섯 곳을 실측했다."],
+  found: ["More street-level greenery went with lower temperatures. In the canyons, street-tree shade lowered air temperature by about 0.5 °C and mean radiant temperature by about 2 °C.", "가로 수준의 녹지가 많을수록 기온이 낮았다. 가로 협곡에서는 가로수 그늘이 기온을 약 0.5 °C, 평균 복사 온도를 약 2 °C 낮추었다."],
+  tr: ["Same direction as our afternoon greenery result. Taipei would be a good place to test our street types.", "이 연구의 오후 녹지 결과와 방향이 같다. 이 연구의 가로 유형을 검증해 볼 만한 도시다."]},
  {id: "sg", n: ["Singapore", "싱가포르"], lat: 1.35, lon: 103.82, ref: "Wong & Jusuf, 2010",
-  like: ["Dense and green but tropical and mostly flat: a useful contrast.", "고밀하고 푸르지만 열대이고 대체로 평탄함: 좋은 대조군."],
-  did: ["Measured air temperature and sky view factor across the One-North estate, November 2007 to March 2008.", "2007년 11월–2008년 3월 One-North 지구에서 기온과 하늘 조망 계수를 측정."],
-  found: ["Dense-greenery areas were 2.4 K cooler by day and 1.1 K at night than less-green areas; trees reduced open sky without making nights warmer.", "녹지가 많은 곳은 적은 곳보다 낮에 2.4 K, 밤에 1.1 K 시원했고, 나무는 하늘을 가리면서도 밤을 덥게 만들지 않았음."],
-  tr: ["Supports separating building-blocked sky (BVF) from tree-blocked sky, as we did.", "우리처럼 건물이 가린 하늘(BVF)과 나무가 가린 하늘을 나누는 것을 뒷받침."]},
+  like: ["Dense and green, but tropical and mostly flat, which makes it a useful contrast.", "고밀하고 녹지가 많지만 열대 기후에 지형이 대체로 평탄해 서울과 좋은 대조를 이룬다."],
+  did: ["Measured air temperature and sky view factor across the One-North estate, November 2007 to March 2008.", "2007년 11월부터 2008년 3월까지 One-North 지구에서 기온과 천공률을 측정했다."],
+  found: ["Areas with dense greenery were 2.4 K cooler by day and 1.1 K cooler at night than less green areas. Trees reduced open sky without making nights warmer.", "녹지가 많은 곳은 적은 곳보다 낮에 2.4 K, 밤에 1.1 K 낮았다. 수목은 하늘을 가렸지만 밤을 덥게 만들지는 않았다."],
+  tr: ["Supports separating building-blocked sky (BVF) from tree-blocked sky, as we did.", "이 연구처럼 건물이 가린 하늘(BVF)과 수목이 가린 하늘을 구분해야 할 근거가 된다."]},
  {id: "bos", n: ["Boston", "보스턴"], lat: 42.36, lon: -71.06, ref: "Li, Ratti & Seiferling, 2018",
-  like: ["Different form and climate; shares the method.", "형태와 기후는 다르지만 방법을 공유."],
-  did: ["Turned Street View panoramas into upward fisheyes to estimate how much shade street trees give.", "스트리트뷰 파노라마를 위로 향한 어안 이미지로 바꿔 가로수 그늘의 양을 추정."],
-  found: ["Street-level photos capture tree shade that building-height models miss.", "거리 사진은 건물 높이 모형이 놓치는 나무 그늘을 잡아냄."],
-  tr: ["The basis of our sun-path and shade step.", "우리 태양 경로·그늘 단계의 바탕."]},
+  like: ["Different form and climate, but the same method.", "도시 형태와 기후는 다르지만 연구 방법이 같다."],
+  did: ["Turned Street View panoramas into upward fisheyes to estimate how much shade street trees give.", "스트리트뷰 파노라마를 하늘을 향한 어안 이미지로 변환해 가로수 그늘의 양을 추정했다."],
+  found: ["Street-level photos capture tree shade that building-height models miss.", "거리 사진은 건물 높이 모형이 놓치는 수목 그늘을 포착한다."],
+  tr: ["The basis of our sun-path and shade step.", "이 연구의 태양 궤적·그늘 분석의 토대가 되었다."]},
  {id: "phx", n: ["Phoenix", "피닉스"], lat: 33.45, lon: -112.07, ref: "Middel et al., 2017",
-  like: ["A hot desert city; shares the fisheye method.", "더운 사막 도시. 어안 방법을 공유."],
-  did: ["Generated fisheye views to map sky view factor at 5 m resolution for thermal-comfort routing.", "어안 이미지를 만들어 5 m 해상도의 하늘 조망 계수를 지도화하고 열쾌적 경로 안내에 활용."],
-  found: ["Fine-scale sky openness varies a lot within a neighbourhood, with buildings and trees both mattering.", "동네 안에서도 하늘 개방도가 크게 달랐고, 건물과 나무 모두 중요했음."],
-  tr: ["Same idea as our 'Find your 동' card, at a finer scale: show people where shade and open sky are.", "'우리 동 찾기'와 같은 생각을 더 세밀하게: 그늘과 열린 하늘이 어디 있는지 보여 줌."]},
+  like: ["A hot desert city that uses the same fisheye method.", "고온 건조한 사막 도시로, 같은 어안 이미지 방법을 사용했다."],
+  did: ["Generated fisheye views to map sky view factor at 5 m resolution for thermal-comfort routing.", "합성 어안 이미지로 5 m 해상도의 천공률 지도를 만들어 열쾌적 보행 경로 안내에 활용했다."],
+  found: ["Sky openness varied a lot within a single neighbourhood, and both buildings and trees mattered.", "같은 동네 안에서도 천공률의 편차가 컸고, 건물과 수목이 모두 영향을 미쳤다."],
+  tr: ["The same idea as our 'Find your 동' map at a finer scale: showing people where the shade and open sky are.", "'우리 동네 찾기'와 같은 발상을 더 세밀한 공간 단위로 구현해, 그늘과 열린 하늘의 위치를 보여 준다."]},
  {id: "us", n: ["108 US cities", "미국 108개 도시"], lat: 39.5, lon: -96, ref: "Hoffman, Shandas & Pendleton, 2020",
-  like: ["Many cities at once; the equity question.", "여러 도시를 한꺼번에. 형평성 질문."],
-  did: ["Compared satellite land surface temperature in neighbourhoods 'redlined' in the 1930s with their neighbours.", "1930년대 레드라이닝된 동네의 위성 지표면 온도를 이웃 동네와 비교."],
-  found: ["In 94% of the areas studied, formerly redlined neighbourhoods were hotter, by as much as 7 °C at the surface.", "연구 지역의 94%에서 과거 레드라이닝된 동네가 더 뜨거웠고, 지표면 온도 차이는 최대 7 °C."],
-  tr: ["Surface temperature, not air temperature, and a history Seoul doesn't share. But the same question: who lives where it is hottest?", "기온이 아니라 지표면 온도이고, 서울과 다른 역사입니다. 그래도 같은 질문: 가장 더운 곳에는 누가 사는가?"]}];
+  like: ["Many cities at once, and the equity question.", "여러 도시를 함께 분석했고, 형평성 문제를 다룬다."],
+  did: ["Compared satellite land surface temperature in neighbourhoods 'redlined' in the 1930s with their neighbours.", "1930년대 레드라이닝(redlining) 대상이었던 동네의 위성 지표면 온도를 인접 동네와 비교했다."],
+  found: ["In 94% of the areas studied, formerly redlined neighbourhoods were hotter, by as much as 7 °C at the surface.", "분석 지역의 94%에서 과거 레드라이닝 대상 동네가 더 뜨거웠으며, 지표면 온도 차이는 최대 7 °C에 달했다."],
+  tr: ["They measured surface temperature, and Seoul has no such history. The question is the same, though: who lives where it is hottest?", "기온이 아닌 지표면 온도를 측정했고, 서울에는 이런 역사가 없다. 그러나 가장 더운 곳에 누가 사는가라는 질문은 같다."]}];
 let citySel = "hk";
 function renderWorld() {
   const svg = $("#worldmap"); clear(svg); const X = lon => 60 + (lon + 130) / 290 * 560, Y = lat => 350 - (lat + 5) / 60 * 320;
@@ -630,38 +630,38 @@ function renderWorld() {
     g.addEventListener("click", () => { if (!c.me) { citySel = c.id; renderWorld(); } }); });
   const c = CITIES.find(x => x.id === citySel), k = LANG === "ko" ? 1 : 0;
   $("#citycard").innerHTML = `<div class="card" style="border-left-color:#1E3557;margin-top:0"><h4>${c.n[k]} <span class="small">${c.ref}</span></h4>
-    <p><b>${L("Like Seoul?", "서울과 닮은 점")}</b> ${c.like[k]}</p><p><b>${L("What they did", "무엇을 했나")}</b> ${c.did[k]}</p>
-    <p><b>${L("What they found", "무엇을 찾았나")}</b> ${c.found[k]}</p><p><b>${L("What it means here", "우리에게 주는 의미")}</b> ${c.tr[k]}</p></div>`;
+    <p><b>${L("Like Seoul?", "서울과 닮은 점")}</b> ${c.like[k]}</p><p><b>${L("What they did", "연구 내용")}</b> ${c.did[k]}</p>
+    <p><b>${L("What they found", "주요 결과")}</b> ${c.found[k]}</p><p><b>${L("What it means here", "이 연구에 주는 시사점")}</b> ${c.tr[k]}</p></div>`;
 }
 
 /* ---------- debate positions ---------- */
 const POS = [
- {k: "A", t: ["Hottest streets first", "가장 더운 거리부터"],
-  why: ["Cooling is physical: the most degrees gained per won come where streets are hottest. Heat reaches everyone who walks, works or waits there, not only residents.", "냉각은 물리적인 일입니다. 같은 예산으로 가장 많은 온도를 낮출 수 있는 곳은 가장 더운 거리입니다. 더위는 그곳에 사는 사람만이 아니라 걷고, 일하고, 기다리는 모든 사람에게 닿습니다."],
-  data: ["S4 is 41.8% of Seoul's mapped streets: the target is large.", "S4는 서울 거리의 41.8%: 대상이 큽니다."],
-  weak: ["Spreads money across 3,000 km of street and ignores who is most harmed.", "3,000 km의 거리에 예산을 흩고, 누가 가장 피해를 입는지를 보지 않습니다."]},
+ {k: "A", t: ["Hottest streets first", "가장 더운 가로부터"],
+  why: ["Cooling is physical. Each won buys the most cooling where streets are hottest. The heat reaches everyone who walks, works or waits there, residents and passers-by alike.", "냉각은 물리적인 문제다. 같은 예산으로 기온을 가장 많이 낮출 수 있는 곳은 가장 더운 가로다. 더위는 거주자뿐 아니라 그 길을 걷고, 그곳에서 일하고, 버스를 기다리는 모든 사람에게 영향을 미친다."],
+  data: ["S4 is 41.8% of Seoul's mapped streets: the target is large.", "S4는 서울 가로의 41.8%를 차지할 만큼 대상이 넓다."],
+  weak: ["Spreads money across 3,000 km of street and ignores who is most harmed.", "3,000 km에 이르는 가로에 예산이 분산되고, 누가 가장 큰 피해를 입는지는 고려하지 않는다."]},
  {k: "B", t: ["Most vulnerable people first", "가장 취약한 사람부터"],
-  why: ["Heat does not harm people equally. Age, illness, poor housing and low income decide who gets sick. Public money should go first to those with the least means to protect themselves.", "더위는 사람을 똑같이 해치지 않습니다. 나이, 질병, 열악한 주거, 낮은 소득이 누가 아플지를 정합니다. 공공 예산은 스스로를 지킬 수단이 가장 적은 사람에게 먼저 가야 합니다."],
-  data: ["Seoul's night-heat mortality risk rises from a 22 °C night minimum (Oh et al., 2022).", "서울의 밤 더위 사망 위험은 밤 최저기온 22 °C부터 높아집니다(Oh 외, 2022)."],
-  weak: ["Street fixes may not reach people whose problem is the room they sleep in; person-level help (cooling centres, bills) may do more.", "자는 방이 문제인 사람에게는 거리 개선이 닿지 않을 수 있습니다. 사람 단위 지원(쉼터, 냉방비)이 더 효과적일 수 있습니다."]},
- {k: "C", t: ["Where both meet", "둘이 겹치는 곳"],
-  why: ["Where hot streets and need overlap, one project serves both aims. It is easy to explain and to map.", "더운 거리와 필요가 겹치는 곳에서는 사업 하나가 두 목표를 함께 채웁니다. 설명하기 쉽고 지도로 보이기 쉽습니다."],
-  data: ["42 priority 동: top quarter for both S4 street share and 수급자 rate.", "우선 검토 동 42곳: S4 거리 비율과 수급자 비율이 모두 상위 25%."],
-  weak: ["The list depends on the cut-off (a top third or top fifth gives a different list), and 동 averages hide individuals.", "목록은 기준선에 따라 달라지고(상위 1/3이나 1/5이면 목록이 바뀜), 동 평균은 개인을 가립니다."]},
- {k: "D", t: ["Citywide rules over projects", "사업보다 도시 전체 규칙"],
-  why: ["Every rebuilt street is a chance. Rules on setbacks, street-wall height and planting shape all of them at little public cost, and treat every neighbourhood the same.", "다시 지어지는 모든 거리가 기회입니다. 후퇴선, 가로벽 높이, 식재 규칙은 공공 비용을 거의 들이지 않고 모든 거리를 바꾸며, 모든 동네를 똑같이 대합니다."],
-  data: ["Night warmth follows enclosure (BVF); enclosure is set when blocks are built.", "밤의 따뜻함은 둘러싸임(BVF)을 따르고, 둘러싸임은 블록이 지어질 때 정해집니다."],
-  weak: ["Slow: rules change streets over decades, while heatwaves come every summer.", "느립니다. 규칙은 수십 년에 걸쳐 거리를 바꾸지만, 폭염은 매년 옵니다."]}];
+  why: ["Heat does not harm people equally. Age, illness, poor housing and low income decide who gets sick. Public money should go first to those with the least means to protect themselves.", "더위의 피해는 모두에게 같지 않다. 나이, 질병, 열악한 주거, 낮은 소득이 누가 건강을 잃을지를 좌우한다. 공공 예산은 스스로를 보호할 수단이 가장 부족한 사람에게 먼저 쓰여야 한다."],
+  data: ["Seoul's night-heat mortality risk rises from a 22 °C night minimum (Oh et al., 2022).", "서울에서는 야간 최저기온 22 °C부터 더위로 인한 사망 위험이 높아진다(Oh et al., 2022)."],
+  weak: ["Street fixes may not reach people whose problem is the room they sleep in. Help aimed at people, such as cooling centres and help with bills, may do more.", "잠자는 방 자체가 문제인 사람에게는 가로 개선의 효과가 닿지 않을 수 있다. 무더위 쉼터나 냉방비 지원처럼 개인을 대상으로 한 지원이 더 효과적일 수 있다."]},
+ {k: "C", t: ["Where both meet", "두 조건이 겹치는 곳부터"],
+  why: ["Where hot streets and need overlap, one project serves both aims. It is easy to explain and to map.", "더운 가로와 지원 필요가 겹치는 곳에서는 사업 하나로 두 목표를 동시에 달성할 수 있다. 정책 취지를 설명하기 쉽고 지도로 나타내기도 쉽다."],
+  data: ["42 priority 동: top quarter for both S4 street share and 수급자 rate.", "우선 검토 동 42곳은 S4 가로 비율과 수급자 비율이 모두 상위 25%다."],
+  weak: ["The list depends on the cut-off (a top third or top fifth gives a different list), and 동 averages hide individuals.", "대상 목록은 기준에 따라 달라지며(상위 3분의 1이나 5분의 1을 기준으로 하면 목록이 바뀐다), 동 평균은 개인 간 차이를 드러내지 못한다."]},
+ {k: "D", t: ["Citywide rules before projects", "개별 사업보다 도시 전체의 규정"],
+  why: ["Every rebuilt street is a chance. Rules on setbacks, street-wall height and planting shape all of them at little public cost, and treat every neighbourhood the same.", "재건축되는 모든 가로가 기회다. 건축선 후퇴, 가로벽 높이, 식재에 관한 규정은 공공 비용을 거의 들이지 않고 모든 가로에 적용되며, 모든 동네를 동등하게 다룬다."],
+  data: ["Night warmth follows enclosure (BVF); enclosure is set when blocks are built.", "야간 기온은 가로의 위요도(BVF)를 따르고, 위요도는 블록이 지어질 때 결정된다."],
+  weak: ["Slow: rules change streets over decades, while heatwaves come every summer.", "효과가 느리다. 규정은 수십 년에 걸쳐 가로를 바꾸지만 폭염은 해마다 찾아온다."]}];
 function renderPositions() {
   const k = LANG === "ko" ? 1 : 0;
   $("#positions").innerHTML = `<div class="posgrid">` + POS.map(p => `<div class="pos"><div class="pk">${p.k}</div><h4>${p.t[k]}</h4>
-    <p>${p.why[k]}</p><p class="small"><b>${L("From the data", "자료에서")}:</b> ${p.data[k]}</p><p class="small"><b>${L("Weak point", "약점")}:</b> ${p.weak[k]}</p></div>`).join("") + `</div>`;
+    <p>${p.why[k]}</p><p class="small"><b>${L("From the data", "자료상 근거")}:</b> ${p.data[k]}</p><p class="small"><b>${L("Weak point", "약점")}:</b> ${p.weak[k]}</p></div>`).join("") + `</div>`;
 }
 function initComments() {
   const box = $("#cusdis_thread"), note = $("#cnote");
-  if (box.dataset.appId === "CUSDIS_APP_ID") { note.innerHTML = L("The comment box opens when the site goes live.", "댓글 창은 사이트가 공개되면 열립니다."); return; }
+  if (box.dataset.appId === "CUSDIS_APP_ID") { note.innerHTML = L("The comment box opens when the site goes live.", "댓글 창은 사이트가 공개되면 열린다."); return; }
   const s = document.createElement("script"); s.src = "https://cusdis.com/js/cusdis.es.js"; s.async = true; s.defer = true;
-  s.onerror = () => { note.textContent = L("Comments could not load here.", "이곳에서는 댓글을 불러올 수 없습니다."); };
+  s.onerror = () => { note.textContent = L("Comments could not load here.", "이곳에서는 댓글을 불러올 수 없다."); };
   document.body.appendChild(s);
 }
 
@@ -682,10 +682,10 @@ const GK = { // Korean term -> English gloss
   "공공누리": "Korea Open Government License", "GIS건물통합정보": "the national integrated GIS building dataset",
   "서울시 정보통신과": "Seoul city's ICT division, which runs the sensor network", "기상자료개방포털": "KMA's open weather-data portal"};
 const GE = { // English term -> Korean gloss
-  "BVF": "건물 조망 계수: 거리에서 본 하늘 가운데 건물이 가리는 비율",
-  "NDVI": "정규식생지수: 위성으로 잰 초록 식생의 양 (−1~1)",
-  "SVF": "하늘 조망 계수: 거리에서 보이는 하늘의 비율",
-  "S-DoT": "서울시 도시데이터 센서(Smart Seoul Data of Things): 거리의 기온 등을 재는 IoT 센서망",
+  "BVF": "건물 조망 계수: 가로에서 올려다본 하늘 가운데 건물이 가리는 비율",
+  "NDVI": "정규식생지수: 위성 영상으로 산출한 식생의 양 (−1~1)",
+  "SVF": "천공률(하늘 조망 계수): 가로에서 보이는 하늘의 비율", "Cohen's f": "효과 크기 지표의 하나로, 한 변수가 설명하는 변동의 상대적 크기", "OLS": "최소제곱 회귀",
+  "S-DoT": "서울시 도시데이터 센서(Smart Seoul Data of Things): 거리의 기온 등을 측정하는 IoT 센서망",
   "SegFormer-B4": "이미지의 모든 픽셀을 하늘, 건물, 나무 등으로 분류하는 AI 모델", "SegFormer": "이미지의 모든 픽셀을 분류하는 AI 모델",
   "ADE20K": "AI 학습용 공개 장면 이미지 데이터셋 (150개 분류)", "k-means": "가장 가까운 중심을 기준으로 자료를 묶는 군집 방법",
   "Gaussian mixture": "자료를 여러 정규분포의 합으로 보고 묶는 군집 방법", "HC1": "이분산에 강건한 표준오차의 한 종류",
@@ -711,7 +711,7 @@ function glossKo(t) {
   return null;
 }
 const RE = new RegExp(`(?<![A-Za-z0-9-])(${Object.keys(GE).sort((a, b) => b.length - a.length).map(esc).join("|")})(?![A-Za-z0-9-])`, "g");
-const SKIP = "svg,script,style,code,pre,textarea,input,button,.v,.term,.gt,.tchip,.bar,h1,.mail,.formula,.refs";
+const SKIP = "svg,script,style,code,pre,textarea,input,button,summary,.v,.term,.gt,.tchip,.bar,h1,.mail,.formula,.refs";
 function wrapTerms(root = document.body) {
   const DYN = "#positions,#reflist,#citycard,#eqcards,#dcard,#typelist,#fexplain,#stepbody,#nightinfo,#codeblocks,#gloss,#dotinfo,#tread,#tcap,#pollbtns,#pollnote";
   [["en", RK, GK, ".en"], ["ko", RE, GE, ".ko"]].forEach(([cls, rx, dict, sel]) => {
@@ -752,7 +752,7 @@ function drawPoll() {
   $("#pollbtns").innerHTML = POS.map(p => `<button data-p="${p.k}" class="${myVote === p.k ? "on" : ""}" ${myVote ? "disabled" : ""}><b>${p.k}</b>${p.t[k]}${myVote === p.k ? " ✓" : ""}</button>`).join("");
   $$("#pollbtns button").forEach(b => b.addEventListener("click", () => vote(b.dataset.p)));
   const c = pollCounts || {}, tot = Object.values(c).reduce((a, b) => a + b, 0);
-  $("#pollres").innerHTML = pollErr ? `<p class="small">${L("Results can't load here; they show on the live site.", "이곳에서는 결과를 불러올 수 없습니다. 공개 사이트에서 보입니다.")}</p>`
+  $("#pollres").innerHTML = pollErr ? `<p class="small">${L("Results can't load here; they show on the live site.", "이곳에서는 결과를 불러올 수 없다. 공개 사이트에서 확인할 수 있다.")}</p>`
     : `<div class="small" style="margin-bottom:4px">${L("Votes so far", "지금까지의 투표")}: ${pollCounts ? tot : "…"}</div>` + POS.map(p => { const v = c[p.k] || 0, pc = tot ? Math.round(100 * v / tot) : 0;
       return `<div class="pbar"><b>${p.k}</b><div class="t"><i style="width:${pc}%"></i></div><span class="num">${pc}%</span></div>`; }).join("");
   $("#pollnote").textContent = (myVote ? L("Thanks for voting. One vote per browser. ", "투표해 주셔서 감사합니다. 브라우저당 한 표입니다. ") : "") +
