@@ -291,7 +291,7 @@ const FEX = {
   "Main model": ["S4 vs S1 with location, building and device controls; robust standard errors.", "입지, 건물, 센서 기종을 통제하고 강건 표준오차를 적용한 S4 대 S1 비교."],
   "One device type only (V02)": ["The network uses two sensor models that read about 0.5 °C apart. Here only one model is used.", "센서망에는 측정값이 약 0.5 °C 차이 나는 두 기종이 섞여 있다. 이 점검에서는 한 기종만 사용했다."],
   "Strictest 284 sensors": ["Only sensors that pass every doubt at once: pole-mounted, known height, one device type, no redevelopment nearby, photos from 2017 or later.", "제기될 수 있는 의문을 모두 통과한 센서만 남겼다. 지주 설치, 설치 높이 확인, 단일 기종, 주변 재개발 없음, 2017년 이후 촬영 사진이라는 조건이다."],
-  "Matched S1–S4 pairs": ["Each S1 site is paired with its most similar S4 site on the controls, and the remaining differences are corrected for.", "S1 지점마다 통제변수가 가장 비슷한 S4 지점을 짝지은 뒤 남은 차이를 보정했다."],
+  "Matched S1–S4 pairs": ["Each S1 site is paired with the most similar S4 site of the same device family, and the remaining differences are corrected for.", "S1 지점마다 같은 센서 기종 가운데 통제변수가 가장 비슷한 S4 지점을 짝지은 뒤 남은 차이를 보정했다."],
   "Machine-learning controls": ["The controls enter through a flexible machine-learning model, so their effects need not follow straight lines (Chernozhukov et al., 2018).", "통제변수의 영향을 선형으로 가정하지 않고 유연한 머신러닝 모형으로 추정했다(Chernozhukov et al., 2018)."],
   "Other clustering (Gaussian mixture)": ["The types are rebuilt with a different method (Gaussian mixture).", "다른 군집 방법(Gaussian mixture)으로 유형을 다시 도출했다."],
   "Map-coordinate surface added": ["A smooth surface over map coordinates removes any broad city-wide pattern.", "지도 좌표에 대한 완만한 공간 추세면을 추가해 도시 전체에 걸친 광역적 패턴을 제거했다."],
@@ -307,7 +307,7 @@ function renderForest() {
 }
 /* ---------- tropical nights bars ---------- */
 function renderTrop() {
-  const svg = $("#tropbars"); clear(svg); const tn = D.trop, X = v => 60 + 560 * v / 45;
+  const svg = $("#tropbars"); clear(svg); const tn = D.trop, X = v => 60 + 560 * v / 55;
   T4.forEach((t, i) => { const y = 20 + i * 48;
     txt(svg, 10, y + 18, t, {"font-weight": 900, fill: TCT[t], "font-size": 16});
     el("rect", {x: 60, y, width: X(tn[`2025.${t}`]) - 60, height: 22, fill: TC[t], rx: 3}, svg); txt(svg, X(tn[`2025.${t}`]) + 6, y + 17, tn[`2025.${t}`].toFixed(1), {"font-weight": 700, "font-size": 15});
