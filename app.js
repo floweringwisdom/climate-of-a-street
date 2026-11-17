@@ -322,7 +322,7 @@ function initStreetMap() {
   pth(B.city, {fill: "#FFFFFF", stroke: "#4F5E63", "stroke-width": 40}); pth(B.forest, {fill: "#E4ECDD", "fill-rule": "evenodd"}); pth(B.water, {fill: "#CFE2EE", "fill-rule": "evenodd"});
   pth(B.gu, {fill: "none", stroke: "#D6D1C7", "stroke-width": 25});
   inner.appendChild(base);
-  ["X", "S1", "S2", "S3", "S4"].forEach(k => { const im = document.createElement("img"); im.src = `img/streets_${k}.png`; im.alt = ""; im.id = "sm_" + k; im.loading = "lazy"; inner.appendChild(im); });
+  ["X", "S1", "S2", "S3", "S4"].forEach(k => { const im = document.createElement("img"); im.src = `img/streets_${k}.png`; im.alt = ""; im.id = "sm_" + k; inner.appendChild(im); });
   const apply = () => { inner.style.transform = `translate(${zs.x}px,${zs.y}px) scale(${zs.k})`; };
   const zoomAt = (cx, cy, f) => { const nk = Math.max(1, Math.min(8, zs.k * f)); zs.x = cx - (cx - zs.x) * nk / zs.k; zs.y = cy - (cy - zs.y) * nk / zs.k; zs.k = nk; clamp(); apply(); };
   const clamp = () => { const w = box.clientWidth, h = box.clientHeight; zs.x = Math.min(0, Math.max(w - w * zs.k, zs.x)); zs.y = Math.min(0, Math.max(h - h * zs.k, zs.y)); };
