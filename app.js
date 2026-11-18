@@ -291,7 +291,7 @@ const FEX = {
   "Main model": ["S4 vs S1 with location, building and device controls; robust standard errors.", "입지, 건물, 센서 기종을 통제하고 강건 표준오차를 적용한 S4 대 S1 비교."],
   "One device type only (V02)": ["The network uses two sensor models that read about 0.5 °C apart. Here only one model is used.", "센서망에는 측정값이 약 0.5 °C 차이 나는 두 기종이 섞여 있다. 이 점검에서는 한 기종만 사용했다."],
   "Strictest 284 sensors": ["Only sensors that pass every doubt at once: pole-mounted, known height, one device type, no redevelopment nearby, photos from 2017 or later.", "제기될 수 있는 의문을 모두 통과한 센서만 남겼다. 지주 설치, 설치 높이 확인, 단일 기종, 주변 재개발 없음, 2017년 이후 촬영 사진이라는 조건이다."],
-  "Matched S1–S4 pairs": ["Each S1 site is paired with the most similar S4 site of the same device family, and the remaining differences are corrected for.", "S1 지점마다 같은 센서 기종 가운데 통제변수가 가장 비슷한 S4 지점을 짝지은 뒤 남은 차이를 보정했다."],
+  "Matched S1–S4 pairs": ["Each S1 site is paired with the most similar S4 site of the same device family, and the remaining differences are corrected for. 86 S1 sites share 54 S4 sites, so the interval uses the Abadie–Imbens variance.", "S1 지점마다 같은 센서 기종 가운데 통제변수가 가장 비슷한 S4 지점을 짝지은 뒤 남은 차이를 보정했다. S1 86곳이 S4 54곳을 나누어 쓰므로 신뢰구간은 Abadie–Imbens 분산으로 구했다."],
   "Machine-learning controls": ["The controls enter through a flexible machine-learning model, so their effects need not follow straight lines (Chernozhukov et al., 2018).", "통제변수의 영향을 선형으로 가정하지 않고 유연한 머신러닝 모형으로 추정했다(Chernozhukov et al., 2018)."],
   "Other clustering (Gaussian mixture)": ["The types are rebuilt with a different method (Gaussian mixture).", "다른 군집 방법(Gaussian mixture)으로 유형을 다시 도출했다."],
   "Map-coordinate surface added": ["A smooth surface over map coordinates removes any broad city-wide pattern.", "지도 좌표에 대한 완만한 공간 추세면을 추가해 도시 전체에 걸친 광역적 패턴을 제거했다."],
@@ -347,7 +347,7 @@ function renderStreetLegend() {
 /* ---------- residents bars ---------- */
 function renderRes() {
   const V = D.values, svg = $("#resbars"); clear(svg); const X = v => 220 + 420 * v / 0.5;
-  [[L("All residents", "전체 주민"), V["res.all"], "#B9B5AD"], [L("People aged 65+", "65세 이상"), V["res.old"], "#B9B5AD"], [L("수급자", "수급자"), V["res.rec"], "#D55E00"]].forEach(([l, v, c], i) => {
+  [[L("Night-time population", "야간 생활인구"), V["res.all"], "#B9B5AD"], [L("People aged 65+", "65세 이상"), V["res.old"], "#B9B5AD"], [L("수급자", "수급자"), V["res.rec"], "#D55E00"]].forEach(([l, v, c], i) => {
     const y = 14 + i * 42; txt(svg, 0, y + 17, l, {"font-size": 15, "font-weight": i === 2 ? 700 : 400}); el("rect", {x: 220, y, width: X(v) - 220, height: 24, fill: c, rx: 3}, svg);
     txt(svg, X(v) + 6, y + 18, (100 * v).toFixed(1) + "%", {"font-size": 15, "font-weight": i === 2 ? 700 : 400}); });
   txt(svg, 220, 146, L("Share of street length that is S4 in the 동 where each group lives", "각 집단이 거주하는 동의 S4 가로 비율"), {"font-size": 12, fill: "#4F5E63"});
@@ -446,10 +446,11 @@ const REFS = [
   ["Hoffman, J. S., Shandas, V., &amp; Pendleton, N. (2020). The effects of historical housing policies on resident exposure to intra-urban heat: A study of 108 US urban areas. <i>Climate</i>, 8(1), 12.", "10.3390/cli8010012"],
   ["Holm, S. (1979). A simple sequentially rejective multiple test procedure. <i>Scandinavian Journal of Statistics</i>, 6(2), 65–70. https://www.jstor.org/stable/4615733", null],
   ["Korea Meteorological Administration. 열대야일수 (tropical nights). 기상자료개방포털. https://data.kma.go.kr/climate/tropicalNight/selectTropicalNightChart.do", null],
+  ["Lee, Y., Kim, M., &amp; Seo, E. (2025). Explaining street-level thermal variability through semantic segmentation and explainable AI: Toward climate-responsive building and urban design. <i>Atmosphere</i>, 16(12), 1413.", "10.3390/atmos16121413"],
   ["Li, X., Ratti, C., &amp; Seiferling, I. (2018). Quantifying the shade provision of street trees in urban landscape: A case study in Boston, USA, using Google Street View. <i>Landscape and Urban Planning</i>, 169, 81–91.", "10.1016/j.landurbplan.2017.08.011"],
   ["Lin, B.-S., Chang, H.-C., Chen, C.-W., Huang, I.-H., Pardthaisong, L., &amp; Hsieh, C.-I. (2024). Effects of street spatial structure on micrometeorological condition and air quality—A case study of Taipei City. <i>Forests</i>, 15(12), 2221.", "10.3390/f15122221"],
   ["Middel, A., Lukasczyk, J., &amp; Maciejewski, R. (2017). Sky view factors from synthetic fisheye photos for thermal comfort routing—A case study in Phoenix, Arizona. <i>Urban Planning</i>, 2(1), 19–30.", "10.17645/up.v2i1.855"],
-  ["Oh, J., Kang, S., Lee, H., & Kim, H. (2022). 한국 수도권 지역 열대야 현상의 온도 기준과 사망 위험 [Cut-off point temperature of hot night and heat-related mortality risk in the capital area of South Korea]. <i>Journal of Climate Change Research</i>, 13(6), 781–791.", "10.15531/KSCCR.2022.13.6.781"],
+  ["Oh, J., Kang, C., Lee, W., & Kim, H. (2022). 한국 수도권 지역 열대야 현상의 온도 기준과 사망 위험 [Cut-off point temperature of hot night and heat-related mortality risk in the capital area of South Korea]. <i>Journal of Climate Change Research</i>, 13(6), 781–791.", "10.15531/KSCCR.2022.13.6.781"],
   ["Oke, T. R. (1981). Canyon geometry and the nocturnal urban heat island: Comparison of scale model and field observations. <i>Journal of Climatology</i>, 1(3), 237–254.", "10.1002/joc.3370010304"],
   ["Wong, N. H., &amp; Jusuf, S. K. (2010). Air temperature distribution and the influence of sky view factor in a green Singapore estate. <i>Journal of Urban Planning and Development</i>, 136(3), 261–272.", "10.1061/(ASCE)UP.1943-5444.0000014"],
   ["Xie, E., Wang, W., Yu, Z., Anandkumar, A., Alvarez, J. M., & Luo, P. (2021). SegFormer: Simple and efficient design for semantic segmentation with transformers. <i>Advances in Neural Information Processing Systems</i>, 34, 12077–12090.", null],
@@ -527,13 +528,13 @@ const EQ = [
   src: ["Ordinary least squares with heteroskedasticity-robust standard errors, a standard regression set-up.", "이분산에 강건한 표준오차를 적용한 최소제곱(OLS) 회귀로, 표준적인 회귀 설계다."],
   adapt: ["The device term was added after our audit found the two sensor families read differently and were unevenly spread over the types. It shrank the night gap from +0.50 to +0.45 °C.", "자체 점검에서 두 센서 기종의 측정값이 서로 다르고 유형별 분포도 고르지 않다는 점을 확인해 기종 항을 추가했다. 그 결과 야간 기온 차는 +0.50 °C에서 +0.45 °C로 줄었다."]},
  {t: ["6 · Tropical nights", "6 · 열대야"], at: "#tropical",
-  f: () => `${v("TN", "TN<sub>i</sub>")} = ${v("sn", "Σ<sub>n</sub>")} ${v("ind3", "𝟙[ min<sub>t ∈ 18–08 h</sub> T<sub>i,t</sub> ≥ c ]")} ,&nbsp; ${v("c", "c = 25 °C + offset")}`,
+  f: () => `${v("TN", "TN<sub>i</sub>")} = ${v("sn", "Σ<sub>n</sub>")} ${v("ind3", "𝟙[ min<sub>t ∈ 18–08 h</sub> T<sub>i,t</sub> ≥ c ]")} ,&nbsp; ${v("c", "c = 25 °C")}`,
   vars: {TN: ["number of tropical nights at sensor i over the 61 nights of July–August", "7–8월 61일 밤 가운데 센서 i의 열대야 일수"],
          sn: ["sum over nights n", "밤 n에 대한 합"],
          ind3: ["1 if the night's lowest hourly temperature stayed at or above c", "그날 밤의 최저 시간별 기온이 c 이상이면 1"],
-         c: ["the threshold: KMA's 25 °C plus an offset (+0.71 °C in 2025) so the network's median sensor counts the same nights as KMA's Seoul station", "기준 온도: 기상청 기준 25 °C에 보정값(2025년 +0.71 °C)을 더해, 센서망의 중앙값 센서가 기상청 서울 관측소와 같은 열대야 일수를 기록하도록 맞춤"]},
+         c: ["the threshold: KMA's 25 °C, used as it is", "기준 온도: 기상청 기준 25 °C를 그대로 적용"]},
   src: ["The Korea Meteorological Administration's definition: night minimum (18:01–09:00) of 25 °C or more.", "기상청 정의: 18:01부터 다음 날 09:00까지의 최저기온이 25 °C 이상인 밤."],
-  adapt: ["Street sensors read warmer at night than the official station, so a raw 25 °C would over-count. We calibrated one offset per summer and used sensors with at least 40 complete nights.", "거리 센서는 야간에 공식 관측소보다 높게 측정되므로 25 °C를 그대로 적용하면 열대야가 과대 집계된다. 여름마다 보정값을 하나씩 정하고, 야간 자료가 온전한 밤이 40일 이상인 센서만 사용했다."]},
+  adapt: ["These are S-DoT estimates with the official threshold, not official station counts. A night counts if at least 12 of its 15 hourly minima are present; sensors need at least 40 such nights, and counts are scaled to 61 nights. Because a missing hour may hold the coolest reading, we also counted complete nights only, shifted the window an hour each way (the files do not say whether a time stamp marks the start or end of its hour) and bounded the count. 2026 records were nearly complete and every rule gave 2.9 to 4.0 extra nights on S4 streets; in 2025 most nights had gaps and the size of the difference is not settled. A network-tuned threshold is kept only as a secondary check.", "공식 관측소 집계가 아니라 공식 기준을 S-DoT 자료에 적용한 추정치다. 15개 시간별 최저기온 가운데 12개 이상이 있는 밤을 유효한 밤으로 보고, 유효한 밤이 40일 이상인 센서를 분석했으며 일수는 61일 기준으로 환산했다. 빠진 시간에 가장 낮은 기온이 있었을 수 있으므로 자료가 온전한 밤만 세기, 시간대를 앞뒤로 한 시간씩 옮기기(시각 표기가 그 시간의 시작인지 끝인지 자료에 명시되어 있지 않다), 상한·하한 구하기를 함께 수행했다. 자료가 거의 온전한 2026년에는 모든 방식에서 S4 가로의 열대야가 2.9–4.0일 많았지만, 결측이 많은 2025년에는 차이의 크기가 확정되지 않았다. 센서망에 맞춰 보정한 기준은 보조 지표로만 남겼다."]},
  {t: ["7 · Who lives along S4 streets", "7 · S4 가로 주변에 사는 사람들"], at: "#who",
   f: () => `${v("Sg", "S4<sub>g</sub>")} = ${v("sd", "Σ<sub>d</sub>")} ${v("sdd", "s<sub>d</sub>")} ${v("wg", "w<sub>g,d</sub>")} / ${v("sd", "Σ<sub>d</sub>")} ${v("wg", "w<sub>g,d</sub>")} ,&nbsp; ${v("gap", "gap = S4<sub>수급자</sub> − S4<sub>all</sub>")}`,
   vars: {Sg: ["the S4 share of street length in the 동 where group g lives, on average", "집단 g가 거주하는 동의 평균 S4 가로 비율"],
@@ -556,9 +557,9 @@ const EQ = [
   vars: {pk: ["the p-values of all tests, sorted from smallest to largest", "모든 검정의 p값을 오름차순으로 정렬"],
          Hk: ["the k-th hypothesis in that order", "정렬 순서상 k번째 가설"],
          al: ["the error rate allowed for the whole family of tests, 0.05", "검정 전체에 허용하는 오류율(0.05)"],
-         m: ["the number of tests: 85 here", "검정의 수(이 연구에서는 85개)"]},
+         m: ["the number of tests in the family: 18 for the main model and its checks, 62 for the nights", "검정군 안의 검정 수: 기본 모형과 점검 18개, 밤별 추정 62개"]},
   src: ["Holm (1979), a sequentially rejective procedure that controls the chance of any false alarm across all tests.", "Holm(1979)의 순차 기각 방법으로, 여러 검정 가운데 하나라도 잘못 기각할 확률을 통제한다."],
-  adapt: ["Applied to every S4-versus-S1 test we ran (85). The largest adjusted p-value is 0.014.", "이 연구에서 수행한 S4 대 S1 검정 85개 전체에 적용했다. 보정 후 가장 큰 p값은 0.014다."]},
+  adapt: ["Applied within two families: the main model and its eight checks (18 tests, largest adjusted p 0.022) and the 62 nights (largest 0.046 with HC1 errors, 0.043 with Conley errors at 2 km). Control holds within each family, not across every claim on this site.", "두 검정군 안에서 각각 적용했다. 기본 모형과 여덟 가지 점검(18개, 보정 후 가장 큰 p값 0.022), 62일 밤별 추정(HC1 기준 0.046, 2 km Conley 표준오차 기준 0.043)이다. 오류율 통제는 각 검정군 안에서만 성립하며, 이 사이트의 모든 주장에 일괄 적용되는 것은 아니다."]},
  {t: ["10 · Sky in an ideal street (teaching model)", "10 · 이상화된 가로 협곡의 천공률 (설명용 모형)"], at: "#two",
   f: () => `${v("svf", "SVF")} = cos ( arctan ( 2 ${v("H", "H")} / ${v("W", "W")} ) )`,
   vars: {svf: ["sky view factor at the centre of the street floor", "가로 바닥 중앙의 천공률(SVF)"], H: ["wall height (m)", "벽 높이 (m)"], W: ["street width (m)", "가로 폭 (m)"]},
