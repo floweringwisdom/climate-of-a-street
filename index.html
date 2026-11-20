@@ -6,7 +6,7 @@
 <title>The Climate of a Street · 거리의 기후</title>
 <meta name="description" content="Street form and summer heat in Seoul, read from AI-labelled street imagery and 723 sensors. By Jisoo Han, Yonsei University.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=1.3">
+<link rel="stylesheet" href="style.css?v=1.4">
 </head>
 <body>
 <div class="bar"><div class="in">
@@ -56,8 +56,15 @@
     <div class="l"><span class="en">of Seoul's street length is S4</span><span class="ko">서울 가로 연장 중 S4 비율</span></div>
     <div class="s"><span class="en">expressways excluded</span><span class="ko">고속도로 제외</span></div></a>
   <a class="key" href="#who"><div class="v num" data-count="res.rec" data-f="pct1" data-u=""></div>
-    <div class="l"><span class="en">S4 share where 수급자 live</span><span class="ko">수급자 거주 동의 S4 비율</span></div>
+    <div class="l"><span class="en">S4 share where welfare recipients live</span><span class="ko">수급자 거주 동의 S4 비율</span></div>
     <div class="s"><span class="en">vs </span><span class="ko">야간 인구 전체 </span><span data-v="res.all" data-f="pct1"></span><span class="en"> for the night-time population</span></div></a>
+  <a class="key" href="#change"><div class="v num" data-count="split.old" data-f="pct0" data-u=""></div>
+    <div class="l"><span class="en">of S4 street is old enough for redevelopment</span><span class="ko">재개발 노후도 기준을 넘는 S4 가로</span></div>
+    <div class="s"><span class="en">by Seoul's building-age test: plan before it is rebuilt</span><span class="ko">서울시 노후도 기준 적용, 다시 지어지기 전에 계획할 대상</span></div></a>
+</div>
+<div class="wrap" style="padding:0;margin-top:14px">
+  <p class="en small">What is new. Li &amp; Quan (2023) typed Seoul's urban form in 500 m grids without temperature, and Bansal &amp; Quan (2024) modelled sensor temperature from 500 m urban form on a single day. This study types the streets themselves, follows each type's air temperature hour by hour over two summers, maps the four types for every street in Seoul, and gives each type its own design rule.</p>
+  <p class="ko small">기존 연구와의 차이. Li &amp; Quan(2023)은 서울의 도시 형태를 500 m 격자 단위로 유형화했지만 기온과 연결하지 않았고, Bansal &amp; Quan(2024)은 500 m 범위의 도시 형태로 하루 동안의 센서 기온을 모형화했다. 이 연구는 가로 자체를 유형화하고, 유형별 기온을 두 여름에 걸쳐 시간대별로 추적하며, 서울의 모든 가로에 유형을 부여한 지도와 유형별 설계 원칙을 함께 제시한다.</p>
 </div>
 <nav class="toc">
   <a href="#act1"><span class="en">1 · A street's own climate</span><span class="ko">1부 · 가로의 기후</span></a>
@@ -151,6 +158,7 @@
   <p class="ko">지표 조합 10가지를 각각 3–8개 군집으로 나누어 모두 60가지 버전을 시험했다. 분석에 앞서 통과 기준을 먼저 정해 두었다. 재표본추출에도 군집이 안정적일 것, 군집 간 구분이 최소한의 수준은 될 것, 전체 지점의 5% 미만인 군집이 없을 것, 입지와 건물을 통제한 뒤에도 기온과 유의한 관계가 있을 것이다. 기준을 통과한 버전은 분석에서 제외한 자치구의 기온을 얼마나 잘 예측하는지로 순위를 매겼고, 상위 세 버전은 유형마다 이름을 붙일 수 있어야 했다. 1위 버전은 여섯 유형이었으나 그중 두 유형이 모든 지표에서 중간값이어서 이 단계를 통과하지 못했고, 네 유형 버전이 선택되었다. 2025년 기온이 이 기준에 쓰였으므로 2025년 결과는 이 선택을 전제로 한 것이며, 2026년 신규 지점 180곳이 더 엄밀한 검증이 된다. 통과한 20개 버전 모두에서 가장 따뜻한 유형은 가장 둘러싸이고 녹지가 가장 적은 유형이었다.</p>
   <div class="fig"><div class="scroll"><svg id="versions" viewBox="0 0 700 300"></svg></div><span class="hint"><span class="en">Swipe sideways to see the whole chart.</span><span class="ko">옆으로 밀면 그래프 전체를 볼 수 있다.</span></span>
     <div class="cap"><span class="en">Each dot is one version. Across: stability when the data are resampled. Up: how much the types add to predicting night temperature beyond location and buildings. Filled dots passed every rule, and the orange ring marks the chosen four types.</span><span class="ko">점 하나가 버전 하나다. 가로축은 재표본 안정성, 세로축은 입지·건물 변수에 더해 유형이 야간 기온 예측에 보태는 설명력이다. 채워진 점은 모든 기준을 통과한 버전이며, 주황색 테두리가 최종 선택한 네 유형이다.</span></div></div>
+  <p class="small"><span class="en">Example photos on the exhibition panel. Each type card shows one Street View panorama as a street photo, an upward fisheye and its AI labels. The examples were chosen by rules written before any image was viewed: a leaf-on panorama (May to October) within 60 m of a 2025 sensor; a sensor whose four measures all lie inside its type's 10th–90th percentile; and, among those, the panorama whose sky, tree and building views sit closest to its own type and furthest from the other three. The highest-ranked panorama that passed a check by eye (no vehicle filling the view, no glare, no close faces) was used; one S3 panorama was skipped for lens glare. All four are from May 2018: 마포구 아현동 (S1), 동대문구 용신동 (S2), 동대문구 답십리1동 (S3) and 종로구 종로5·6가동 (S4). They illustrate the types; the numbers on each card are type averages.</span><span class="ko">전시 패널의 예시 사진. 패널의 유형 카드에는 스트리트뷰 파노라마 하나를 가로 사진, 위로 올려다본 어안 영상, AI 라벨로 나누어 보여 준다. 예시는 사진을 보기 전에 정한 기준으로 골랐다. 2025년 센서에서 60 m 이내이고 잎이 무성한 시기(5–10월)에 촬영된 파노라마여야 하며, 해당 센서의 네 지표가 모두 소속 유형의 10–90 백분위 안에 있어야 한다. 이 가운데 하늘·수목·건물 조망 비율이 자기 유형의 평균에 가장 가깝고 다른 세 유형과는 가장 먼 파노라마를 순위대로 골랐으며, 육안 점검(시야를 가리는 차량, 빛 번짐, 가까운 얼굴 없음)을 통과한 최상위 파노라마를 썼다. S3의 1순위 파노라마는 빛 번짐 때문에 제외했다. 네 예시는 모두 2018년 5월 촬영본으로, 마포구 아현동(S1), 동대문구 용신동(S2), 동대문구 답십리1동(S3), 종로구 종로5·6가동(S4)이다. 예시는 유형을 보여 주기 위한 것이며, 카드의 수치는 유형 평균이다.</span></p>
   <p class="small"><span class="en">The four types simplify a continuum. The statistical separation between them is weak (silhouette 0.29), so the case for them rests on stability, prediction and replication.</span><span class="ko">네 유형은 연속적인 변이를 단순화한 것이다. 유형 간 통계적 구분은 약한 편이어서(실루엣 계수 0.29), 유형의 타당성은 경계의 명확성보다 안정성, 예측력, 재현성에 근거한다.</span></p>
 </div></section>
 
@@ -237,24 +245,24 @@
 </div></section>
 
 <section id="who"><div class="wrap">
-  <h2><span class="en">More of these streets where people on basic livelihood support live</span><span class="ko">기초생활수급자 거주지에 더 많은 S4 가로</span></h2>
-  <p class="en">For each of Seoul's <span data-v="res.n_dong" data-f="int"></span> 행정동 we know the share of its streets that are S4 and how many residents receive basic livelihood support (<span class="term" data-t="sug">수급자</span>).</p>
+  <h2><span class="en">More of these streets where welfare recipients live</span><span class="ko">기초생활수급자 거주지에 더 많은 S4 가로</span></h2>
+  <p class="en">For each of Seoul's <span data-v="res.n_dong" data-f="int"></span> 행정동 we know the share of its streets that are S4 and how many residents are welfare recipients, that is, recipients of Basic Livelihood Security (<span class="term" data-t="sug">수급자</span>), Korea's main public assistance.</p>
   <p class="ko">서울 <span data-v="res.n_dong" data-f="int"></span>개 행정동마다 S4 가로의 비율과 국민기초생활보장 <span class="term" data-t="sug">수급자</span> 수를 산출했다.</p>
   <div class="fig"><svg id="resbars" viewBox="0 0 700 150"></svg></div>
-  <p class="en">수급자 lived in 동 with <b><span data-v="res.rec_diff" data-f="f1"></span> percentage points more</b> S4 street than the night-time population of Korean nationals <span data-v="res.rec_diff" data-f="ci1"></span>, and 4.4 points more than the registered population of the same 동. For people aged 65 and over in the same night-time estimates there was no clear difference (<span data-v="res.old_diff" data-f="sg1"></span> <span data-v="res.old_diff" data-f="ci1"></span>). The interval comes from resampling whole 구, which allows for neighbouring 동 being alike. The analysis describes the street mix of the 동 where people live and says nothing about the street outside any one home.</p>
+  <p class="en">Welfare recipients lived in 동 with <b><span data-v="res.rec_diff" data-f="f1"></span> percentage points more</b> S4 street than the night-time population of Korean nationals <span data-v="res.rec_diff" data-f="ci1"></span>, and 4.4 points more than the registered population of the same 동. For people aged 65 and over in the same night-time estimates there was no clear difference (<span data-v="res.old_diff" data-f="sg1"></span> <span data-v="res.old_diff" data-f="ci1"></span>). The interval comes from resampling whole 구, which allows for neighbouring 동 being alike. The analysis describes the street mix of the 동 where people live and says nothing about the street outside any one home.</p>
   <p class="ko">수급자가 거주하는 동은 같은 동들의 내국인 야간 생활인구 기준보다 S4 가로 비율이 <b><span data-v="res.rec_diff" data-f="f1"></span>%p 높았다</b> <span data-v="res.rec_diff" data-f="ci1"></span>. 주민등록인구와 비교하면 4.4%p 높았다. 65세 이상 인구에서는 뚜렷한 차이가 없었다(<span data-v="res.old_diff" data-f="sg1"></span>%p <span data-v="res.old_diff" data-f="ci1"></span>). 신뢰구간은 인접한 동끼리 특성이 비슷하다는 점을 고려해 자치구 단위로 재표본추출하여 구했다. 이 분석은 사람들이 사는 동의 가로 구성을 보여 줄 뿐, 개별 주택 앞 가로의 상태를 말해 주지는 않는다.</p>
 </div></section>
 
 <section id="find"><div class="wrap">
   <h2><span class="en">Find your 동</span><span class="ko">우리 동네 찾기</span></h2>
-  <p class="en">The dark areas are the <span data-v="prio_n" data-f="int"></span> priority 동, which are in the top quarter of Seoul for both S4 street share and 수급자 rate. Together they hold <span data-v="prio_s4_km" data-f="int"></span> km of S4 street and <span data-v="prio_rec_share" data-f="pct0"></span> of all recipients. Search for a 동 or tap the map.</p>
+  <p class="en">The dark areas are the <span data-v="prio_n" data-f="int"></span> priority 동, which are in the top quarter of Seoul for both S4 street share and welfare-recipient rate (at least 59% and 6.3%). Together they hold <span data-v="prio_s4_km" data-f="int"></span> km of S4 street and <span data-v="prio_rec_share" data-f="pct0"></span> of all welfare recipients. Search for a 동 or tap the map.</p>
   <p class="ko">진하게 표시된 곳은 S4 가로 비율과 수급자 비율이 모두 서울 상위 25%에 드는 우선 검토 동 <span data-v="prio_n" data-f="int"></span>곳이다. 이들 동에 S4 가로 <span data-v="prio_s4_km" data-f="int"></span> km와 전체 수급자의 <span data-v="prio_rec_share" data-f="pct0"></span>가 분포한다. 동 이름을 검색하거나 지도를 누르면 상세 정보를 볼 수 있다.</p>
 </div>
 <div class="wide"><div class="fig">
   <div class="ctrl">
     <button class="btn on" data-dm="cls"><span class="en">Streets × need</span><span class="ko">가로 × 수급자</span></button>
     <button class="btn" data-dm="s4"><span class="en">S4 street share</span><span class="ko">S4 가로 비율</span></button>
-    <button class="btn" data-dm="rate"><span class="en">수급자 rate</span><span class="ko">수급자 비율</span></button>
+    <button class="btn" data-dm="rate"><span class="en">Welfare-recipient rate</span><span class="ko">수급자 비율</span></button>
   </div>
   <div class="grid2">
     <div><svg id="dongmap"></svg><div class="legend" id="dlegend"></div></div>
@@ -266,20 +274,47 @@
 </div></div></section>
 
 <section id="act"><div class="wrap">
-  <h2><span class="en">What a district could do</span><span class="ko">자치구가 할 수 있는 일</span></h2>
-  <p class="small"><span class="en">Three directions to test. They come from comparing streets across the city, and none has yet been tested as an intervention.</span><span class="ko">검증이 필요한 세 가지 방향이다. 도시 전체의 가로를 비교해 얻은 연관성에 근거한 것으로, 실제 개입 효과를 검증한 것은 아니다.</span></p>
-  <div class="proposal"><div class="n">1</div><div><b class="en">Green S4 streets first.</b><b class="ko">S4 가로부터 녹화한다.</b>
-    <span class="en">Greener surroundings went with cooler afternoons: about <span data-v="cont.afternoon.ndvi_30m" data-f="sg2"></span> °C for every +0.1 of NDVI within 30 m, all else equal <span data-v="cont.afternoon.ndvi_30m" data-f="ci2"></span>. S4 streets are the least green (NDVI <span data-v="S4.ndvi_30m" data-f="f2"></span> against <span data-v="S1.ndvi_30m" data-f="f2"></span> on S1 streets).</span>
-    <span class="ko">주변 녹지가 많을수록 오후 기온이 낮았다. 다른 조건이 같을 때 반경 30 m 내 NDVI 0.1 증가에 따른 오후 기온 변화는 <span data-v="cont.afternoon.ndvi_30m" data-f="sg2"></span> °C였다 <span data-v="cont.afternoon.ndvi_30m" data-f="ci2"></span>. S4 가로는 녹지가 가장 적다(NDVI <span data-v="S4.ndvi_30m" data-f="f2"></span>, S1은 <span data-v="S1.ndvi_30m" data-f="f2"></span>).</span></div></div>
-  <div class="proposal"><div class="n">2</div><div><b class="en">Keep streets open to the sky.</b><b class="ko">하늘로 열린 가로를 유지한다.</b>
-    <span class="en">More enclosure went with warmer nights: about <span data-v="cont.night.bvf" data-f="sg2"></span> °C for every +0.1 of BVF <span data-v="cont.night.bvf" data-f="ci2"></span>. When dense low-rise blocks are rebuilt, the height of the street wall relative to the street's width affects how well the street cools at night.</span>
-    <span class="ko">가로가 둘러싸일수록 야간 기온이 높았다. BVF 0.1 증가에 따른 야간 기온 변화는 <span data-v="cont.night.bvf" data-f="sg2"></span> °C였다 <span data-v="cont.night.bvf" data-f="ci2"></span>. 저층 고밀 주거지를 재건축할 때 가로 폭 대비 가로벽 높이는 밤사이 가로가 얼마나 잘 식는지를 좌우한다.</span></div></div>
-  <div class="proposal"><div class="n">3</div><div><b class="en">Protect S1 and S2 streets.</b><b class="ko">S1·S2 가로를 보전한다.</b>
-    <span class="en">Keep their trees and spacing as the city densifies.</span><span class="ko">도시가 고밀화되더라도 이들 가로의 수목과 건물 간격은 유지해야 한다.</span></div></div>
+  <h2><span class="en">A design rule for each street type</span><span class="ko">가로 유형별 설계 원칙</span></h2>
+  <p class="small"><span class="en">Proposals to test. They come from comparing streets across the city, and none has yet been tested as an intervention. Two rules of thumb from the data, all else equal: +0.1 of sky blocked by buildings (BVF) goes with <span data-v="cont.night.bvf" data-f="sg2"></span> °C at night <span data-v="cont.night.bvf" data-f="ci2"></span>, and +0.1 of greenery within 30 m (NDVI) with <span data-v="cont.afternoon.ndvi_30m" data-f="sg2"></span> °C in the afternoon <span data-v="cont.afternoon.ndvi_30m" data-f="ci2"></span>.</span><span class="ko">검증이 필요한 제안이다. 도시 전체의 가로를 비교해 얻은 연관성에 근거한 것으로, 실제 개입 효과를 검증한 것은 아니다. 다른 조건이 같을 때 자료가 보여 주는 두 가지 경험칙은 다음과 같다. 건물이 가리는 하늘(BVF)이 0.1 늘면 야간 기온이 <span data-v="cont.night.bvf" data-f="sg2"></span> °C <span data-v="cont.night.bvf" data-f="ci2"></span>, 반경 30 m 내 녹지(NDVI)가 0.1 늘면 오후 기온이 <span data-v="cont.afternoon.ndvi_30m" data-f="sg2"></span> °C <span data-v="cont.afternoon.ndvi_30m" data-f="ci2"></span> 달라졌다.</span></p>
+  <div class="proposal"><div class="n" style="background:var(--s1);flex-basis:34px;width:34px;border-radius:8px">S1</div><div><b class="en">Protect.</b><b class="ko">보전한다.</b>
+    <span class="en">The coolest type at every hour. Keep its trees, setbacks and open sky as the blocks around it densify.</span>
+    <span class="ko">모든 시간대에서 가장 시원한 유형이다. 주변 가구가 고밀화되더라도 수목, 건축선 후퇴 공간, 열린 하늘을 지켜야 한다.</span></div></div>
+  <div class="proposal"><div class="n" style="background:var(--s2);flex-basis:34px;width:34px;border-radius:8px">S2</div><div><b class="en">Shade the open ground.</b><b class="ko">빈 땅에 그늘을 만든다.</b>
+    <span class="en">Close to S1 once location, buildings and device are equal (night <span data-v="coef.night.S2" data-f="sg2"></span> °C, p = 0.06, not significant). Shade and plant the open ground between towers: daytime heat first in office areas, night heat too in housing.</span>
+    <span class="ko">입지, 건물, 기종을 통제하면 S1과 비슷하다(야간 <span data-v="coef.night.S2" data-f="sg2"></span> °C, p = 0.06, 유의하지 않음). 고층 건물 사이의 빈 땅에 그늘과 식재를 더한다. 업무 지역에서는 낮 더위를, 주거 지역에서는 밤 더위까지 함께 고려한다.</span></div></div>
+  <div class="proposal"><div class="n" style="background:var(--s3);flex-basis:34px;width:34px;border-radius:8px">S3</div><div><b class="en">Green the edges.</b><b class="ko">가장자리를 녹화한다.</b>
+    <span class="en">All else equal, <span data-v="coef.night.S3" data-f="sg2"></span> °C at night and <span data-v="coef.afternoon.S3" data-f="sg2"></span> °C in the afternoon. Add street trees and planted edges: here greenery went with cooler afternoons most, and other work finds tree canopy cools mainly by day (Ziter et al., 2019).</span>
+    <span class="ko">다른 조건이 같을 때 야간 <span data-v="coef.night.S3" data-f="sg2"></span> °C, 오후 <span data-v="coef.afternoon.S3" data-f="sg2"></span> °C 높다. 가로수와 식재 가장자리를 더한다. 이 연구에서 녹지는 오후 기온과 가장 뚜렷하게 관련되었고, 선행 연구도 수관의 냉각 효과가 주로 낮에 나타난다고 보고한다(Ziter et al., 2019).</span></div></div>
+  <div class="proposal"><div class="n" style="background:var(--s4);flex-basis:34px;width:34px;border-radius:8px">S4</div><div><b class="en">Plan now.</b><b class="ko">지금 계획한다.</b>
+    <span class="en">All else equal, <span data-v="coef.night.S4" data-f="sg2"></span> °C at night and <span data-v="coef.afternoon.S4" data-f="sg2"></span> °C in the afternoon. Hardest to change, with small lots and narrow streets, so set the rules before rebuilding: setbacks, street-wall height relative to street width, and room for trees.</span>
+    <span class="ko">다른 조건이 같을 때 야간 <span data-v="coef.night.S4" data-f="sg2"></span> °C, 오후 <span data-v="coef.afternoon.S4" data-f="sg2"></span> °C 높다. 필지가 작고 가로가 좁아 바꾸기가 가장 어려우므로, 다시 지어지기 전에 규칙을 정해 두어야 한다. 건축선 후퇴, 가로 폭 대비 가로벽 높이, 수목을 심을 공간이 그 대상이다.</span></div></div>
+
+  <h3 id="change"><span class="en">Where S4 can still change</span><span class="ko">S4 가로는 어디서 바뀔 수 있는가</span></h3>
+  <p class="en">We sorted all <span data-v="S4.km" data-f="int,"></span> km of S4 street by the age and use of the buildings along it, using Seoul's own redevelopment test. A street counts as old enough for redevelopment when at least 60% of the buildings within 15 m pass the age rule of Seoul's urban-renewal ordinance (Art. 4: concrete or steel buildings 30 years, detached houses and other buildings 20 years). It counts as commercial when under half of those buildings are housing. The rules were set before the split was run. <b><span data-v="split.old" data-f="pct0"></span> of S4 street is old enough</b>, so most of it will be rebuilt at some point, and the rules written now will shape what replaces it.</p>
+  <p class="ko">S4 가로 <span data-v="S4.km" data-f="int,"></span> km 전체를 주변 건물의 노후도와 용도에 따라 서울시의 재개발 기준으로 나누었다. 가로에서 15 m 이내 건물의 60% 이상이 서울시 도시 및 주거환경정비 조례 제4조의 노후 기준(철근콘크리트·철골조 30년, 단독주택과 그 밖의 건축물 20년)을 넘으면 '재개발 노후도 기준 충족'으로, 그 건물 가운데 주택이 절반 미만이면 '상업 가로'로 분류했다. 기준은 분석 전에 정했다. <b>S4 가로의 <span data-v="split.old" data-f="pct0"></span>가 노후도 기준을 충족</b>하므로 대부분 언젠가 다시 지어지며, 지금 정하는 규칙이 그 결과를 좌우한다.</p>
+  <div class="fig">
+    <div style="display:flex;height:26px;border-radius:6px;overflow:hidden;gap:2px;background:#fff" aria-label="S4 street by building age and use">
+      <div style="flex:20.5;background:#B4501B"></div><div style="flex:52.1;background:#D55E00"></div><div style="flex:6.7;background:#C9B8A6"></div><div style="flex:19.9;background:#E6D9CB"></div><div style="flex:0.8;background:#EFEBE4"></div>
+    </div>
+    <div class="cap"><span class="en">Share of S4 street length, left to right: commercial, old enough <span data-v="split.A" data-f="pct1"></span> · residential, old enough <span data-v="split.C" data-f="pct1"></span> · commercial, newer buildings <span data-v="split.B" data-f="pct1"></span> · residential, newer buildings <span data-v="split.D" data-f="pct1"></span> · too few buildings on record <span data-v="split.few" data-f="pct1"></span>.</span><span class="ko">S4 가로 연장 대비 비율(왼쪽부터): 상업·노후 <span data-v="split.A" data-f="pct1"></span> · 주거·노후 <span data-v="split.C" data-f="pct1"></span> · 상업·신축 <span data-v="split.B" data-f="pct1"></span> · 주거·신축 <span data-v="split.D" data-f="pct1"></span> · 기록된 건물이 너무 적음 <span data-v="split.few" data-f="pct1"></span>.</span></div>
+  </div>
+  <ul class="en">
+    <li><b>Commercial street, old enough (<span data-v="split.A" data-f="pct1"></span>).</b> Write setbacks, shade and planting into district-unit plans before it is rebuilt; daytime heat first.</li>
+    <li><b>Residential street, old enough (<span data-v="split.C" data-f="pct1"></span>).</b> District-unit plans, Moa housing to bundle small lots, and pocket parks on old lots; night heat matters here.</li>
+    <li><b>Commercial street, newer buildings (<span data-v="split.B" data-f="pct1"></span>).</b> The street itself is public: trees, shade structures and cooler paving now.</li>
+    <li><b>Residential street, newer buildings (<span data-v="split.D" data-f="pct1"></span>).</b> Fixed for decades: subsidise cool roofs and green walls, building by building.</li>
+  </ul>
+  <ul class="ko">
+    <li><b>상업 가로, 노후(<span data-v="split.A" data-f="pct1"></span>).</b> 다시 지어지기 전에 지구단위계획에 건축선 후퇴, 그늘, 식재를 담는다. 낮 더위가 우선이다.</li>
+    <li><b>주거 가로, 노후(<span data-v="split.C" data-f="pct1"></span>).</b> 지구단위계획, 작은 필지를 묶는 모아주택, 노후 필지를 활용한 소공원. 이곳에서는 밤 더위가 중요하다.</li>
+    <li><b>상업 가로, 신축(<span data-v="split.B" data-f="pct1"></span>).</b> 가로 자체는 공공 공간이므로 가로수, 그늘 시설, 차열 포장을 지금 도입할 수 있다.</li>
+    <li><b>주거 가로, 신축(<span data-v="split.D" data-f="pct1"></span>).</b> 수십 년간 그대로 남을 건물이므로 쿨루프와 벽면 녹화를 건물별로 지원한다.</li>
+  </ul>
+  <p class="small"><span class="en">Other settings (two-thirds old instead of 60%, 30 years for every building, or 10 or 25 m instead of 15 m) give 64–75% old enough. Buildings with no registry record (21.5%) were left out. The split reads the buildings along each street; it is not a test of legal eligibility for redevelopment.</span><span class="ko">기준을 바꾸어도(60% 대신 3분의 2, 모든 건물에 30년 적용, 15 m 대신 10 m 또는 25 m) 노후 비율은 64–75%였다. 건축물대장 기록이 없는 건물(21.5%)은 제외했다. 이 분류는 가로변 건물의 상태를 읽은 것이지 법적 재개발 요건을 판정한 것은 아니다.</span></p>
   <div class="fig"><div class="grid2"><svg id="inset" viewBox="0 0 400 400"></svg>
     <div><h3 style="margin-top:0"><span class="en">Where to start: 수유3동</span><span class="ko">출발점: 수유3동</span></h3>
-    <p class="en">강북구 수유3동 has 22.6 km of S4 street, 84% of its typed streets and the most of any priority 동 (송천동 is close behind at 22.5 km). A next step would be a paired field study there. One S4 street and a nearby open, green street would be measured with shielded sensors in the same night and afternoon windows, before a greening or redesign pilot is chosen.</p>
-    <p class="ko">강북구 수유3동의 S4 가로는 22.6 km로, 유형이 부여된 가로의 84%에 해당하며 우선 검토 동 가운데 가장 길다(송천동이 22.5 km로 뒤를 잇는다). 다음 단계로 이곳에서 대응 현장 측정을 제안한다. S4 가로 하나와 인근의 트이고 녹지가 많은 가로를 같은 야간·오후 시간대에 차폐형 센서로 측정한 뒤, 녹화나 가로 재설계 시범 사업을 선정하는 방식이다.</p></div></div></div>
+    <p class="en">강북구 수유3동 has 22.6 km of S4 street, 84% of its typed streets and the most of any priority 동 (송천동 is close behind at 22.5 km). Most of its S4 street (62%) is residential and old enough for redevelopment, and another 18% is commercial and old enough. A next step would be a paired field study there. One S4 street and a nearby open, green street would be measured with shielded sensors in the same night and afternoon windows, before a greening or redesign pilot is chosen.</p>
+    <p class="ko">강북구 수유3동의 S4 가로는 22.6 km로, 유형이 부여된 가로의 84%에 해당하며 우선 검토 동 가운데 가장 길다(송천동이 22.5 km로 뒤를 잇는다). 이 S4 가로의 62%는 노후도 기준을 충족하는 주거 가로이고, 18%는 노후도 기준을 충족하는 상업 가로다. 다음 단계로 이곳에서 대응 현장 측정을 제안한다. S4 가로 하나와 인근의 트이고 녹지가 많은 가로를 같은 야간·오후 시간대에 차폐형 센서로 측정한 뒤, 녹화나 가로 재설계 시범 사업을 선정하는 방식이다.</p></div></div></div>
 </div></section>
 
 <!-- ACT 4: beyond Seoul -->
@@ -306,7 +341,7 @@
   <p class="en">The method can be repeated elsewhere. It needs street photographs, an AI model that labels sky, trees and buildings, and a dense public sensor network. Hong Kong, Taipei and Seoul have the first two, and more cities are building the third.</p>
   <p class="en">The mechanism carries over with care. Enclosure slowing night cooling is a classic result of urban climatology (Oke, 1981). In tropical Singapore, though, sky hidden by trees did not make nights warmer (Wong &amp; Jusuf, 2010). That is one reason we measured sky hidden by buildings (BVF) separately from sky hidden by trees.</p>
   <p class="en">The numbers do not carry over. The +0.45 °C belongs to Seoul's climate, building stock and sensor network, and another city would have to measure its own.</p>
-  <p class="en">The equity question does. In 108 US cities, neighbourhoods that were redlined in the 1930s are hotter today (Hoffman, Shandas &amp; Pendleton, 2020). Our 수급자 gap is much smaller and measured differently, but it asks who lives on the hottest streets.</p>
+  <p class="en">The equity question does. In 108 US cities, neighbourhoods that were redlined in the 1930s are hotter today (Hoffman, Shandas &amp; Pendleton, 2020). Our welfare-recipient gap is much smaller and measured differently, but it asks who lives on the hottest streets.</p>
   <p class="ko">방법은 다른 도시에도 적용할 수 있다. 거리 사진, 하늘·수목·건물을 구분하는 AI 모델, 촘촘한 공공 센서망이 있으면 된다. 홍콩, 타이베이, 서울은 앞의 두 가지를 갖추었고, 세 번째를 구축하는 도시도 늘고 있다.</p>
   <p class="ko">작동 원리 역시 적용할 수 있지만 신중해야 한다. 둘러싸인 가로에서 야간 냉각이 늦어진다는 것은 도시기후학의 고전적 결과다(Oke, 1981). 그러나 열대 도시 싱가포르에서는 수목이 하늘을 가려도 밤이 더 더워지지 않았다(Wong &amp; Jusuf, 2010). 이 연구가 건물이 가린 하늘(BVF)을 수목이 가린 하늘과 따로 측정한 것도 이 때문이다.</p>
   <p class="ko">구체적인 수치는 옮겨 쓸 수 없다. +0.45 °C는 서울의 기후, 건축물, 센서망에서 나온 값이므로 다른 도시는 직접 측정해야 한다.</p>
@@ -344,7 +379,8 @@
     <li>All temperatures come from one sensor network, whose two device models read about 0.5 °C apart. The device is controlled for and checked separately.</li>
     <li>Most photos are from 2018, and some streets have been rebuilt since. Tree shade is undercounted. Greenery comes from 2025 satellite data.</li>
     <li>The four types simplify a continuum. They are useful for planning and are not natural categories.</li>
-    <li>Residents are analysed by 행정동, using each 동's street mix. 수급자 counts are from December 2024 and population from December 2025.</li>
+    <li>Residents are analysed by 행정동, using each 동's street mix. Welfare-recipient counts are from December 2024 and population from December 2025.</li>
+    <li>The split of S4 street by building age reads the buildings along each street from the national building registry. It is not a test of legal eligibility for redevelopment, and 21.5% of buildings have no age on record.</li>
     <li>"All residents" means the Korean nationals present in each 동 at night (생활인구). Foreign residents are not in this series, and people present are close to, but not the same as, people resident.</li>
   </ul>
   <ul class="ko">
@@ -354,6 +390,7 @@
     <li>사진은 대부분 2018년에 촬영되어 이후 재건축된 가로가 있고, 수목 그늘은 적게 잡힌다. 녹지는 2025년 위성 자료를 사용했다.</li>
     <li>네 유형은 연속적인 변이를 단순화한 것으로, 계획에 활용하기 위한 구분이지 자연적 범주는 아니다.</li>
     <li>주민 분석은 행정동 단위로, 각 동의 가로 구성을 사용했다. 수급자 수는 2024년 12월, 인구는 2025년 12월 기준이다.</li>
+    <li>S4 가로의 노후도 분류는 건축물 정보에 기록된 가로변 건물을 읽은 것으로, 법적 재개발 요건을 판정한 것이 아니며 건물의 21.5%는 사용승인 연도 기록이 없다.</li>
     <li>'전체 주민'은 야간에 각 동에 머무는 내국인 생활인구다. 외국인은 포함되지 않으며, 머무는 인구는 거주 인구와 비슷하지만 같지는 않다.</li>
   </ul>
 </div></section>
@@ -450,6 +487,7 @@
     <li>행정동 boundaries: vuski/admdongkor (CC BY 4.0), from 통계청 SGIS (공공누리 제1유형).</li>
     <li>생활인구 (OA-14991); 국민기초생활보장 수급자 (동별, Dec 2024); 등록인구 (Dec 2025): 서울 열린데이터광장.</li>
     <li>Elevation: FABDEM (Hawker et al., 2022), CC BY-NC-SA 4.0.</li>
+    <li>Building age and use for the S4 split: 국토교통부 GIS건물통합정보 (Oct 2026). Zoning: UPIS 용도지역 UQ111 (Aug 2025). Age rule: 서울특별시 도시 및 주거환경정비 조례, 제4조.</li>
     <li>Tropical-night definition: 기상청 기상자료개방포털, 열대야일수.</li>
   </ul>
   <h3><span class="en">How to cite this site</span><span class="ko">인용 방법</span></h3>
@@ -465,9 +503,10 @@
   <p class="en">This website was written and built by Jisoo Han. The research behind it was a 2026 capstone project in Urban Planning and Engineering at Yonsei University, carried out by Jisoo Han and Minju Won and supervised by Prof. Bon Woo Koo.</p>
   <p class="ko">이 웹사이트는 한지수가 작성하고 제작했다. 바탕이 된 연구는 연세대학교 도시공학과 2026년 도시공학종합설계 프로젝트로, 한지수와 원민주가 함께 수행했으며 구본우 교수의 지도를 받았다.</p>
   <p><span class="en">Contact</span><span class="ko">연락처</span>: <span class="mail" data-u="floweringwisdom" data-d="yonsei.ac.kr"></span> · <span class="mail" data-u="flowering-wisdom" data-d="berkeley.edu"></span></p>
+  <p class="note"><span class="en">Version 1.4, 21 November 2026. Brought in line with the final exhibition panel: a design rule for each street type, a new split of S4 street by building age and use (73% old enough for redevelopment), "welfare recipients" in English, what is new compared with earlier Seoul studies, and the rules used to pick the panel's example photos.</span><span class="ko">버전 1.4, 2026년 11월 21일. 최종 전시 패널과 내용을 맞추었다. 가로 유형별 설계 원칙, 건물 노후도와 용도에 따른 S4 가로 분류(73%가 재개발 노후도 기준 충족), 선행 서울 연구와의 차이, 패널 예시 사진의 선정 기준을 더했다.</span></p>
   <p class="note"><span class="en">Version 1.3, 18 November 2026. Updated after a second review: tropical-night counts checked for incomplete nights, matched-pairs interval recomputed, method cards and references brought in line with the paper.</span><span class="ko">버전 1.3, 2026년 11월 18일. 두 번째 심사를 반영해 결측이 있는 밤에 대한 열대야 점검을 추가하고, 짝 비교 신뢰구간을 다시 계산했으며, 방법 카드와 참고문헌을 논문과 일치시켰다.</span></p>
 </div></footer>
 <div class="tip" id="tip"></div>
-<script src="app.js?v=1.3"></script>
+<script src="app.js?v=1.4"></script>
 </body>
 </html>

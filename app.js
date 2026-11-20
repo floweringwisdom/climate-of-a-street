@@ -347,7 +347,7 @@ function renderStreetLegend() {
 /* ---------- residents bars ---------- */
 function renderRes() {
   const V = D.values, svg = $("#resbars"); clear(svg); const X = v => 220 + 420 * v / 0.5;
-  [[L("Night-time population", "야간 생활인구"), V["res.all"], "#B9B5AD"], [L("People aged 65+", "65세 이상"), V["res.old"], "#B9B5AD"], [L("수급자", "수급자"), V["res.rec"], "#D55E00"]].forEach(([l, v, c], i) => {
+  [[L("Night-time population", "야간 생활인구"), V["res.all"], "#B9B5AD"], [L("People aged 65+", "65세 이상"), V["res.old"], "#B9B5AD"], [L("Welfare recipients", "수급자"), V["res.rec"], "#D55E00"]].forEach(([l, v, c], i) => {
     const y = 14 + i * 42; txt(svg, 0, y + 17, l, {"font-size": 15, "font-weight": i === 2 ? 700 : 400}); el("rect", {x: 220, y, width: X(v) - 220, height: 24, fill: c, rx: 3}, svg);
     txt(svg, X(v) + 6, y + 18, (100 * v).toFixed(1) + "%", {"font-size": 15, "font-weight": i === 2 ? 700 : 400}); });
   txt(svg, 220, 146, L("Share of street length that is S4 in the 동 where each group lives", "각 집단이 거주하는 동의 S4 가로 비율"), {"font-size": 12, fill: "#4F5E63"});
@@ -370,21 +370,21 @@ function renderDong() {
   el("path", {d: D.base.gu.map(r => "M" + r.map(p => p.join(",")).join("L") + "Z").join(""), fill: "none", stroke: "#8A979B", "stroke-width": 30, "pointer-events": "none"}, svg);
   if (dSel !== null) { const f = G.f[dSel]; el("path", {d: f.g.map(r => "M" + r.map(q => q.join(",")).join("L") + "Z").join(""), fill: "none", stroke: "#1C2629", "stroke-width": 90, "pointer-events": "none"}, svg); }
   const lg = $("#dlegend");
-  if (dMode === "cls") lg.innerHTML = [["both", L(`Priority: top quarter on both (${D.values.prio_n})`, `우선 검토 동: 두 지표 모두 상위 25% (${D.values.prio_n}곳)`)], ["streets", L("Top quarter for S4 streets only", "S4 가로 비율만 상위 25%")], ["people", L("Top quarter for 수급자 only", "수급자 비율만 상위 25%")], ["neither", L("Neither", "해당 없음")], ["forest", L("Forest and mountain (drawn over the 동)", "산림 (동 경계 위에 표시)")]].map(([k, l]) => `<span><i style="background:${k === "forest" ? "#E4ECDD" : DC[k]};height:12px;width:14px"></i> ${l}</span>`).join("");
+  if (dMode === "cls") lg.innerHTML = [["both", L(`Priority: top quarter on both (${D.values.prio_n})`, `우선 검토 동: 두 지표 모두 상위 25% (${D.values.prio_n}곳)`)], ["streets", L("Top quarter for S4 streets only", "S4 가로 비율만 상위 25%")], ["people", L("Top quarter for welfare recipients only", "수급자 비율만 상위 25%")], ["neither", L("Neither", "해당 없음")], ["forest", L("Forest and mountain (drawn over the 동)", "산림 (동 경계 위에 표시)")]].map(([k, l]) => `<span><i style="background:${k === "forest" ? "#E4ECDD" : DC[k]};height:12px;width:14px"></i> ${l}</span>`).join("");
   else if (dMode === "s4") lg.innerHTML = `<span>${L("S4 share of street length", "S4 가로 비율")}: 0% <i style="width:90px;height:10px;background:linear-gradient(90deg,#FDF0E6,#B3470A)"></i> 90%</span>`;
-  else lg.innerHTML = `<span>${L("수급자 per registered resident", "등록 인구 대비 수급자")}: 0% <i style="width:90px;height:10px;background:linear-gradient(90deg,#EEF2F7,#1E3557)"></i> 14%</span>`;
+  else lg.innerHTML = `<span>${L("Welfare recipients per registered resident", "등록 인구 대비 수급자")}: 0% <i style="width:90px;height:10px;background:linear-gradient(90deg,#EEF2F7,#1E3557)"></i> 14%</span>`;
   renderCard();
 }
 function selectDong(i) { dSel = i; renderDong(); }
 function renderCard() {
   const box = $("#dcard"); if (dSel === null) { box.innerHTML = `<div class="card"><span class="small">${L("Tap a 동 or search above. Try 수유3동.", "지도에서 동을 누르거나 위에서 검색한다. 예: 수유3동")}</span></div>`; return; }
   const f = D.dong.f[dSel], n = D.dong.f.length;
-  const clsT = {neither: L("Neither", "해당 없음"), streets: L("Top quarter for S4 streets", "S4 가로 비율 상위 25%"), people: L("Top quarter for 수급자", "수급자 비율 상위 25%"), both: L("Priority 동: top quarter on both", "우선 검토 동: 두 지표 모두 상위 25%")}[f.cls];
+  const clsT = {neither: L("Neither", "해당 없음"), streets: L("Top quarter for S4 streets", "S4 가로 비율 상위 25%"), people: L("Top quarter for welfare recipients", "수급자 비율 상위 25%"), both: L("Priority 동: top quarter on both", "우선 검토 동: 두 지표 모두 상위 25%")}[f.cls];
   const mix = T4.map((t, k) => `<i style="flex:${Math.max(0, f.sh[k] || 0)};background:${TC[t]}"></i>`).join("") + `<i style="flex:${Math.max(0, 1 - f.sh.reduce((a, b) => a + (b || 0), 0))};background:#CFCAC0"></i>`;
   box.innerHTML = `<div class="card" style="border-left-color:${DC[f.cls]}"><h4>${f.n} <span class="small">${f.gu}${f.en ? " · " + f.en : ""}</span></h4>
     <div class="mix">${mix}</div><div class="small">${T4.map((t, k) => `<span class="tt${t[1]}">${t}</span> ${Math.round(100 * (f.sh[k] || 0))}%`).join(" · ")} · ${L("expressways", "고속도로")} ${Math.round(100 * Math.max(0, 1 - f.sh.reduce((a, b) => a + (b || 0), 0)))}%</div>
     <p style="margin:.5em 0 .2em"><b>S4 ${Math.round(100 * f.sh[3])}%</b> ${L(`of street length · rank ${f.r1} of ${n}`, `(가로 연장 기준) · ${n}개 동 중 ${f.r1}위`)} · ${f.km} km</p>
-    <p style="margin:.2em 0"><b>${L("수급자", "수급자")} ${(100 * f.rate).toFixed(1)}%</b> ${L(`of registered residents · rank ${f.r2} of ${n}`, `(등록 인구 대비) · ${n}개 동 중 ${f.r2}위`)}</p>
+    <p style="margin:.2em 0"><b>${L("Welfare recipients", "수급자")} ${(100 * f.rate).toFixed(1)}%</b> ${L(`of registered residents · rank ${f.r2} of ${n}`, `(등록 인구 대비) · ${n}개 동 중 ${f.r2}위`)}</p>
     <p style="margin:.2em 0"><b>${clsT}</b></p>
     <p class="note">${L("동 averages. A single street can be very different from its 동.", "동 평균값이다. 같은 동 안에서도 가로마다 상태가 크게 다를 수 있다.")}</p></div>`;
 }
@@ -437,6 +437,7 @@ function codeHTML(i) { return `<pre><code>${CODE[i].c}</code></pre><p class="not
 function renderCode() { $("#codeblocks").innerHTML = CODE.map((c, i) => `<h3>${c.t[LANG === "ko" ? 1 : 0]}</h3>${codeHTML(i)}`).join(""); }
 /* ---------- references ---------- */
 const REFS = [
+  ["Bansal, P., &amp; Quan, S. J. (2024). Examining temporally varying nonlinear effects of urban form on urban heat island using explainable machine learning: A case of Seoul. <i>Building and Environment</i>, 247, 110957.", "10.1016/j.buildenv.2023.110957"],
   ["Cameron, A. C., Gelbach, J. B., &amp; Miller, D. L. (2008). Bootstrap-based improvements for inference with clustered errors. <i>Review of Economics and Statistics</i>, 90(3), 414–427.", "10.1162/rest.90.3.414"],
   ["Chan, T.-C., Lee, P.-H., Lee, Y.-T., &amp; Tang, J.-H. (2024). Exploring the spatial association between the distribution of temperature and urban morphology with green view index. <i>PLOS ONE</i>, 19(5), e0301921.", "10.1371/journal.pone.0301921"],
   ["Chernozhukov, V., Chetverikov, D., Demirer, M., Duflo, E., Hansen, C., Newey, W., & Robins, J. (2018). Double/debiased machine learning for treatment and structural parameters. <i>The Econometrics Journal</i>, 21(1), C1–C68.", "10.1111/ectj.12097"],
@@ -447,6 +448,7 @@ const REFS = [
   ["Holm, S. (1979). A simple sequentially rejective multiple test procedure. <i>Scandinavian Journal of Statistics</i>, 6(2), 65–70. https://www.jstor.org/stable/4615733", null],
   ["Korea Meteorological Administration. 열대야일수 (tropical nights). 기상자료개방포털. https://data.kma.go.kr/climate/tropicalNight/selectTropicalNightChart.do", null],
   ["Lee, Y., Kim, M., &amp; Seo, E. (2025). Explaining street-level thermal variability through semantic segmentation and explainable AI: Toward climate-responsive building and urban design. <i>Atmosphere</i>, 16(12), 1413.", "10.3390/atmos16121413"],
+  ["Li, N., &amp; Quan, S. J. (2023). Identifying urban form typologies in Seoul using a new Gaussian mixture model-based clustering framework. <i>Environment and Planning B: Urban Analytics and City Science</i>, 50(9), 2342–2358.", "10.1177/23998083231151688"],
   ["Li, X., Ratti, C., &amp; Seiferling, I. (2018). Quantifying the shade provision of street trees in urban landscape: A case study in Boston, USA, using Google Street View. <i>Landscape and Urban Planning</i>, 169, 81–91.", "10.1016/j.landurbplan.2017.08.011"],
   ["Lin, B.-S., Chang, H.-C., Chen, C.-W., Huang, I.-H., Pardthaisong, L., &amp; Hsieh, C.-I. (2024). Effects of street spatial structure on micrometeorological condition and air quality—A case study of Taipei City. <i>Forests</i>, 15(12), 2221.", "10.3390/f15122221"],
   ["Middel, A., Lukasczyk, J., &amp; Maciejewski, R. (2017). Sky view factors from synthetic fisheye photos for thermal comfort routing—A case study in Phoenix, Arizona. <i>Urban Planning</i>, 2(1), 19–30.", "10.17645/up.v2i1.855"],
@@ -454,7 +456,8 @@ const REFS = [
   ["Oke, T. R. (1981). Canyon geometry and the nocturnal urban heat island: Comparison of scale model and field observations. <i>Journal of Climatology</i>, 1(3), 237–254.", "10.1002/joc.3370010304"],
   ["Wong, N. H., &amp; Jusuf, S. K. (2010). Air temperature distribution and the influence of sky view factor in a green Singapore estate. <i>Journal of Urban Planning and Development</i>, 136(3), 261–272.", "10.1061/(ASCE)UP.1943-5444.0000014"],
   ["Xie, E., Wang, W., Yu, Z., Anandkumar, A., Alvarez, J. M., & Luo, P. (2021). SegFormer: Simple and efficient design for semantic segmentation with transformers. <i>Advances in Neural Information Processing Systems</i>, 34, 12077–12090.", null],
-  ["Zhou, B., Zhao, H., Puig, X., Fidler, S., Barriuso, A., & Torralba, A. (2017). Scene parsing through ADE20K dataset. <i>CVPR 2017</i>, 633–641.", "10.1109/CVPR.2017.544"]];
+  ["Zhou, B., Zhao, H., Puig, X., Fidler, S., Barriuso, A., & Torralba, A. (2017). Scene parsing through ADE20K dataset. <i>CVPR 2017</i>, 633–641.", "10.1109/CVPR.2017.544"],
+  ["Ziter, C. D., Pedersen, E. J., Kucharik, C. J., &amp; Turner, M. G. (2019). Scale-dependent interactions between tree canopy cover and impervious surfaces reduce daytime urban heat during summer. <i>Proceedings of the National Academy of Sciences</i>, 116(15), 7575–7580.", "10.1073/pnas.1817561116"]];
 function renderRefs() { $("#reflist").innerHTML = REFS.map(([t, d]) => `<li>${t}${d ? ` <a href="https://doi.org/${d}" target="_blank" rel="noopener">doi:${d}</a>` : ""}</li>`).join(""); }
 /* ---------- glossary + tooltips ---------- */
 const GL = {
@@ -536,11 +539,11 @@ const EQ = [
   src: ["The Korea Meteorological Administration's definition: night minimum (18:01–09:00) of 25 °C or more.", "기상청 정의: 18:01부터 다음 날 09:00까지의 최저기온이 25 °C 이상인 밤."],
   adapt: ["These are S-DoT estimates with the official threshold, not official station counts. A night counts if at least 12 of its 15 hourly minima are present; sensors need at least 40 such nights, and counts are scaled to 61 nights. Because a missing hour may hold the coolest reading, we also counted complete nights only, shifted the window an hour each way (the files do not say whether a time stamp marks the start or end of its hour) and bounded the count. 2026 records were nearly complete and every rule gave 2.9 to 4.0 extra nights on S4 streets; in 2025 most nights had gaps and the size of the difference is not settled. A network-tuned threshold is kept only as a secondary check.", "공식 관측소 집계가 아니라 공식 기준을 S-DoT 자료에 적용한 추정치다. 15개 시간별 최저기온 가운데 12개 이상이 있는 밤을 유효한 밤으로 보고, 유효한 밤이 40일 이상인 센서를 분석했으며 일수는 61일 기준으로 환산했다. 빠진 시간에 가장 낮은 기온이 있었을 수 있으므로 자료가 온전한 밤만 세기, 시간대를 앞뒤로 한 시간씩 옮기기(시각 표기가 그 시간의 시작인지 끝인지 자료에 명시되어 있지 않다), 상한·하한 구하기를 함께 수행했다. 자료가 거의 온전한 2026년에는 모든 방식에서 S4 가로의 열대야가 2.9–4.0일 많았지만, 결측이 많은 2025년에는 차이의 크기가 확정되지 않았다. 센서망에 맞춰 보정한 기준은 보조 지표로만 남겼다."]},
  {t: ["7 · Who lives along S4 streets", "7 · S4 가로 주변에 사는 사람들"], at: "#who",
-  f: () => `${v("Sg", "S4<sub>g</sub>")} = ${v("sd", "Σ<sub>d</sub>")} ${v("sdd", "s<sub>d</sub>")} ${v("wg", "w<sub>g,d</sub>")} / ${v("sd", "Σ<sub>d</sub>")} ${v("wg", "w<sub>g,d</sub>")} ,&nbsp; ${v("gap", "gap = S4<sub>수급자</sub> − S4<sub>all</sub>")}`,
+  f: () => `${v("Sg", "S4<sub>g</sub>")} = ${v("sd", "Σ<sub>d</sub>")} ${v("sdd", "s<sub>d</sub>")} ${v("wg", "w<sub>g,d</sub>")} / ${v("sd", "Σ<sub>d</sub>")} ${v("wg", "w<sub>g,d</sub>")} ,&nbsp; ${v("gap", "gap = S4<sub>rec</sub> − S4<sub>all</sub>")}`,
   vars: {Sg: ["the S4 share of street length in the 동 where group g lives, on average", "집단 g가 거주하는 동의 평균 S4 가로 비율"],
          sd: ["sum over Seoul's 424 행정동", "서울 424개 행정동에 대한 합"],
          sdd: ["the share of 동 d's street length that is S4", "동 d의 가로 연장 중 S4 비율"],
-         wg: ["how many people of group g live in 동 d (수급자, people aged 65+, or everyone at night)", "동 d에 거주하는 집단 g의 인원 (수급자, 65세 이상, 또는 야간 생활인구 전체)"],
+         wg: ["how many people of group g live in 동 d (welfare recipients, people aged 65+, or everyone at night)", "동 d에 거주하는 집단 g의 인원 (수급자, 65세 이상, 또는 야간 생활인구 전체)"],
          gap: ["the difference in percentage points; its 95% interval comes from resampling whole 구 2,000 times", "%p 차이. 95% 신뢰구간은 자치구 단위로 2,000번 재표본추출해 구함"]},
   src: ["A population-weighted exposure share, with a cluster bootstrap for the interval (resampling whole clusters; see Cameron, Gelbach &amp; Miller, 2008).", "인구 가중 노출 비율을 구하고, 신뢰구간은 군집 단위 부트스트랩으로 추정했다(Cameron, Gelbach &amp; Miller, 2008)."],
   adapt: ["Neighbouring 동 are alike, so resampling whole 구 gives a wider interval than resampling single 동. We report the wider one.", "인접한 동끼리는 특성이 비슷하므로, 동 단위보다 자치구 단위로 재표본추출할 때 신뢰구간이 넓어진다. 이 연구는 더 보수적인 자치구 단위 구간을 보고했다."]},
@@ -647,7 +650,7 @@ const POS = [
   weak: ["Street fixes may not reach people whose problem is the room they sleep in. Help aimed at people, such as cooling centres and help with bills, may do more.", "잠자는 방 자체가 문제인 사람에게는 가로 개선의 효과가 닿지 않을 수 있다. 무더위 쉼터나 냉방비 지원처럼 개인을 대상으로 한 지원이 더 효과적일 수 있다."]},
  {k: "C", t: ["Where both meet", "두 조건이 겹치는 곳부터"],
   why: ["Where hot streets and need overlap, one project serves both aims. It is easy to explain and to map.", "더운 가로와 지원 필요가 겹치는 곳에서는 사업 하나로 두 목표를 동시에 달성할 수 있다. 정책 취지를 설명하기 쉽고 지도로 나타내기도 쉽다."],
-  data: ["42 priority 동: top quarter for both S4 street share and 수급자 rate.", "우선 검토 동 42곳은 S4 가로 비율과 수급자 비율이 모두 상위 25%다."],
+  data: ["42 priority 동: top quarter for both S4 street share and welfare-recipient rate.", "우선 검토 동 42곳은 S4 가로 비율과 수급자 비율이 모두 상위 25%다."],
   weak: ["The list depends on the cut-off (a top third or top fifth gives a different list), and 동 averages hide individuals.", "대상 목록은 기준에 따라 달라지며(상위 3분의 1이나 5분의 1을 기준으로 하면 목록이 바뀐다), 동 평균은 개인 간 차이를 드러내지 못한다."]},
  {k: "D", t: ["Citywide rules before projects", "개별 사업보다 도시 전체의 규정"],
   why: ["Every rebuilt street is a chance. Rules on setbacks, street-wall height and planting shape all of them at little public cost, and treat every neighbourhood the same.", "재건축되는 모든 가로가 기회다. 건축선 후퇴, 가로벽 높이, 식재에 관한 규정은 공공 비용을 거의 들이지 않고 모든 가로에 적용되며, 모든 동네를 동등하게 다룬다."],
@@ -707,7 +710,7 @@ function glossKo(t) {
   if (hits.length) {
     const f = hits[0], name = f.en ? f.en.replace(/\(.*?\)/g, "") : null;
     const where = hits.map(h => GU[h.gu] || h.gu).join(" / ");
-    return `${name ? name + ", a" : "A"} neighbourhood (dong) in ${where}` + (hits.length === 1 ? `. S4 streets: ${Math.round(100 * f.sh[3])}% of street length; 수급자: ${(100 * f.rate).toFixed(1)}% of residents.` : ".");
+    return `${name ? name + ", a" : "A"} neighbourhood (dong) in ${where}` + (hits.length === 1 ? `. S4 streets: ${Math.round(100 * f.sh[3])}% of street length; welfare recipients: ${(100 * f.rate).toFixed(1)}% of residents.` : ".");
   }
   return null;
 }
