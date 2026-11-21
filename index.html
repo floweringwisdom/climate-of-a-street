@@ -6,7 +6,7 @@
 <title>The Climate of a Street · 거리의 기후</title>
 <meta name="description" content="Street form and summer heat in Seoul, read from AI-labelled street imagery and 723 sensors. By Jisoo Han, Yonsei University.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=1.4">
+<link rel="stylesheet" href="style.css?v=1.5">
 </head>
 <body>
 <div class="bar"><div class="in">
@@ -59,12 +59,12 @@
     <div class="l"><span class="en">S4 share where welfare recipients live</span><span class="ko">수급자 거주 동의 S4 비율</span></div>
     <div class="s"><span class="en">vs </span><span class="ko">야간 인구 전체 </span><span data-v="res.all" data-f="pct1"></span><span class="en"> for the night-time population</span></div></a>
   <a class="key" href="#change"><div class="v num" data-count="split.old" data-f="pct0" data-u=""></div>
-    <div class="l"><span class="en">of S4 street is old enough for redevelopment</span><span class="ko">재개발 노후도 기준을 넘는 S4 가로</span></div>
-    <div class="s"><span class="en">by Seoul's building-age test: plan before it is rebuilt</span><span class="ko">서울시 노후도 기준 적용, 다시 지어지기 전에 계획할 대상</span></div></a>
+    <div class="l"><span class="en">of S4 street passes our building-age screen</span><span class="ko">건물 노후도 선별 기준을 통과한 S4 가로</span></div>
+    <div class="s"><span class="en">age rule from Seoul's ordinance; not legal eligibility</span><span class="ko">서울시 조례의 노후 기준을 적용한 연구용 선별이며 법적 요건 판정이 아님</span></div></a>
 </div>
 <div class="wrap" style="padding:0;margin-top:14px">
-  <p class="en small">What is new. Li &amp; Quan (2023) typed Seoul's urban form in 500 m grids without temperature, and Bansal &amp; Quan (2024) modelled sensor temperature from 500 m urban form on a single day. This study types the streets themselves, follows each type's air temperature hour by hour over two summers, maps the four types for every street in Seoul, and gives each type its own design rule.</p>
-  <p class="ko small">기존 연구와의 차이. Li &amp; Quan(2023)은 서울의 도시 형태를 500 m 격자 단위로 유형화했지만 기온과 연결하지 않았고, Bansal &amp; Quan(2024)은 500 m 범위의 도시 형태로 하루 동안의 센서 기온을 모형화했다. 이 연구는 가로 자체를 유형화하고, 유형별 기온을 두 여름에 걸쳐 시간대별로 추적하며, 서울의 모든 가로에 유형을 부여한 지도와 유형별 설계 원칙을 함께 제시한다.</p>
+  <p class="en small">What is new. Li &amp; Quan (2023) typed Seoul's urban form in 500 m grids without temperature, and Bansal &amp; Quan (2024) modelled sensor temperature from 500 m urban form on a single day, and Kim, Won &amp; Kim (2025) related day and night means of one summer (July–August 2021, 1,063 S-DoT stations) to land use and urban form in buffers up to 500 m. Both relate temperature to surrounding form, not to street types. This study types the streets themselves, follows each type's air temperature hour by hour over two summers, maps the four types for every street in Seoul, and gives each type its own design rule.</p>
+  <p class="ko small">기존 연구와의 차이. Li &amp; Quan(2023)은 서울의 도시 형태를 500 m 격자 단위로 유형화했지만 기온과 연결하지 않았고, Bansal &amp; Quan(2024)은 500 m 범위의 도시 형태로 하루 동안의 센서 기온을 모형화했고, Kim, Won &amp; Kim(2025)은 한 여름(2021년 7–8월, S-DoT 1,063개 지점)의 주간·야간 평균기온을 반경 500 m 이내의 토지이용 및 도시 형태와 연결했다. 두 연구 모두 기온을 주변 형태와 연결했을 뿐 가로 유형과 연결하지는 않았다. 이 연구는 가로 자체를 유형화하고, 유형별 기온을 두 여름에 걸쳐 시간대별로 추적하며, 서울의 모든 가로에 유형을 부여한 지도와 유형별 설계 원칙을 함께 제시한다.</p>
 </div>
 <nav class="toc">
   <a href="#act1"><span class="en">1 · A street's own climate</span><span class="ko">1부 · 가로의 기후</span></a>
@@ -290,31 +290,31 @@
     <span class="ko">다른 조건이 같을 때 야간 <span data-v="coef.night.S4" data-f="sg2"></span> °C, 오후 <span data-v="coef.afternoon.S4" data-f="sg2"></span> °C 높다. 필지가 작고 가로가 좁아 바꾸기가 가장 어려우므로, 다시 지어지기 전에 규칙을 정해 두어야 한다. 건축선 후퇴, 가로 폭 대비 가로벽 높이, 수목을 심을 공간이 그 대상이다.</span></div></div>
 
   <h3 id="change"><span class="en">Where S4 can still change</span><span class="ko">S4 가로는 어디서 바뀔 수 있는가</span></h3>
-  <p class="en">We sorted all <span data-v="S4.km" data-f="int,"></span> km of S4 street by the age and use of the buildings along it, using Seoul's own redevelopment test. A street counts as old enough for redevelopment when at least 60% of the buildings within 15 m pass the age rule of Seoul's urban-renewal ordinance (Art. 4: concrete or steel buildings 30 years, detached houses and other buildings 20 years). It counts as commercial when under half of those buildings are housing. The rules were set before the split was run. <b><span data-v="split.old" data-f="pct0"></span> of S4 street is old enough</b>, so most of it will be rebuilt at some point, and the rules written now will shape what replaces it.</p>
-  <p class="ko">S4 가로 <span data-v="S4.km" data-f="int,"></span> km 전체를 주변 건물의 노후도와 용도에 따라 서울시의 재개발 기준으로 나누었다. 가로에서 15 m 이내 건물의 60% 이상이 서울시 도시 및 주거환경정비 조례 제4조의 노후 기준(철근콘크리트·철골조 30년, 단독주택과 그 밖의 건축물 20년)을 넘으면 '재개발 노후도 기준 충족'으로, 그 건물 가운데 주택이 절반 미만이면 '상업 가로'로 분류했다. 기준은 분석 전에 정했다. <b>S4 가로의 <span data-v="split.old" data-f="pct0"></span>가 노후도 기준을 충족</b>하므로 대부분 언젠가 다시 지어지며, 지금 정하는 규칙이 그 결과를 좌우한다.</p>
+  <p class="en">We sorted all <span data-v="S4.km" data-f="int,"></span> km of S4 street by the age and use of the buildings along it, with a screening rule built on Seoul's redevelopment age criteria. A street passes the screen when at least 60% of the buildings within 15 m pass the age rule of Seoul's urban-renewal ordinance (Art. 4: concrete or steel buildings 30 years, detached houses and other buildings 20 years). It counts as commercial when under half of those buildings are housing. The rules were set before the split was run. It is a study screen, not a test of legal eligibility. <b><span data-v="split.old" data-f="pct1"></span> of S4 street passes the screen</b>, 26.6% does not and 0.8% has too few buildings on record. Much of it is likely to be rebuilt over time, and the rules written now will shape what replaces it.</p>
+  <p class="ko">S4 가로 <span data-v="S4.km" data-f="int,"></span> km 전체를 주변 건물의 노후도와 용도에 따라 서울시 재개발 노후 기준을 바탕으로 한 선별 규칙으로 나누었다. 가로에서 15 m 이내 건물의 60% 이상이 서울시 도시 및 주거환경정비 조례 제4조의 노후 기준(철근콘크리트·철골조 30년, 단독주택과 그 밖의 건축물 20년)을 넘으면 '노후도 선별 통과'로, 그 건물 가운데 주택이 절반 미만이면 '상업 가로'로 분류했다. 기준은 분석 전에 정했다. 연구용 선별이며 법적 재개발 요건 판정이 아니다. <b>S4 가로의 <span data-v="split.old" data-f="pct1"></span>가 선별 기준을 통과</b>했고 26.6%는 통과하지 못했으며 0.8%는 기록된 건물이 너무 적었다. 이 가로의 상당수는 시간이 지나며 다시 지어질 가능성이 크고, 지금 정하는 규칙이 그 결과를 좌우한다.</p>
   <div class="fig">
     <div style="display:flex;height:26px;border-radius:6px;overflow:hidden;gap:2px;background:#fff" aria-label="S4 street by building age and use">
       <div style="flex:20.5;background:#B4501B"></div><div style="flex:52.1;background:#D55E00"></div><div style="flex:6.7;background:#C9B8A6"></div><div style="flex:19.9;background:#E6D9CB"></div><div style="flex:0.8;background:#EFEBE4"></div>
     </div>
-    <div class="cap"><span class="en">Share of S4 street length, left to right: commercial, old enough <span data-v="split.A" data-f="pct1"></span> · residential, old enough <span data-v="split.C" data-f="pct1"></span> · commercial, newer buildings <span data-v="split.B" data-f="pct1"></span> · residential, newer buildings <span data-v="split.D" data-f="pct1"></span> · too few buildings on record <span data-v="split.few" data-f="pct1"></span>.</span><span class="ko">S4 가로 연장 대비 비율(왼쪽부터): 상업·노후 <span data-v="split.A" data-f="pct1"></span> · 주거·노후 <span data-v="split.C" data-f="pct1"></span> · 상업·신축 <span data-v="split.B" data-f="pct1"></span> · 주거·신축 <span data-v="split.D" data-f="pct1"></span> · 기록된 건물이 너무 적음 <span data-v="split.few" data-f="pct1"></span>.</span></div>
+    <div class="cap"><span class="en">Share of S4 street length, left to right: commercial, passes <span data-v="split.A" data-f="pct1"></span> · residential, passes <span data-v="split.C" data-f="pct1"></span> · commercial, below the screen <span data-v="split.B" data-f="pct1"></span> · residential, below the screen <span data-v="split.D" data-f="pct1"></span> · too few buildings on record <span data-v="split.few" data-f="pct1"></span>.</span><span class="ko">S4 가로 연장 대비 비율(왼쪽부터): 상업·통과 <span data-v="split.A" data-f="pct1"></span> · 주거·통과 <span data-v="split.C" data-f="pct1"></span> · 상업·미통과 <span data-v="split.B" data-f="pct1"></span> · 주거·미통과 <span data-v="split.D" data-f="pct1"></span> · 기록된 건물이 너무 적음 <span data-v="split.few" data-f="pct1"></span>.</span></div>
   </div>
   <ul class="en">
-    <li><b>Commercial street, old enough (<span data-v="split.A" data-f="pct1"></span>).</b> Write setbacks, shade and planting into district-unit plans before it is rebuilt; daytime heat first.</li>
-    <li><b>Residential street, old enough (<span data-v="split.C" data-f="pct1"></span>).</b> District-unit plans, Moa housing to bundle small lots, and pocket parks on old lots; night heat matters here.</li>
-    <li><b>Commercial street, newer buildings (<span data-v="split.B" data-f="pct1"></span>).</b> The street itself is public: trees, shade structures and cooler paving now.</li>
-    <li><b>Residential street, newer buildings (<span data-v="split.D" data-f="pct1"></span>).</b> Fixed for decades: subsidise cool roofs and green walls, building by building.</li>
+    <li><b>Commercial street, passes the screen (<span data-v="split.A" data-f="pct1"></span>).</b> Write setbacks, shade and planting into district-unit plans before it is rebuilt; daytime heat first.</li>
+    <li><b>Residential street, passes the screen (<span data-v="split.C" data-f="pct1"></span>).</b> District-unit plans, Moa housing to bundle small lots, and pocket parks on old lots; night heat matters here.</li>
+    <li><b>Commercial street, below the screen (<span data-v="split.B" data-f="pct1"></span>).</b> Work in the road space now: trees, shade structures and cooler paving.</li>
+    <li><b>Residential street, below the screen (<span data-v="split.D" data-f="pct1"></span>).</b> Not due for rebuilding soon: support cool roofs and green walls, building by building.</li>
   </ul>
   <ul class="ko">
-    <li><b>상업 가로, 노후(<span data-v="split.A" data-f="pct1"></span>).</b> 다시 지어지기 전에 지구단위계획에 건축선 후퇴, 그늘, 식재를 담는다. 낮 더위가 우선이다.</li>
-    <li><b>주거 가로, 노후(<span data-v="split.C" data-f="pct1"></span>).</b> 지구단위계획, 작은 필지를 묶는 모아주택, 노후 필지를 활용한 소공원. 이곳에서는 밤 더위가 중요하다.</li>
-    <li><b>상업 가로, 신축(<span data-v="split.B" data-f="pct1"></span>).</b> 가로 자체는 공공 공간이므로 가로수, 그늘 시설, 차열 포장을 지금 도입할 수 있다.</li>
-    <li><b>주거 가로, 신축(<span data-v="split.D" data-f="pct1"></span>).</b> 수십 년간 그대로 남을 건물이므로 쿨루프와 벽면 녹화를 건물별로 지원한다.</li>
+    <li><b>상업 가로, 선별 통과(<span data-v="split.A" data-f="pct1"></span>).</b> 다시 지어지기 전에 지구단위계획에 건축선 후퇴, 그늘, 식재를 담는다. 낮 더위가 우선이다.</li>
+    <li><b>주거 가로, 선별 통과(<span data-v="split.C" data-f="pct1"></span>).</b> 지구단위계획, 작은 필지를 묶는 모아주택, 노후 필지를 활용한 소공원. 이곳에서는 밤 더위가 중요하다.</li>
+    <li><b>상업 가로, 선별 미통과(<span data-v="split.B" data-f="pct1"></span>).</b> 도로 공간에서 가로수, 그늘 시설, 차열 포장을 지금 도입한다.</li>
+    <li><b>주거 가로, 선별 미통과(<span data-v="split.D" data-f="pct1"></span>).</b> 당분간 재건축될 가능성이 낮으므로 쿨루프와 벽면 녹화를 건물별로 지원한다.</li>
   </ul>
-  <p class="small"><span class="en">Other settings (two-thirds old instead of 60%, 30 years for every building, or 10 or 25 m instead of 15 m) give 64–75% old enough. Buildings with no registry record (21.5%) were left out. The split reads the buildings along each street; it is not a test of legal eligibility for redevelopment.</span><span class="ko">기준을 바꾸어도(60% 대신 3분의 2, 모든 건물에 30년 적용, 15 m 대신 10 m 또는 25 m) 노후 비율은 64–75%였다. 건축물대장 기록이 없는 건물(21.5%)은 제외했다. 이 분류는 가로변 건물의 상태를 읽은 것이지 법적 재개발 요건을 판정한 것은 아니다.</span></p>
+  <p class="small"><span class="en">Other settings (two-thirds old instead of 60%, 30 years for every building, or 10 or 25 m instead of 15 m) give 64–75%. About 10% of the buildings along S4 streets have no age on record; counting them all as old or all as new gives 76% or 62% (checked after the main run). The split reads the buildings along each street; it is not a test of legal eligibility for redevelopment.</span><span class="ko">기준을 바꾸어도(60% 대신 3분의 2, 모든 건물에 30년 적용, 15 m 대신 10 m 또는 25 m) 통과 비율은 64–75%였다. S4 가로변 건물의 약 10%는 사용승인 연도 기록이 없으며, 이를 모두 노후로 보면 76%, 모두 신축으로 보면 62%였다(본 분석 후 추가 확인). 이 분류는 가로변 건물의 상태를 읽은 것이지 법적 재개발 요건을 판정한 것은 아니다.</span></p>
   <div class="fig"><div class="grid2"><svg id="inset" viewBox="0 0 400 400"></svg>
     <div><h3 style="margin-top:0"><span class="en">Where to start: 수유3동</span><span class="ko">출발점: 수유3동</span></h3>
-    <p class="en">강북구 수유3동 has 22.6 km of S4 street, 84% of its typed streets and the most of any priority 동 (송천동 is close behind at 22.5 km). Most of its S4 street (62%) is residential and old enough for redevelopment, and another 18% is commercial and old enough. A next step would be a paired field study there. One S4 street and a nearby open, green street would be measured with shielded sensors in the same night and afternoon windows, before a greening or redesign pilot is chosen.</p>
-    <p class="ko">강북구 수유3동의 S4 가로는 22.6 km로, 유형이 부여된 가로의 84%에 해당하며 우선 검토 동 가운데 가장 길다(송천동이 22.5 km로 뒤를 잇는다). 이 S4 가로의 62%는 노후도 기준을 충족하는 주거 가로이고, 18%는 노후도 기준을 충족하는 상업 가로다. 다음 단계로 이곳에서 대응 현장 측정을 제안한다. S4 가로 하나와 인근의 트이고 녹지가 많은 가로를 같은 야간·오후 시간대에 차폐형 센서로 측정한 뒤, 녹화나 가로 재설계 시범 사업을 선정하는 방식이다.</p></div></div></div>
+    <p class="en">강북구 수유3동 has 22.6 km of S4 street, 84% of its typed streets and the most of any priority 동 (송천동 is close behind at 22.5 km). Most of its S4 street (62%) is residential and passes the age screen, and another 18% is commercial and passes it. A next step would be a paired field study there. One S4 street and a nearby open, green street would be measured with shielded sensors in the same night and afternoon windows, before a greening or redesign pilot is chosen.</p>
+    <p class="ko">강북구 수유3동의 S4 가로는 22.6 km로, 유형이 부여된 가로의 84%에 해당하며 우선 검토 동 가운데 가장 길다(송천동이 22.5 km로 뒤를 잇는다). 이 S4 가로의 62%는 노후도 선별을 통과한 주거 가로이고, 18%는 선별을 통과한 상업 가로다. 다음 단계로 이곳에서 대응 현장 측정을 제안한다. S4 가로 하나와 인근의 트이고 녹지가 많은 가로를 같은 야간·오후 시간대에 차폐형 센서로 측정한 뒤, 녹화나 가로 재설계 시범 사업을 선정하는 방식이다.</p></div></div></div>
 </div></section>
 
 <!-- ACT 4: beyond Seoul -->
@@ -380,7 +380,7 @@
     <li>Most photos are from 2018, and some streets have been rebuilt since. Tree shade is undercounted. Greenery comes from 2025 satellite data.</li>
     <li>The four types simplify a continuum. They are useful for planning and are not natural categories.</li>
     <li>Residents are analysed by 행정동, using each 동's street mix. Welfare-recipient counts are from December 2024 and population from December 2025.</li>
-    <li>The split of S4 street by building age reads the buildings along each street from the national building registry. It is not a test of legal eligibility for redevelopment, and 21.5% of buildings have no age on record.</li>
+    <li>The S4 age screen is a study rule that reads the buildings along each street from the national building registry. It is not a test of legal eligibility for redevelopment, and about 10% of the buildings along S4 streets have no age on record (bounds 62–76%).</li>
     <li>"All residents" means the Korean nationals present in each 동 at night (생활인구). Foreign residents are not in this series, and people present are close to, but not the same as, people resident.</li>
   </ul>
   <ul class="ko">
@@ -390,7 +390,7 @@
     <li>사진은 대부분 2018년에 촬영되어 이후 재건축된 가로가 있고, 수목 그늘은 적게 잡힌다. 녹지는 2025년 위성 자료를 사용했다.</li>
     <li>네 유형은 연속적인 변이를 단순화한 것으로, 계획에 활용하기 위한 구분이지 자연적 범주는 아니다.</li>
     <li>주민 분석은 행정동 단위로, 각 동의 가로 구성을 사용했다. 수급자 수는 2024년 12월, 인구는 2025년 12월 기준이다.</li>
-    <li>S4 가로의 노후도 분류는 건축물 정보에 기록된 가로변 건물을 읽은 것으로, 법적 재개발 요건을 판정한 것이 아니며 건물의 21.5%는 사용승인 연도 기록이 없다.</li>
+    <li>S4 가로의 노후도 분류는 건축물 정보에 기록된 가로변 건물을 읽은 것으로, 법적 재개발 요건을 판정한 것이 아니며 S4 가로변 건물의 약 10%는 사용승인 연도 기록이 없다(범위 62–76%).</li>
     <li>'전체 주민'은 야간에 각 동에 머무는 내국인 생활인구다. 외국인은 포함되지 않으며, 머무는 인구는 거주 인구와 비슷하지만 같지는 않다.</li>
   </ul>
 </div></section>
@@ -503,10 +503,11 @@
   <p class="en">This website was written and built by Jisoo Han. The research behind it was a 2026 capstone project in Urban Planning and Engineering at Yonsei University, carried out by Jisoo Han and Minju Won and supervised by Prof. Bon Woo Koo.</p>
   <p class="ko">이 웹사이트는 한지수가 작성하고 제작했다. 바탕이 된 연구는 연세대학교 도시공학과 2026년 도시공학종합설계 프로젝트로, 한지수와 원민주가 함께 수행했으며 구본우 교수의 지도를 받았다.</p>
   <p><span class="en">Contact</span><span class="ko">연락처</span>: <span class="mail" data-u="floweringwisdom" data-d="yonsei.ac.kr"></span> · <span class="mail" data-u="flowering-wisdom" data-d="berkeley.edu"></span></p>
+  <p class="note"><span class="en">Version 1.5, 21 November 2026. Synced with the panel after a third review: the S4 result is called a building-age screen (72.6% pass, 26.6% do not, 0.8% too few records) with bounds for missing building ages, and Kim, Won &amp; Kim (2025) joins the comparison with earlier Seoul studies.</span><span class="ko">버전 1.5, 2026년 11월 21일. 세 번째 검토 후 패널과 맞추었다. S4 결과를 건물 노후도 선별로 표현하고(통과 72.6%, 미통과 26.6%, 기록 부족 0.8%) 연도 기록이 없는 건물에 대한 범위를 더했으며, 선행 서울 연구 비교에 Kim, Won &amp; Kim(2025)을 추가했다.</span></p>
   <p class="note"><span class="en">Version 1.4, 21 November 2026. Brought in line with the final exhibition panel: a design rule for each street type, a new split of S4 street by building age and use (73% old enough for redevelopment), "welfare recipients" in English, what is new compared with earlier Seoul studies, and the rules used to pick the panel's example photos.</span><span class="ko">버전 1.4, 2026년 11월 21일. 최종 전시 패널과 내용을 맞추었다. 가로 유형별 설계 원칙, 건물 노후도와 용도에 따른 S4 가로 분류(73%가 재개발 노후도 기준 충족), 선행 서울 연구와의 차이, 패널 예시 사진의 선정 기준을 더했다.</span></p>
   <p class="note"><span class="en">Version 1.3, 18 November 2026. Updated after a second review: tropical-night counts checked for incomplete nights, matched-pairs interval recomputed, method cards and references brought in line with the paper.</span><span class="ko">버전 1.3, 2026년 11월 18일. 두 번째 심사를 반영해 결측이 있는 밤에 대한 열대야 점검을 추가하고, 짝 비교 신뢰구간을 다시 계산했으며, 방법 카드와 참고문헌을 논문과 일치시켰다.</span></p>
 </div></footer>
 <div class="tip" id="tip"></div>
-<script src="app.js?v=1.4"></script>
+<script src="app.js?v=1.5"></script>
 </body>
 </html>
